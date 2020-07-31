@@ -1,6 +1,6 @@
 
 bear.png
-size: 1902,521
+size: 1907,521
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -47,8 +47,8 @@ eye_highlight_L
   offset: 0, 1
   index: -1
 eye_highlight_R
-  rotate: true
-  xy: 1865, 162
+  rotate: false
+  xy: 1865, 125
   size: 38, 34
   orig: 38, 34
   offset: 0, 0
@@ -90,17 +90,24 @@ fish
   index: -1
 items/back_ear_L
   rotate: false
-  xy: 978, 52
-  size: 48, 62
-  orig: 49, 62
-  offset: 0, 0
+  xy: 1858, 50
+  size: 47, 46
+  orig: 49, 51
+  offset: 0, 5
   index: -1
 items/back_ear_R
   rotate: false
-  xy: 978, 12
-  size: 36, 38
-  orig: 36, 39
+  xy: 1865, 161
+  size: 39, 39
+  orig: 39, 40
   offset: 0, 0
+  index: -1
+items/back_eye
+  rotate: true
+  xy: 978, 8
+  size: 106, 46
+  orig: 107, 46
+  offset: 1, 0
   index: -1
 items/back_face
   rotate: false
@@ -128,6 +135,13 @@ items/chair_back
   xy: 2, 231
   size: 288, 557
   orig: 288, 566
+  offset: 0, 0
+  index: -1
+items/eyes_back_closed
+  rotate: false
+  xy: 204, 4
+  size: 119, 16
+  orig: 119, 16
   offset: 0, 0
   index: -1
 items/guitar
@@ -167,7 +181,7 @@ mouth_L
   index: -1
 mouth_R
   rotate: false
-  xy: 204, 3
+  xy: 1623, 355
   size: 42, 17
   orig: 42, 17
   offset: 0, 0
