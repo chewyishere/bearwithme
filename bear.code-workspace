@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../../../../../Downloads/WarframeAlerts-33ca22e3f91a3af2b4cdec2e451051c030943271"
 		}
 	],
 	"settings": {}

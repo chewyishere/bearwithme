@@ -2,15 +2,12 @@ import * as PIXI from 'pixi.js';
 import gsap from 'gsap';
 
 export default class Bear extends PIXI.Container {
-    constructor(spineData, scale, pos, lookCB) {
+    constructor(spineData, lookCB) {
         super()
 
         this.bear = new PIXI.spine.Spine(spineData)
         this.bear.skeleton.setSkinByName('default') 
         this.zIndex = 1;
-
-        this.bear.position = pos;
-        this.bear.scale.set(scale)
         this.bear.interactive = true;
 
         this.addChild(this.bear)
@@ -53,12 +50,14 @@ export default class Bear extends PIXI.Container {
         this.hitSqr.interactive = true;
     }
 
-    setCurrentAnim(anim){
+    setCurrentAnim(anim, init){
         if (typeof(anim) === 'string') {
             this.prevAnim = this.currentAnim;
             this.currentAnim = anim;
-            this.bear.stateData.setMix(anim, this.prevAnim, 0.1);
-            this.bear.stateData.setMix(this.prevAnim, anim, 0.1);
+            if(!init){
+                this.bear.stateData.setMix(anim, this.prevAnim, 0.1);
+                this.bear.stateData.setMix(this.prevAnim, anim, 0.1);
+            }
             this.bear.state.setAnimation(0, anim, true);
         }
     }

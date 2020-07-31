@@ -16,7 +16,6 @@ export default class App extends PIXI.Application {
         this.items = [];
         this.prevAnim = 0;
         this.currentItem = {};
-        this.startIdx = 5;
 
         this.ticker = PIXI.Ticker.shared;
         this.scenes = [new PIXI.Container(), new PIXI.Container()];
@@ -41,14 +40,32 @@ export default class App extends PIXI.Application {
             this.stage.addChild(scene)
         });
     }
+    getStartIdx(){
+        let idx = 5;
+        let h = new Date().getHours();
+        if(h < 9){
+        } else if (h >= 9 || h < 12){
+           return idx + 3;
+        } else if (h >= 12 || h < 14){
+            return idx + 2;
+        } else if (h >= 14 || h < 19){
+            return idx + 3;
+        } else if (h >= 19 || h < 21){
+            return idx + 2;
+        } else {
+            return idx + 1;
+        }
+    }
 
     getBear() {
         this.loader.add('bears', './assets/bear/bear.json').load(this.onBearLoaded.bind(this));
     }
     onBearLoaded(loader, res) {
-        this.bear = new Bear(res.bears.spineData, this.getSize(0.5), this.getPos(ITEMS[this.startIdx], 'itemPos'), this.animate.bind(this));
+        this.bear = new Bear(
+            res.bears.spineData,
+            this.animate.bind(this)
+        );
        // this.view.addEventListener('tap', this.openDoor.bind(this));
-        this.stage.addChild(this.bear) 
         this.getAsset();
     }
         
@@ -61,14 +78,21 @@ export default class App extends PIXI.Application {
                 this.loader.add('seq', `assets/items/${_item.session}/${_item.subAssetsName}.json`).load(item.loadSubAssets);
             }
             this.items.push(item);
-            this.scenes[_item.scene].addChild(item);
         })
     }
 
     subAssetsLoaded() {
-        this.setActiveScene(0);
-        this.playAnimByTime();
+       // this.setActiveScene(0);
+        this.updateSession(ITEMS[this.getStartIdx()])
+        this.checkReachedItem(true)
+        this.bear.setPos(this.getCurAvatarPos()); 
+        this.bear.setSize(this.getSize(0.5)); 
+        this.stage.addChild(this.bear) 
+        this.items.forEach(_item => {
+            this.scenes[_item.scene].addChild(_item);
+        });
     }
+
     // openDoor(e) {
     //     if (directions.left && this.onView < 1) {
     //         this.onView += 1;
@@ -140,9 +164,9 @@ export default class App extends PIXI.Application {
             this.animate(val); 
         }
     }
-    checkReachedItem(){
+    checkReachedItem(init){
         this.toggleItemAnim(0);
-        this.bear.setCurrentAnim(this.currentItem.session.avatarAnim)
+        this.bear.setCurrentAnim(this.currentItem.session.avatarAnim, init)
         this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.session.hitAreaOffset); 
     }
 
@@ -162,32 +186,10 @@ export default class App extends PIXI.Application {
             item.setSize(itemSize);
         });
         this.bear.setHitArea(this.getCurAvatarPos, this.currentItem.session.hitAreaOffset);
-
         }
-    }
-
-    playAnimByTime(){
-        let h = new Date().getHours();
-        if(h < 9){
-            this.updateSession(ITEMS[this.startIdx])
-        } else if (h >= 9 || h < 12){
-            this.updateSession(ITEMS[this.startIdx + 3])
-        } else if (h >= 12 || h < 14){
-            this.updateSession(ITEMS[this.startIdx + 2])
-        } else if (h >= 14 || h < 19){
-            this.updateSession(ITEMS[this.startIdx + 3])
-        } else if (h >= 19 || h < 21){
-            this.updateSession(ITEMS[this.startIdx + 2])
-        } else {
-            this.updateSession(ITEMS[this.startIdx + 1])
-        }
-        this.checkReachedItem();
-        this.bear.setPos(this.getCurAvatarPos()); 
-        this.bear.setSize(this.getSize(0.5)); 
     }
 
     animate(play) {
-        console.log(play)
         if(this.currentItem.session.hasAnim) {
             switch(play) {
                 case 0:
