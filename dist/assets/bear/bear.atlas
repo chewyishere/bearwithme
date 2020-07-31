@@ -1,0 +1,202 @@
+
+bear.png
+size: 1902,521
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm_L
+  rotate: true
+  xy: 751, 116
+  size: 108, 142
+  orig: 109, 146
+  offset: 0, 2
+  index: -1
+arm_R
+  rotate: true
+  xy: 895, 116
+  size: 108, 142
+  orig: 109, 146
+  offset: 1, 2
+  index: -1
+balloon
+  rotate: true
+  xy: 1043, 345
+  size: 174, 578
+  orig: 174, 579
+  offset: 0, 0
+  index: -1
+beer
+  rotate: true
+  xy: 2, 2
+  size: 68, 200
+  orig: 68, 200
+  offset: 0, 0
+  index: -1
+body
+  rotate: true
+  xy: 561, 226
+  size: 293, 480
+  orig: 298, 491
+  offset: 0, 11
+  index: -1
+eye_highlight_L
+  rotate: false
+  xy: 491, 26
+  size: 41, 37
+  orig: 41, 38
+  offset: 0, 1
+  index: -1
+eye_highlight_R
+  rotate: true
+  xy: 1865, 162
+  size: 38, 34
+  orig: 38, 34
+  offset: 0, 0
+  index: -1
+eyebrow
+  rotate: false
+  xy: 548, 72
+  size: 176, 21
+  orig: 176, 21
+  offset: 0, 0
+  index: -1
+eyes
+  rotate: false
+  xy: 204, 22
+  size: 165, 48
+  orig: 165, 48
+  offset: 0, 0
+  index: -1
+eyes_closed
+  rotate: false
+  xy: 548, 95
+  size: 180, 21
+  orig: 181, 22
+  offset: 0, 0
+  index: -1
+eyes_sad
+  rotate: true
+  xy: 1865, 202
+  size: 183, 35
+  orig: 183, 41
+  offset: 0, 6
+  index: -1
+fish
+  rotate: true
+  xy: 1043, 8
+  size: 335, 389
+  orig: 413, 420
+  offset: 0, 31
+  index: -1
+items/back_ear_L
+  rotate: false
+  xy: 978, 52
+  size: 48, 62
+  orig: 49, 62
+  offset: 0, 0
+  index: -1
+items/back_ear_R
+  rotate: false
+  xy: 978, 12
+  size: 36, 38
+  orig: 36, 39
+  offset: 0, 0
+  index: -1
+items/back_face
+  rotate: false
+  xy: 865, 11
+  size: 111, 103
+  orig: 114, 104
+  offset: 0, 1
+  index: -1
+items/back_hair
+  rotate: false
+  xy: 371, 2
+  size: 118, 61
+  orig: 121, 79
+  offset: 2, 16
+  index: -1
+items/bedsheet
+  rotate: true
+  xy: 1434, 14
+  size: 329, 287
+  orig: 371, 287
+  offset: 1, 0
+  index: -1
+items/chair_back
+  rotate: true
+  xy: 2, 231
+  size: 288, 557
+  orig: 288, 566
+  offset: 0, 0
+  index: -1
+items/guitar
+  rotate: true
+  xy: 2, 72
+  size: 157, 402
+  orig: 161, 439
+  offset: 0, 0
+  index: -1
+items/phone
+  rotate: false
+  xy: 548, 118
+  size: 201, 106
+  orig: 201, 106
+  offset: 0, 0
+  index: -1
+leg_L
+  rotate: true
+  xy: 1623, 387
+  size: 132, 277
+  orig: 139, 285
+  offset: 3, 1
+  index: -1
+leg_R
+  rotate: false
+  xy: 1723, 98
+  size: 140, 287
+  orig: 142, 287
+  offset: 1, 0
+  index: -1
+mouth_L
+  rotate: false
+  xy: 1723, 18
+  size: 42, 17
+  orig: 42, 17
+  offset: 0, 0
+  index: -1
+mouth_R
+  rotate: false
+  xy: 204, 3
+  size: 42, 17
+  orig: 42, 17
+  offset: 0, 0
+  index: -1
+mouth_sad
+  rotate: false
+  xy: 1623, 374
+  size: 89, 11
+  orig: 89, 11
+  offset: 0, 0
+  index: -1
+nose
+  rotate: false
+  xy: 1723, 37
+  size: 133, 59
+  orig: 134, 60
+  offset: 0, 1
+  index: -1
+nose_Top
+  rotate: false
+  xy: 730, 16
+  size: 133, 98
+  orig: 133, 112
+  offset: 0, 1
+  index: -1
+pizza
+  rotate: false
+  xy: 406, 65
+  size: 140, 164
+  orig: 140, 165
+  offset: 0, 0
+  index: -1
