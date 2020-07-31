@@ -104,7 +104,7 @@ const ITEMS = [
         name: 'pizza',
         avatarAnim: 'pizza',
         scene: 0,
-        itemPos: {x: 0.6, y: 0.85},
+        itemPos: {x: 0.59, y: 0.85},
         avatarPos: {x: 0.55, y: 0.75},
         hitAreaOffset:  [-80, -70, 150, 250],
         size: 0.8,

@@ -93,18 +93,6 @@ export default class App extends PIXI.Application {
         });
     }
 
-    // openDoor(e) {
-    //     if (directions.left && this.onView < 1) {
-    //         this.onView += 1;
-    //         gsap.to(this.view, {x: -x, duration: 1.2, ease: "elastic.out(0.7, 0.6)"});
-    //     }
-        
-    //     if (directions.right && this.onView > 0) {
-    //         this.onView -= 1;
-    //         gsap.to(this.view, {x: -x, duration: 1.2, ease: "elastic.out(0.7, 0.6)"});
-    //     }
-    // }
-
     getPos(item, posName){
         let pos = {
             x: this.renderer.width * item[posName].x,
@@ -185,7 +173,7 @@ export default class App extends PIXI.Application {
             item.setPos(itemPos);
             item.setSize(itemSize);
         });
-        this.bear.setHitArea(this.getCurAvatarPos, this.currentItem.session.hitAreaOffset);
+        this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.session.hitAreaOffset);
         }
     }
 

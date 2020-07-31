@@ -7,7 +7,7 @@ export default class Item extends PIXI.Container {
         this._item.position = pos;
         this._item.scale.set(size)
         this._item.anchor.set(item.anchor)
-        this._item.interactive = true;
+        this._item.interactive = item.clickable;
         this._item.buttonMode = true;
         this.name = item.name;
         this.interaction = item.interaction;
@@ -32,7 +32,6 @@ export default class Item extends PIXI.Container {
         this.subAsset.position = this._item.position;
         this.subAsset.alpha = 0;
         this.subAsset.scale = this._item.scale;
-       // this.subAsset.scale.set(this._item.scale)
         this.addChild(this.subAsset);
         this.loadCB();
     }
