@@ -86,10 +86,10 @@ export default class App extends PIXI.Application {
     onBearLoaded(loader, res) {
         this.bear = new Bear(
             res.bears.spineData,
-            this.animate.bind(this)
+            this.animate.bind(this),
+            this.sendLove.bind(this),
         );
-       // this.view.addEventListener('tap', this.openDoor.bind(this));
-       this.bear.filters = [this.oldFilmFilter, this.shadowFilter];
+        this.bear.filters = [this.shadowFilter];
         this.getAsset();
     }
         
@@ -111,12 +111,11 @@ export default class App extends PIXI.Application {
         this.checkReachedItem(true)
         this.bear.setPos(this.getCurAvatarPos()); 
         this.bear.setSize(this.getSize(0.5)); 
-        this.stage.addChild(this.bear) 
         this.items.forEach(_item => {
             _item.addShadow();
             this.scenes[_item.scene].addChild(_item);
         });
-        
+        this.scenes[0].addChild(this.bear);
         this.updateShadow(false);
         this.start();
     }
@@ -184,6 +183,7 @@ export default class App extends PIXI.Application {
         this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset); 
         this.updateShadow(false);
     }
+
     onResize() {
         if(window.innerWidth > 1024 && window.innerWidth < 1900){
             this.renderer.resize(window.innerWidth, window.innerHeight)
@@ -222,6 +222,14 @@ export default class App extends PIXI.Application {
                     this.currentItem.play('active');
             }
         };
+    }
+
+    sendLove(){
+        // gsap.to(this.oldFilmFilter, { noise: 0, scratch: 0, vignetting: 0,sepia: 0, duration: 1, 
+        //     onComplete: () => {
+        //         console.log('noise gone')
+        //     }
+        // });
     }
 
     shadowTicker() {

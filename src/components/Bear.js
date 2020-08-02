@@ -1,8 +1,9 @@
 import * as PIXI from 'pixi.js';
+import { GlowFilter } from 'pixi-filters';
 import gsap from 'gsap';
 
 export default class Bear extends PIXI.Container {
-    constructor(spineData, lookCB) {
+    constructor(spineData, lookCB, loveCB) {
         super()
 
         this.bear = new PIXI.spine.Spine(spineData)
@@ -18,12 +19,15 @@ export default class Bear extends PIXI.Container {
 
         this.hitSqr = new PIXI.Graphics(0,0,1,1);
         this.addChild(this.hitSqr)
-
+        this.glowFilter = new GlowFilter();
         this.hitSqr.on('pointerover',this.look.bind(this));
+        this.hitSqr.on('pointerdown', this.onClick.bind(this));
         this.hitSqr.on('pointerout', this.lookAway.bind(this));
         this.lookCB = lookCB;
+        this.loveCB = loveCB;
 
     }
+
     move(pos, _itemCB){
         this.setCurrentAnim('walk');
         gsap.to(this.bear.position, { x: pos.x, y:pos.y, duration: 1, 
@@ -64,6 +68,7 @@ export default class Bear extends PIXI.Container {
 
     look(){
         if(this.currentAnim !== 'walk'){
+            this.filters.unshift(this.glowFilter);
             this.bear.stateData.setMix(this.currentAnim, this.currentAnim + '-look', 0.1);
             this.bear.stateData.setMix(this.currentAnim + '-look', this.currentAnim, 0.1);
             this.bear.state.setAnimation(0, this.currentAnim + '-look', true);
@@ -73,9 +78,14 @@ export default class Bear extends PIXI.Container {
 
     lookAway(){
         if(this.currentAnim !== 'walk'){
+            this.filters.shift(this.glowFilter);
             this.setCurrentAnim(this.currentAnim);
             this.lookCB(0);
         }
+    }
+
+    onClick(){
+        this.loveCB();
     }
 
 }

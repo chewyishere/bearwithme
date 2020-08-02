@@ -72,8 +72,6 @@ export default class Item extends PIXI.Container {
     }
 
     play(track){
-        console.log(this.name + ' is playing:' + track)
-        console.log(this.subAsset)
         if(this.subAsset){
             this.subAsset.alpha = 1;
             this.subAsset.state.setAnimation(0, track, true);
@@ -81,7 +79,6 @@ export default class Item extends PIXI.Container {
         
     }
     stop(){
-        console.log(this.name + 'stops')
         if(this.subAsset){
             this.subAsset.alpha = 0;
             this.subAsset.state.setAnimation(0, 'active-look', true);
