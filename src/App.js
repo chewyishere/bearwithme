@@ -23,8 +23,7 @@ export default class App extends PIXI.Application {
 
         this.ticker = PIXI.Ticker.shared;
         this.scenes = [new PIXI.Container(), new PIXI.Container()];
-        this.shadowFilter = new PIXI.Filter(shadowVert, shadowFrag);
-        this.shadowFilter.padding = 500;
+     
         this.init();
 
         this.getBear = this.getBear.bind(this);
@@ -37,8 +36,22 @@ export default class App extends PIXI.Application {
         window.addEventListener('resize', this.onResize.bind(this))
         this.setupWorld();
         this.getBear()
-        const filter = new OldFilmFilter();
-        this.filters = [filter]
+        this.initFilters();
+    }
+
+    initFilters(){
+        this.shadowFilter = new PIXI.Filter(shadowVert, shadowFrag);
+        this.shadowFilter.padding = 500;
+        this.oldFilmFilter = new OldFilmFilter({
+            sepia: 1,
+            noise: 0.11,
+            vignetting: .35,
+            scratch: 0.3,
+          }, 0)
+        this.scenes[0].filters = [this.oldFilmFilter]
+        this.ticker.add(()=>{
+            this.oldFilmFilter.seed = Math.random()
+        })
     }
 
     setupWorld() {
@@ -76,7 +89,7 @@ export default class App extends PIXI.Application {
             this.animate.bind(this)
         );
        // this.view.addEventListener('tap', this.openDoor.bind(this));
-       this.bear.filters = [this.shadowFilter];
+       this.bear.filters = [this.oldFilmFilter, this.shadowFilter];
         this.getAsset();
     }
         
@@ -214,7 +227,6 @@ export default class App extends PIXI.Application {
     shadowTicker() {
         this.shadowFilter.uniforms.floorY =  this.bear.bear.toGlobal(new PIXI.Point(0, 0)).y + this.getShadowY(0.3)
     }
-
 
     getCurAvatarPos(){
         return this.getPos(this.currentItem, 'avatarPos');
