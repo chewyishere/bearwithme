@@ -1,4 +1,6 @@
 import * as PIXI from 'pixi.js';
+import { shadowVert, shadowFrag} from './glsl/shadow'
+
 export default class Item extends PIXI.Container {
     constructor(item, pos, size, index, _tapcb, _loadcb) {
         super()
@@ -19,10 +21,22 @@ export default class Item extends PIXI.Container {
         this.loadSubAssets = this.loadSubAssets.bind(this)
         this.setActive = this.setActive.bind(this);
         this.loadCB = _loadcb;
+        this.shadow = new PIXI.Filter(shadowVert, shadowFrag);
 
         if(this.clickable){
             this._item.on('pointerdown',this.onClick.bind(this));
         }
+    }
+
+    addShadow(){
+        this.shadow.padding = 200;
+        this.shadow.uniforms.shadowDirection = this.itemShadowDir;
+        this.updateShadowY();
+        this.filters = [this.shadow];
+    }
+
+    updateShadowY(){
+        this.shadow.uniforms.floorY  = this._item.toGlobal(new PIXI.Point(0, 0)).y + this._item.height * this.itemShadowY;
     }
 
     loadSubAssets(loader, res) {

@@ -3,6 +3,9 @@ import gsap from 'gsap';
 import {ITEMS} from './json/items';
 import Bear from './components/Bear';
 import Item from './components/Item';
+import { shadowVert, shadowFrag} from './components/glsl/shadow'
+import { OldFilmFilter } from 'pixi-filters';
+
 
 export default class App extends PIXI.Application {
     constructor(){
@@ -15,20 +18,27 @@ export default class App extends PIXI.Application {
 
         this.items = [];
         this.prevAnim = 0;
-        this.currentItem = {};
+        this.currentItem = null;
+        this.currentIdx = 0;
 
         this.ticker = PIXI.Ticker.shared;
         this.scenes = [new PIXI.Container(), new PIXI.Container()];
+        this.shadowFilter = new PIXI.Filter(shadowVert, shadowFrag);
+        this.shadowFilter.padding = 500;
         this.init();
 
         this.getBear = this.getBear.bind(this);
         this.walkBear = this.walkBear.bind(this);
+        
     }
 
     init() {
+        this.stop();
         window.addEventListener('resize', this.onResize.bind(this))
         this.setupWorld();
         this.getBear()
+        const filter = new OldFilmFilter();
+        this.filters = [filter]
     }
 
     setupWorld() {
@@ -66,6 +76,7 @@ export default class App extends PIXI.Application {
             this.animate.bind(this)
         );
        // this.view.addEventListener('tap', this.openDoor.bind(this));
+       this.bear.filters = [this.shadowFilter];
         this.getAsset();
     }
         
@@ -89,29 +100,30 @@ export default class App extends PIXI.Application {
         this.bear.setSize(this.getSize(0.5)); 
         this.stage.addChild(this.bear) 
         this.items.forEach(_item => {
+            _item.addShadow();
             this.scenes[_item.scene].addChild(_item);
         });
+        
+        this.updateShadow(false);
+        this.start();
     }
 
-    getPos(item, posName){
-        let pos = {
-            x: this.renderer.width * item[posName].x,
-            y: this.renderer.height * item[posName].y
-        };
-        return pos;
-    }
-
-    getSize(size){
-        return this.renderer.width * size * 0.0007;
+    updateShadow(walk){
+       if (walk){
+            this.shadowFilter.uniforms.shadowDirection = [0, -0.3]
+             this.ticker.add(this.shadowTicker, this);
+       } else{
+            this.ticker.remove(this.shadowTicker, this);
+            this.shadowFilter.uniforms.shadowDirection = this.currentItem.avatarShadowDir;
+            this.shadowFilter.uniforms.floorY =  this.getCurAvatarPos().y + this.getShadowY(this.currentItem.avatarShadowY);
+       };
     }
 
     updateSession(item){
         this.items.forEach( (_item, _idx) => {
            if (_item.name === item.session) {
-                this.currentItem = {
-                    idx: _idx,
-                    session: _item,
-                };
+                this.currentItem = _item;
+                this.currentIdx = _idx;
            }
         });
     }
@@ -130,10 +142,11 @@ export default class App extends PIXI.Application {
         if(idx === 2) {
            this.openDoor();
         } else {
+            this.updateShadow(true);
             this.toggleItemAnim(1);
             this.prevAnim = 0;
             this.updateSession(ITEMS[idx]);
-            this.bear.move(this.getPos(this.currentItem.session, 'avatarPos'), this.checkReachedItem.bind(this))
+            this.bear.move(this.getPos(this.currentItem, 'avatarPos'), this.checkReachedItem.bind(this))
         }
     }
 
@@ -142,58 +155,87 @@ export default class App extends PIXI.Application {
     }
     
     toggleItemAnim(val){
-        this.currentItem.session.setActive(val);
-        if (this.currentItem.session.interaction === 'fade'){
-            gsap.to(this.currentItem.session, {alpha: val, duration: 0.2});    
+        this.currentItem.setActive(val);
+        if (this.currentItem.interaction === 'fade'){
+            gsap.to(this.currentItem, {alpha: val, duration: 0.2});    
         }
-        if (this.currentItem.session.hasAnim === true){
-            let fadeItem = this.items[this.currentItem.idx + 1];
+        if (this.currentItem.hasAnim === true){
+            let fadeItem = this.items[this.currentIdx + 1];
             gsap.to(fadeItem, {alpha: val, duration: 0.2});  
             this.animate(val); 
         }
     }
     checkReachedItem(init){
         this.toggleItemAnim(0);
-        this.bear.setCurrentAnim(this.currentItem.session.avatarAnim, init)
-        this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.session.hitAreaOffset); 
+        this.bear.setCurrentAnim(this.currentItem.avatarAnim, init)
+        this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset); 
+        this.updateShadow(false);
     }
-
-    getCurAvatarPos(){
-        return this.getPos(this.currentItem.session, 'avatarPos');
-    }
-
     onResize() {
         if(window.innerWidth > 1024 && window.innerWidth < 1900){
-        this.renderer.resize(window.innerWidth, window.innerHeight)
-        this.bear.setPos(this.getCurAvatarPos()); 
-        this.bear.setSize(this.getSize(0.5)); 
-        this.items.forEach(item => {
-            let itemPos = this.getPos(item, 'itemPos');
-            let itemSize = this.getSize(item.size);
-            item.setPos(itemPos);
-            item.setSize(itemSize);
-        });
-        this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.session.hitAreaOffset);
+            this.renderer.resize(window.innerWidth, window.innerHeight)
+            this.bear.setPos(this.getCurAvatarPos()); 
+            this.bear.setSize(this.getSize(0.5)); 
+            this.items.forEach(item => {
+                let itemPos = this.getPos(item, 'itemPos');
+                let itemSize = this.getSize(item.size);
+                item.setPos(itemPos);
+                item.setSize(itemSize);
+                item.updateShadowY();
+            });
+            this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset);
+            this.updateShadow();
         }
     }
 
+    addItemShadow(dir, y){
+        this.shadowFilter.uniforms.shadowDirection = dir;
+        this.shadowFilter.uniforms.floorY = y;
+    }
+
     animate(play) {
-        if(this.currentItem.session.hasAnim) {
+        if(this.currentItem.hasAnim) {
             switch(play) {
                 case 0:
-                    this.currentItem.session.play('active');    
+                    this.currentItem.play('active');    
                 break;
                 case 1:
-                    this.currentItem.session.stop();
+                    this.currentItem.stop();
                 break;
                 case 2:
-                    this.currentItem.session.play('active-look');
+                    this.currentItem.play('active-look');
                 break;
                 default:
-                    this.currentItem.session.play('active');
+                    this.currentItem.play('active');
             }
         };
     }
+
+    shadowTicker() {
+        this.shadowFilter.uniforms.floorY =  this.bear.bear.toGlobal(new PIXI.Point(0, 0)).y + this.getShadowY(0.3)
+    }
+
+
+    getCurAvatarPos(){
+        return this.getPos(this.currentItem, 'avatarPos');
+    }
+
+    getPos(item, posName){
+        let pos = {
+            x: this.renderer.width * item[posName].x,
+            y: this.renderer.height * item[posName].y
+        };
+        return pos;
+    }
+
+    getShadowY(y){
+        return this.bear.height * y
+    }
+
+    getSize(size){
+        return this.renderer.width * size * 0.0007;
+    }
+
 
 }
 
