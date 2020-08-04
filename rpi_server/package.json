@@ -1,0 +1,19 @@
+{
+  "name": "rpi_server",
+  "version": "1.0.0",
+  "description": "Raspberry pi server that updates servo based on API calls.",
+  "main": "app.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "serialport": "^9.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Stephen Duke",
+  "license": "ISC"
+}

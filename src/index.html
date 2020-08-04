@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+</head>
+
+<body>
+    <script>
+        let user = null;
+        $.ajax({
+            url: 'https://randomuser.me/api/',
+            dataType: 'json',
+            success: function (data) {
+                user = data;
+            }
+        });
+        const socket = io();
+        setTimeout(function () {
+            socket.emit('new hug', { name: user.results[0].name, location: user.results[0].email });
+        }, 1000);
+    </script>
+</body>
+
+</html>
