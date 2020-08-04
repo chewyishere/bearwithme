@@ -5,23 +5,22 @@ const port = process.env.PORT || 8000;
 const server = http.createServer(app);
 const io = socketIO(server);
 server.listen(port);
-var database = null;
-var databasePromise = require('./database');
-databasePromise.then(function (db) {
-    database = db;
-})
-
+const dbClient = require('./database');
 
 // Handle Socket Events
 io.on('connection', function (socket) {
     socket.on('new hug', function (data) {
-        if (!database) {
+        if (!dbClient.connectedDB) {
             console.log("nodb");
             socket.emit('err', "Database is not running");
         } else {
-            var dbo = database.db("IOT");
+            var dbo = dbClient.connectedDB.db("IOT");
             dbo.collection("bearWithMe").insertOne(data, function (err, res) {
-                if (err) throw err;
+                try {
+                    if (err) throw (err);
+                } catch (err) {
+                    console.log(err);
+                }
             });
         }
     })

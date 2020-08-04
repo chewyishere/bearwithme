@@ -1,11 +1,7 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-var database = null;
-const databasePromise = require('../../database.js');
-databasePromise.then(function (db) {
-    database = db;
-});
+var dbClient = require('../../database');
 
 router.get('/', (req, res, next) => {
     res.status(200).json({
@@ -23,15 +19,12 @@ router.post('/', (req, res, next) => {
 router.get('/:productId', (req, res, next) => {
     const id = req.params.productId;
     if (id === 'bearwithme') {
-        var dbo = database.db("IOT");
+        var dbo = dbClient.connectedDB.db("IOT");
         let arr = dbo.collection("bearWithMe").find().toArray();
         arr.then(function (result) {
-            // console.log(result);
             res.status(200).json(result)
         })
-
     }
-
 })
 
 module.exports = router;
