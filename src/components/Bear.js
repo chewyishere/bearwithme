@@ -25,7 +25,6 @@ export default class Bear extends PIXI.Container {
         this.hitSqr.on('pointerout', this.lookAway.bind(this));
         this.lookCB = lookCB;
         this.loveCB = loveCB;
-
     }
 
     move(pos, _itemCB){

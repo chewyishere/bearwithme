@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import {ITEMS} from './json/items';
 import Bear from './components/Bear';
 import Item from './components/Item';
+import Form from './components/Form';
 import { shadowVert, shadowFrag} from './components/glsl/shadow'
 import { OldFilmFilter } from 'pixi-filters';
 
@@ -25,6 +26,7 @@ export default class App extends PIXI.Application {
         this.scenes = [new PIXI.Container(), new PIXI.Container()];
      
         this.init();
+        this.form = new Form();
 
         this.getBear = this.getBear.bind(this);
         this.walkBear = this.walkBear.bind(this);
@@ -225,11 +227,7 @@ export default class App extends PIXI.Application {
     }
 
     sendLove(){
-        // gsap.to(this.oldFilmFilter, { noise: 0, scratch: 0, vignetting: 0,sepia: 0, duration: 1, 
-        //     onComplete: () => {
-        //         console.log('noise gone')
-        //     }
-        // });
+       this.form.show();
     }
 
     shadowTicker() {

@@ -1,0 +1,110 @@
+
+@font-face{
+    font-family: "Sniglet";
+    src: url("fonts/Sniglet-Regular.ttf") format('truetype');
+    src: url("fonts/Sniglet-Regular.woff") format('woff');
+    src: url("fonts/Sniglet-Regular.woff2") format('woff2');
+}
+
+body,html {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        font-family: 'Sniglet', cursive;
+    }
+
+    canvas {
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
+
+    #formContainer {
+        position: absolute;
+        background: oldlace;
+        margin: auto;
+        width: 60vh;
+        max-width: 500px;
+        height: 450px;
+        z-index: 1;
+        border-radius: 20px;
+        justify-content: center;
+        display: flex;
+        flex-flow: wrap;
+        transform-origin: center;
+        transform: rotate3d(0,0,1, -30deg) translateY(300%);
+        opacity: 0;
+    }
+
+    main{
+        position: absolute;
+        margin: auto;
+        justify-content: center;
+        display: flex;
+    }
+
+    #message-form,
+    #name-form {
+        font-family: 'Sniglet', cursive;
+        border: none;
+    }
+
+    #message-form {
+        position: relative;
+        margin: auto;
+        margin-top: 20px;
+        width: 80%;
+    }
+
+    #message {
+        width: 100%;
+        height: 250px;
+    }
+
+    #name-form{
+        font-family: 'Sniglet', cursive;
+        position: absolute;
+        margin: 0 10%;
+        bottom: 25%;
+        left: 0;
+    }
+
+    textarea, input{
+        font-weight: normal;
+        background: transparent;
+        font-family: 'Sniglet', sans-serif;
+        border: none;
+        outline: none;
+        padding: 10px;
+        color: #676767;
+        transition: border 0.5s;
+        -webkit-transition: border 0.5s;
+        -moz-transition: border 0.5s;
+        -o-transition: border 0.5s;
+        -webkit-box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        box-sizing:border-box;
+    }
+
+    textarea {
+        line-height: 3rem;
+        font-size: 2rem;
+    }
+    input{
+        font-size: 1.3rem;
+    }
+
+    #cta{
+        border: 3px #D8A028 solid;
+        border-radius: 20px;
+        bottom: 0;
+        margin: auto;
+        background: #FBE0A6;
+        transition: all 0.3s;
+    }
+    
+    #cta:hover{
+        border: 3px #FF7D76 solid;
+        background: #FFBCB9;
+        transition: all 0.3s;
+    }
