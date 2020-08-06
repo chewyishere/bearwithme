@@ -35,7 +35,7 @@ class Database extends MongoClient {
     }
 }
 
-const url = "mongodb+srv://bearwithme:whatwouldyoudoifyoursonwasathome@iot-dewy.80yug.mongodb.net/iot.bearWithMe?retryWrites=true&w=majority";
+const url = "";
 let dbClient = new Database(url);
 
 module.exports = dbClient;

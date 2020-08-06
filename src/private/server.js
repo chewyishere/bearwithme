@@ -11,11 +11,10 @@ const dbClient = require('./database');
 io.on('connection', function (socket) {
     socket.on('new hug', function (data) {
         if (!dbClient.connectedDB) {
-            console.log("nodb");
-            socket.emit('err', "Database is not running");
+            socket.emit('err', "Database is not connected, cannot add");
         } else {
             var dbo = dbClient.connectedDB.db("IOT");
-            dbo.collection("bearWithMe").insertOne(data, function (err, res) {
+            dbo.collection("bearwithme").insertOne(data, function (err, res) {
                 try {
                     if (err) throw (err);
                 } catch (err) {

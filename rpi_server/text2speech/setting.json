@@ -1,0 +1,15 @@
+{
+  "audioConfig": {
+    "audioEncoding": "LINEAR16",
+    "pitch": -6,
+    "speakingRate": 0.6
+  },
+  "input": {
+    "text": "It's me, Tommy. Ha ha ha ha ha"
+  },
+  "voice": {
+    "languageCode": "en-US",
+    "name": "en-AU-Wavenet-D"
+  },
+  "outputFileName": "output1.wav"
+}
