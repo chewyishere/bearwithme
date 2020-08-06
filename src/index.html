@@ -7,18 +7,15 @@
 
 <body>
     <script>
-        let user = null;
-        $.ajax({
-            url: 'https://randomuser.me/api/',
-            dataType: 'json',
-            success: function (data) {
-                user = data;
-            }
+
+        let socket = io();
+
+        socket.emit('get hugs');
+
+        socket.on('hugs', function (hugs) {
+            console.log(hugs);
         });
-        const socket = io();
-        setTimeout(function () {
-            socket.emit('new hug', { name: user.results[0].name, location: user.results[0].email });
-        }, 1000);
+
     </script>
 </body>
 
