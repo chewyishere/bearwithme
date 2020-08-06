@@ -10,10 +10,20 @@
 
         let socket = io();
 
+        // sends data to the server and is uploaded to the database.
+        socket.emit('new hug', { name: "Stephen", message: "Chewy's cute", email: "stephen@stephen.com" })
+
+        // requests all data from the server
         socket.emit('get hugs');
 
+        // message when request for all data from the server has been received.
         socket.on('hugs', function (hugs) {
             console.log(hugs);
+        });
+
+        // error handling from server
+        socket.on('err', function (msg) {
+            console.log(msg);
         });
 
     </script>
