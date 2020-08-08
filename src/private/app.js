@@ -14,7 +14,7 @@ app.use('/public', express.static(path.join(__dirname, '../public')));
 app.use('/json', express.static('/json'))
 
 app.get('/', function (request, response) {
-    response.sendFile(path.join(__dirname, '../index.html'));
+    response.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 app.use((req, res, next) => {
