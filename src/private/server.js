@@ -23,6 +23,7 @@ io.on('connection', function (socket) {
             });
         }
     });
+
     socket.on('get hugs', function () {
         if (!dbClient.connectedDB) {
             socket.emit('err', "Database is not connected, cannot add");
