@@ -1,0 +1,20 @@
+{
+  "name": "mamas-boy",
+  "version": "1.0.0",
+  "description": "A Node.js RESTful API for interacting with IOT stepper motor.",
+  "main": "private/app.js",
+  "scripts": {
+    "start": "nodemon private/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stephen Duke",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "socket.io": "^2.3.0"
+  }
+}
