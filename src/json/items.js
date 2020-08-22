@@ -194,4 +194,18 @@ const ITEMS = [
 
 ];
 
-export {ITEMS}
+
+const OTHERS = [
+    {
+        name:'letter',
+        itemShadowDir: [-0.02, 1.02],
+        itemShadowY: 1.1,
+        scene: 0,
+        itemPos: {x: 0.12, y: 0.09},
+        size: 0.19,
+        zOrder: 0,
+        anchor: 0,
+    }
+]
+    
+export {ITEMS, OTHERS}

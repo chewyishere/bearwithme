@@ -9,14 +9,25 @@
     </head>
     <body>
         <main>
-            <form id="formContainer">
-                <div class="formgroup" id="message-form">
-                    <label for="fmessage"></label><br>
-                    <textarea id="fmessage" name="fmessage" placeholder="something nice to say?  It's optional!"></textarea><br>
+            <div id="closeArea"></div>
+            <form class="formContainer">
+                <div class="formgroup message-form">
+                    <label for="fmessage"></label>
+                    <textarea class="message-input" name="fmessage" placeholder="something nice to say?  It's optional!"></textarea>
                 </div>
-                <div class="formgroup" id="name-form">
-                    <label for="fname"></label><br>
-                    <input type="text" id="fname" name="fname"  placeholder="name (optional)"><br>
+                <div class="names">
+                    <div class="formgroup name-form">
+                        <label for="fname"></label>
+                        <input type="text" class="name-form-input" name="fname_first"  placeholder="first name">
+                    </div>
+                    <div class="formgroup name-form">
+                        <label for="fname"></label>
+                        <input type="text" class="name-form-input" name="fname_last"  placeholder="last name">
+                    </div>
+                </div>
+                <div class="formgroup email-form">
+                    <label for="fname"></label>
+                    <input type="text" class="email-form-input" name="femail" placeholder="email">
                 </div>
 
                 <input id="cta" type="submit" value="send a hug!" onsubmit= return false />

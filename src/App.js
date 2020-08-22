@@ -1,9 +1,10 @@
 import * as PIXI from 'pixi.js';
 import gsap from 'gsap';
-import {ITEMS} from './json/items';
+import {ITEMS, OTHERS} from './json/items';
 import Bear from './components/Bear';
 import Item from './components/Item';
 import Form from './components/Form';
+import Letter from './components/Letter';
 import { shadowVert, shadowFrag} from './components/glsl/shadow'
 import { OldFilmFilter } from 'pixi-filters';
 
@@ -18,6 +19,7 @@ export default class App extends PIXI.Application {
         document.body.appendChild(this.view);
 
         this.items = [];
+        this.letters = [];
         this.prevAnim = 0;
         this.currentItem = null;
         this.currentIdx = 0;
@@ -26,11 +28,8 @@ export default class App extends PIXI.Application {
         this.scenes = [new PIXI.Container(), new PIXI.Container()];
      
         this.init();
-        this.form = new Form();
-
         this.getBear = this.getBear.bind(this);
         this.walkBear = this.walkBear.bind(this);
-        
     }
 
     init() {
@@ -39,6 +38,7 @@ export default class App extends PIXI.Application {
         this.setupWorld();
         this.getBear()
         this.initFilters();
+        this.form = new Form(this.setupLetters.bind(this));
     }
 
     initFilters(){
@@ -65,6 +65,36 @@ export default class App extends PIXI.Application {
             this.stage.addChild(scene)
         });
     }
+
+    setupLetters(msgs, init){
+        console.log(msgs)
+        console.log(init)
+        let _item = OTHERS[0];
+        let pos = this.getPos(_item, 'itemPos');
+        let size = this.getSize(_item.size);
+        let color =  Math.random() * 0xFFFFFF;
+
+        if(init === true){
+            msgs.forEach((_msg,idx)=>{
+                let l = new Letter(_item, pos, size, idx, color, _msg, this.openLetter.bind(this)); 
+                this.letters.push(l);
+                this.form.addLetterToDom(_msg);
+            })
+        } else {
+            let _idx = this.letters.length;
+            let l = new Letter(_item, pos, size, _idx, color, msgs, this.openLetter.bind(this));
+            this.letters.push(l);
+            l.addShadow();
+            this.scenes[_item.scene].addChild(l);
+            this.form.addLetterToDom(msgs);
+        }
+      
+    }
+
+    openLetter(idx){
+        this.form.showOldLetter(idx);
+    }
+
     getStartIdx(){
         let idx = 5;
         let h = new Date().getHours();
@@ -114,6 +144,10 @@ export default class App extends PIXI.Application {
         this.bear.setPos(this.getCurAvatarPos()); 
         this.bear.setSize(this.getSize(0.5)); 
         this.items.forEach(_item => {
+            _item.addShadow();
+            this.scenes[_item.scene].addChild(_item);
+        });
+        this.letters.forEach(_item => {
             _item.addShadow();
             this.scenes[_item.scene].addChild(_item);
         });
@@ -190,7 +224,8 @@ export default class App extends PIXI.Application {
         if(window.innerWidth > 1024 && window.innerWidth < 1900){
             this.renderer.resize(window.innerWidth, window.innerHeight)
             this.bear.setPos(this.getCurAvatarPos()); 
-            this.bear.setSize(this.getSize(0.5)); 
+            this.bear.setSize(this.getSize(0.5));
+
             this.items.forEach(item => {
                 let itemPos = this.getPos(item, 'itemPos');
                 let itemSize = this.getSize(item.size);
@@ -198,6 +233,14 @@ export default class App extends PIXI.Application {
                 item.setSize(itemSize);
                 item.updateShadowY();
             });
+            
+            this.letters.forEach(item => {
+                let pos = this.getPos(item, 'itemPos');
+                let scale = this.getSize(item.size);
+                item.setTransform(pos, scale)
+                item.updateShadowY();
+            });
+
             this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset);
             this.updateShadow();
         }
@@ -239,11 +282,17 @@ export default class App extends PIXI.Application {
     }
 
     getPos(item, posName){
-        let pos = {
-            x: this.renderer.width * item[posName].x,
-            y: this.renderer.height * item[posName].y
-        };
-        return pos;
+        if (posName){
+            return {
+                x: this.renderer.width * item[posName].x,
+                y: this.renderer.height * item[posName].y
+            };
+        } else {
+            return {
+                x: this.renderer.width * item.x,
+                y: this.renderer.height * item.y
+            }
+        }
     }
 
     getShadowY(y){

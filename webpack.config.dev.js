@@ -1,12 +1,13 @@
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
 module.exports = {
     mode: 'development',
-    devServer: { 
+    devServer: {  
         contentBase: 'dist',
-        port: 3000
+        port: 3000,
     },
     devtool: 'inline-source-map',
     plugins: [
