@@ -51,7 +51,6 @@ const updateStatus = () => {
     axios.get('http://localhost:8000/products/bearwithme/hasPlayed/false')
         .then((res) => {
             messages = res.data;
-            // console.log(res.data);
             setNextMessage();
         })
         .catch((error) => {
@@ -74,4 +73,3 @@ setInterval(function () {
         updateStatus();
     }
 }, 5000);
-
