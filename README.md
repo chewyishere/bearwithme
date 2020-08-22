@@ -1,6 +1,6 @@
 # Get and Post
 
-URL: http://ec2-34-239-249-211.compute-1.amazonaws.com:8000/products/bearwithme
+URL: iot.dukefromearth.com/products/bearwithme
 
 # Format for Post
 
