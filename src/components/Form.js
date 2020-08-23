@@ -8,15 +8,60 @@ export default class Form {
         this.form = document.querySelector("form");
         this.form.addEventListener("submit", this.onSubmit.bind(this));
         this.closeArea = document.getElementById("closeArea");
+        this.submitBTN = document.getElementById("submitCTA");
+        this.info = document.getElementById("info");
+        this.close = document.getElementById("close");
+        this.chat = document.getElementById("chat");
         this.closeArea.addEventListener("click", this.onCloseLetter.bind(this));
+        this.close.addEventListener("click", this.onCloseLetter.bind(this));
+        this.close.addEventListener("mouseover", this.onCloseHover.bind(this, true));
+        this.close.addEventListener("mouseout", this.onCloseHover.bind(this, false));
+        this.submitBTN.addEventListener("mouseover", this.onSendHover.bind(this,true));
+        this.submitBTN.addEventListener("mouseout", this.onSendHover.bind(this,false));
+
+        this.email = document.getElementById("info");
+        this.email.addEventListener("mouseover", this.onEmailHover.bind(this, true));
+        this.email.addEventListener("mouseout", this.onEmailHover.bind(this, false));
+
+        this.main = document.querySelector("main");
         this.getCB = _getCB;
         this.getLetters();
         this.letterDOMS = [];
         this.currentIdx = 0;
+        this.resetDOM();
+    }
+
+    resetDOM(){
+        gsap.to(this.info, {rotation: -40, x: '-100%'});
+        gsap.to(this.close, {rotation: 40, x: '100%'});
+    }
+
+    onSendHover(over){
+        if(over){
+            gsap.to(this.chat, {opacity: 1, duration: 0.3});
+            this.form.classList.add('formContainer--hover')
+        } else {
+            gsap.to(this.chat, {opacity: 0, duration: 0.3});
+            this.form.classList.remove('formContainer--hover')
+        }
+    }
+
+    onCloseHover(over){
+        if(over){
+            this.form.classList.add('formContainer--hoverno')
+        } else {
+            this.form.classList.remove('formContainer--hoverno')
+        }
+    }
+    onEmailHover(over){
+        if(over){
+            this.chat.classList.add('chat-email')
+        } else {
+            this.chat.classList.remove('chat-email')
+        }
     }
 
     addLetterToDom(msgs) {
-        console.log('addLetterToDom')
         let main = document.querySelector("main");
         let letterContainer = document.createElement("div");
         let msgField = document.createElement("p");
@@ -44,6 +89,7 @@ export default class Form {
     postLetters(msg) {
         axios.post(apiPath, msg)
           .then((res) => {
+              this.postComplete();
               this.getCB(msg, false);
           })
           .catch((error) => {
@@ -51,31 +97,68 @@ export default class Form {
           });
     }
 
+    emptyForm(){
+        this.form.elements["fname"].value = '';
+        this.form.elements["femail"].value = '';
+        this.form.elements["fmessage"].value='';
+        this.main.classList.remove('active')
+        this.chat.classList.remove('chat-thanks');
+        this.chat.classList.remove('chat-error');
+    }
+
+    postComplete(){
+        this.chat.classList.add('chat-thanks');
+        this.resetDOM();
+        gsap.to(this.form, {rotation: 10, y: "-150%", duration: 0.5, delay: 1, onComplete: ()=>{
+            gsap.set(this.chat, {opacity: 0});
+            this.emptyForm();
+        }});
+    }
+
+    /*
     showOldLetter(idx){
         this.currentIdx = idx;
-        this.closeArea.classList.add('closeArea-active')
+        this.main.classList.add('active')
+        
         gsap.fromTo(
             this.letterDOMS[idx], 
             {rotation: -10, x: 0, y: "300%", opacity: 1}, 
-            {rotation: -2,  x: 0, y: "30%", duration: 0.5}
+            {rotation: -2,  x: 0, y: "15%", duration: 0.5}
         );
     }
+     */
 
     onCloseLetter() {
-        let l = this.letterDOMS[this.currentIdx]; 
+       //let l = this.letterDOMS[this.currentIdx]; 
+       this.resetDOM();
         gsap.to(
-            l, 
-            {rotation: 10, x: 0, y: "-200%", opacity: 1}, 
+            this.form, 
+            {rotation: 10, x: 0, 
+                y: "300%", 
+                opacity: 1, 
+                duration: 0.8, 
+                onComplete: ()=>{
+                    this.main.classList.remove('active')
+                    this.emptyForm();
+                }
+            }, 
         );
-
-        this.closeArea.classList.remove('closeArea-active')
     }
+   
 
     show(){
+        this.main.classList.add('active')
+        gsap.to(this.info, {rotation: 0, x: '0%', duration: 0.5, delay: 1});
+        gsap.to(this.close, {rotation: 0, x: '0%', duration: 0.5, delay: 1});
         gsap.fromTo(
             this.form, 
             {rotation: -10, x: 0, y: "300%", opacity: 1}, 
-            {rotation: -2,  x: 0, y: "30%", duration: 0.5}
+            {rotation: -2,  x: 0, y: "15%", duration: 0.5}
+        );
+        gsap.fromTo(
+            this.form, 
+            {rotation: -10, x: 0, y: "300%", opacity: 1}, 
+            {rotation: -2,  x: 0, y: "15%", duration: 0.5}
         );
     }
 
@@ -87,17 +170,14 @@ export default class Form {
     onSubmit(e){
         e.preventDefault();
         let form = e.target;
-        gsap.to(this.form, {rotation: 10, y: "-150%", duration: 0.5});
-        let firstName = form.elements["fname_first"].value;
-        let lastName = form.elements["fname_last"].value;
+        let name = form.elements["fname"].value;
         let email = form.elements["femail"].value;
         let message = form.elements["fmessage"].value;
 
         let msg = {
             id: email,
             data: {
-                firstName: firstName,
-                lastName: lastName,
+                name: name,
                 email: email,
                 message: message,
             },
@@ -106,10 +186,15 @@ export default class Form {
         }
 
         if(this.validated(msg)){
+            this.chat.classList.remove('chat-error');
             this.postLetters(msg);
         } else {
-            console.log('error for email')
+            this.emailError();
         }
+    }
+    
+    emailError(){
+        this.chat.classList.add('chat-error');
     }
 
     setPos(pos){

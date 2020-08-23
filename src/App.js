@@ -67,8 +67,6 @@ export default class App extends PIXI.Application {
     }
 
     setupLetters(msgs, init){
-        console.log(msgs)
-        console.log(init)
         let _item = OTHERS[0];
         let pos = this.getPos(_item, 'itemPos');
         let size = this.getSize(_item.size);
@@ -92,7 +90,7 @@ export default class App extends PIXI.Application {
     }
 
     openLetter(idx){
-        this.form.showOldLetter(idx);
+       // this.form.showOldLetter(idx);
     }
 
     getStartIdx(){

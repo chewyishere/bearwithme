@@ -71,7 +71,7 @@ const ITEMS = [
         clickable: true,
         zOrder: 0,
         anchor: 0.5,
-        hitAreaOffset: [-220, -100, 300, 180],
+        hitAreaOffset: [-150, -100, 300, 180],
     },
     {
         session: 'guitar',

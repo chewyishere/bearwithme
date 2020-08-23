@@ -23,6 +23,14 @@ export default class Bear extends PIXI.Container {
         this.hitSqr.on('pointerover',this.look.bind(this));
         this.hitSqr.on('pointerdown', this.onClick.bind(this));
         this.hitSqr.on('pointerout', this.lookAway.bind(this));
+
+        this.hint = new PIXI.Sprite.from(`assets/bear/hint.png`);
+        this.hint.scale.set(0.6);
+        this.hint.anchor.x = 0;
+        this.hint.anchor.y = 1.2;
+        this.hint.alpha = 0;
+        this.addChild(this.hint)
+
         this.lookCB = lookCB;
         this.loveCB = loveCB;
     }
@@ -51,6 +59,8 @@ export default class Bear extends PIXI.Container {
         this.hitSqr.drawRect(avatarPos.x+offsetSq[0], avatarPos.y+offsetSq[1], offsetSq[2], offsetSq[3]);
         this.hitSqr.endFill();
         this.hitSqr.interactive = true;
+        this.hint.position.x = avatarPos.x+offsetSq[0]
+        this.hint.position.y = avatarPos.y+offsetSq[1]
     }
 
     setCurrentAnim(anim, init){
@@ -67,7 +77,8 @@ export default class Bear extends PIXI.Container {
 
     look(){
         if(this.currentAnim !== 'walk'){
-            this.filters.unshift(this.glowFilter);
+            this.hint.alpha = 1;
+            this.hint.filters = [this.glowFilter];
             this.bear.stateData.setMix(this.currentAnim, this.currentAnim + '-look', 0.1);
             this.bear.stateData.setMix(this.currentAnim + '-look', this.currentAnim, 0.1);
             this.bear.state.setAnimation(0, this.currentAnim + '-look', true);
@@ -76,8 +87,10 @@ export default class Bear extends PIXI.Container {
     }
 
     lookAway(){
+       
         if(this.currentAnim !== 'walk'){
-            this.filters.shift(this.glowFilter);
+            this.hint.alpha = 0;
+            this.hint.filters = [];
             this.setCurrentAnim(this.currentAnim);
             this.lookCB(0);
         }

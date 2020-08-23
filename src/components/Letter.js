@@ -7,7 +7,6 @@ export default class Letter extends PIXI.Container {
         Object.assign(this, item);
         this._item = PIXI.Sprite.from(`assets/items/letters/letter.png`);
         this._item.anchor.set(item.anchor)
-        this._item.interactive = true;
         this._item.buttonMode = true;
         this.index = index;
         this.color = color;
@@ -16,18 +15,18 @@ export default class Letter extends PIXI.Container {
         this._stamp = PIXI.Sprite.from(`assets/items/letters/stamp.png`);
         this._stamp.anchor.set(0.5)
 
-        this._initial = new PIXI.Text(content.data.firstName.charAt(0));
+        let name = content.data.name ? content.data.name : content.data.firstName;
+
+        this._initial = new PIXI.Text(name.charAt(0));
         this._initial.anchor.set(0.5)
         this._initial.style.fontSize = 20;
-
-        this.name = 'letter' + index;
-        this.interaction = true;
 
         this.tapcb = _tapcb;
         this.play = this.play.bind(this);
         this.shadow = new PIXI.Filter(shadowVert, shadowFrag);
 
-        this._item.on('pointerdown',this.onClick.bind(this));
+        // this._item.on('pointerdown',this.onClick.bind(this));
+       // this._item.interactive = true;
         this.setTransform(pos, size);
         this.addChild(this._item);
         this.addChild(this._stamp);
@@ -58,7 +57,7 @@ export default class Letter extends PIXI.Container {
 
         this._stamp.scale.set(scale);
         this._stamp.position.x = pos.x + 450 * scale / 2 + disX;
-        this._stamp.position.y = row + 291 * scale / 2 + 5;
+        this._stamp.position.y = row + 291 * scale / 2 + 2;
 
         this._initial.position.x =  this._stamp.position.x - 1;
         this._initial.position.y =  this._stamp.position.y - 1;
