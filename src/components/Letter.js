@@ -15,7 +15,7 @@ export default class Letter extends PIXI.Container {
         this._stamp = PIXI.Sprite.from(`assets/items/letters/stamp.png`);
         this._stamp.anchor.set(0.5)
 
-        let name = content.data.name ? content.data.name : content.data.firstName;
+        let name = content.data.name ? content.data.name : content.data.firstName ? content.data.firstName : '?';
 
         this._initial = new PIXI.Text(name.charAt(0));
         this._initial.anchor.set(0.5)

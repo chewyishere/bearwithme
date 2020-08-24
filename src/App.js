@@ -5,7 +5,7 @@ import Bear from './components/Bear';
 import Item from './components/Item';
 import Form from './components/Form';
 import Letter from './components/Letter';
-import Music from './components/Music';
+import UI from './components/UI';
 import { shadowVert, shadowFrag} from './components/glsl/shadow'
 import { OldFilmFilter } from 'pixi-filters';
 
@@ -16,15 +16,17 @@ export default class App extends PIXI.Application {
             width: window.innerWidth,
             height: window.innerHeight,
             backgroundColor: 0xf6d9b1,
+            resolution: 1,
         });
-        document.body.appendChild(this.view);
 
+        document.body.appendChild(this.view);
+        console.log(this.renderer.resolution)
         this.items = [];
+        this.mobile = global.devicePixelRatio === 3;
         this.letters = [];
         this.prevAnim = 0;
         this.currentItem = null;
         this.currentIdx = 0;
-        this.music = new Music();
 
         this.ticker = PIXI.Ticker.shared;
         this.scenes = [new PIXI.Container(), new PIXI.Container()];
@@ -47,15 +49,17 @@ export default class App extends PIXI.Application {
         this.shadowFilter = new PIXI.Filter(shadowVert, shadowFrag);
         this.shadowFilter.padding = 500;
         this.oldFilmFilter = new OldFilmFilter({
-            sepia: 1,
+            sepia: 0,
             noise: 0.11,
-            vignetting: .35,
+            vignetting: .3,
             scratch: 0.3,
           }, 0)
-        this.scenes[0].filters = [this.oldFilmFilter]
-        this.ticker.add(()=>{
-            this.oldFilmFilter.seed = Math.random()
-        })
+        if(this.mobile === false){
+            this.scenes[0].filters = [this.oldFilmFilter]
+            this.ticker.add(()=>{
+                this.oldFilmFilter.seed = Math.random()
+            })
+        }
     }
 
     setupWorld() {
@@ -95,21 +99,25 @@ export default class App extends PIXI.Application {
        // this.form.showOldLetter(idx);
     }
 
+    //5:bed, 6:guitar, 7:pizza, 8:computer
     getStartIdx(){
         let idx = 5;
         let h = new Date().getHours();
-        if(h < 9){
-        } else if (h >= 9 || h < 12){
-           return idx + 3;
-        } else if (h >= 12 || h < 14){
-            return idx + 2;
-        } else if (h >= 14 || h < 19){
-            return idx + 3;
-        } else if (h >= 19 || h < 21){
-            return idx + 2;
+
+        if (h >= 9 && h < 11){
+           idx = 6; 
+        } else if (h >= 11 && h < 14){
+            idx = 7; 
+        } else if (h >= 14 && h < 18){
+            idx = 8;
+        } else if (h >= 18 && h < 20){
+            idx = 7;
+        } else if (h >= 20 && h < 22){
+            idx = 6;
         } else {
-            return idx + 1;
+            idx = 5;
         }
+        return idx;
     }
 
     getBear() {
@@ -152,6 +160,7 @@ export default class App extends PIXI.Application {
             this.scenes[_item.scene].addChild(_item);
         });
         this.scenes[0].addChild(this.bear);
+        this.UI = new UI();
         this.updateShadow(false);
         this.start();
     }
@@ -221,8 +230,10 @@ export default class App extends PIXI.Application {
     }
 
     onResize() {
+        this.mobile = global.devicePixelRatio === 3;
         if(window.innerWidth > 1024 && window.innerWidth < 1900){
             this.renderer.resize(window.innerWidth, window.innerHeight)
+            this.renderer.resolution = global.devicePixelRatio
             this.bear.setPos(this.getCurAvatarPos()); 
             this.bear.setSize(this.getSize(0.5));
 

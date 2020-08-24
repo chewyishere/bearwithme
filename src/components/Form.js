@@ -162,9 +162,9 @@ export default class Form {
         );
     }
 
-    validated(msg){
+    validated(email){
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(msg.data.email).toLowerCase());
+        return re.test(String(email).toLowerCase());
     }
 
     onSubmit(e){
@@ -173,6 +173,7 @@ export default class Form {
         let name = form.elements["fname"].value;
         let email = form.elements["femail"].value;
         let message = form.elements["fmessage"].value;
+        let location = form.elements["flocation"].value;
 
         let msg = {
             id: email,
@@ -180,12 +181,13 @@ export default class Form {
                 name: name,
                 email: email,
                 message: message,
+                location: location,
             },
-            hasPlayed: false,
+            hasPlayed: "false",
             showOnShelf: true,
         }
 
-        if(this.validated(msg)){
+        if( msg.data.email === '' || this.validated(msg.data.email)){
             this.chat.classList.remove('chat-error');
             this.postLetters(msg);
         } else {

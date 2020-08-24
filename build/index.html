@@ -9,9 +9,39 @@
     </head>
     <body>
         <header>  
-            <button id="musicCTA"></button>         
-            <button id="infoCTA"></button>         
-            <audio id="music" autoplay="true" loop="true">
+            <div class="controls">
+                <button id="musicCTA"></button>         
+                <button id="infoCTA"></button>  
+            </div>
+            <div id="infoPage">
+                <div class="infoContent">
+                    <h1>Bear With Me is an <span> IoT </span> experiment that turns viritual hugs into physical hugs!</h1> 
+                    <p>Welcome! to the quarantine life of two sad bears. Chewy <span class="chewy"> </span><span>and Stephen </span><span class="stephen"></span></p>
+                    <p>If you'd like, you can send a virtual hug here, with some message. (<span class="stephen"></span> is sensitive...please be kind. )
+                    <p>Once you send a message/hug, they will be sent to an 8ft tall robot bear, who will give us a real hug!</p>
+                    <p>Thank you for visiting, sending hugs and being kind towards each other!</p>
+                    <div class="infoCredit">
+                        <p>techincal breakdown <span class="arrow"></span></p>
+                            <div class="infoCreditItem">
+                                <p>
+                                    <a href="https://chewy.ninja" target="_blank"><span class="chewy"></span></a>
+                                    PS + DragonBone + PIXI.js + webpack ->
+                                    </p><p>
+                                    <span class="chewydo"></span> ->
+                                    MongoDB + AWS + Raspberry Pi + Arduino ->
+                                    <span class="stephendo"></span> 
+                                </p><p>
+                                    <- one stuffed bear + 3d printer + sketchup
+                                    <a href="https://dukefromearth.com" target="_blank"><span class="stephen"></span></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="infoTodo"></div>
+                    <div id="infoClose"></div>
+                </div>
+            </div>    
+            <audio id="music" autoplay="false" loop="true">
                 <source src="assets/track.mp3"  type="audio/mpeg">
             </audio>
         </header>
@@ -29,6 +59,10 @@
                         <label for="fname"></label>
                         <input type="text" class="name-form-input" name="fname"  placeholder="name">
                     </div>
+                    <div class="formgroup name-form">
+                        <label for="flocation"></label>
+                        <input type="text" class="name-form-input" name="flocation"  placeholder="location">
+                    </div>
                     <div class="formgroup email-form">
                         <label for="fname"></label>
                         <input type="text" class="email-form-input" name="femail" placeholder="email">
@@ -37,6 +71,6 @@
                 <div id="chat"></div>
                 <input id="submitCTA" type="submit" value="send!" onsubmit= return false />
             </form>
-    </main>
+        </main>
     </body>
 </html>

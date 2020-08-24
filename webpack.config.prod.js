@@ -1,6 +1,7 @@
+const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
     mode: 'production',
@@ -14,15 +15,19 @@ module.exports = {
         }]
     },
     optimization: {
-        minimizer: [new UglifyJSPlugin({
-            uglifyOptions: {
-                output: {
-                    comments: false //use it for removing comments like "/*! ... */"
-                }
-            }
-        })]
+        minimizer: [
+            new TerserPlugin({
+                parallel: true,
+                terserOptions: {
+                  ecma: 6,
+                },
+              }),
+        ]
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            PIXI: 'pixi.js' // makes dragonbones work
+          }),
         new CopyWebpackPlugin([{
             from: 'build/assets',
             to: 'assets'
@@ -34,4 +39,4 @@ module.exports = {
             minify: false
         })
     ]
-}
+} 
