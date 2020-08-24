@@ -185,14 +185,6 @@ object-assign
 */
 
 /*!
- * pixi-filters - v3.1.0
- * Compiled Wed, 11 Mar 2020 20:38:18 UTC
- *
- * pixi-filters is licensed under the MIT License.
- * http://www.opensource.org/licenses/mit-license
- */
-
-/*!
  * pixi.js - v5.3.0
  * Compiled Thu, 18 Jun 2020 23:27:40 UTC
  *

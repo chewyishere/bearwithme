@@ -22,14 +22,13 @@ body,html {
     header{
         position: fixed;
         z-index: 10;
+    }
+    .controls{
+        position: fixed;
+        right: 20px;
         top: 20px;
-        left: 20px;
     }
 
-    .headerBtn{
-        width: 60px;
-        height: 30px;
-    }
 
     main {
         position: fixed;
@@ -104,13 +103,13 @@ body,html {
     .message-form {
         margin: 12rem 5rem 1rem;
         width: calc(100% - 10rem);
-        height: 40%;
+        height: 35%;
         align-self: center;
     }
 
     .name-form,
     .email-form{
-        margin-right: 5rem;
+        margin-right: 4.5rem;
         width: 33%;
         border-bottom: 1px dotted #676767;
         align-items: flex-end;
@@ -264,14 +263,23 @@ body,html {
     #musicCTA, #infoCTA{
         width: 50px;
         height: 50px;
+        margin-right: 10px;
         border-radius: 50%;
         background-size: 100%;
         background-repeat: no-repeat;
-        background-position: center
+        background-position: center;
+        border: 0;
+        background-color: white;
+        cursor: pointer;
     }
 
     #musicCTA {
         background-image: url('https://img.icons8.com/dotty/80/000000/musical.png');
+    }
+
+    #musicCTA:hover,
+    #infoCTA:hover{
+        background-color: #ffcc99;
     }
 
     .off{
@@ -281,3 +289,131 @@ body,html {
     #infoCTA {
         background-image: url('https://img.icons8.com/dotty/80/000000/info.png');
     }
+
+    #infoPage{
+        position: fixed;
+        min-width: 630px;
+        transform: translateY(-100%);
+        top: 0;
+        left: 0;
+        width: 100vw;
+        background: white;
+        background-image: url('png/infoBG.jpg');
+    }
+    .infoContent{
+        margin-left: 20px;
+    }
+
+    .infoContent p{
+        display: block;
+        color: 	#383838;  
+        width: 70%; 
+    }
+    .infoContent h1 {
+        width: 90%;
+    }
+    .infoContent p span{
+        display: inline-flex;
+    }
+    .infoTodo{
+        right: 50px;
+        top: 100px;
+        width: 150px;
+        height: 200px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url('png/todo.png');
+        position: absolute;
+    }
+
+    .infoCredit{
+        margin-top: 50px;
+        margin-bottom: 30px;
+    }
+
+    .infoCredit p {
+        margin-right: 10px;
+        color: 	#383838;
+        width: unset;
+        margin-bottom: 0;
+    }
+
+    .infoCreditItem {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: 	#383838;
+    }
+
+    @media only screen and (max-width: 1100px) {
+        .infoCreditItem {
+          flex-wrap: wrap;
+        }
+      }
+    .chewy, 
+    .stephen, 
+    .chewydo, 
+    .stephendo{
+        margin: 5px;
+        display: inline-block;
+        margin-bottom: -10px;
+        min-width: 40px;
+        height: 40px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .chewy{
+        background-image: url('png/chewy.png');
+    }
+
+    .chewy:hover{
+        background-image: url('png/chewyOn.png');
+    }
+
+    .stephen{
+        background-image: url('png/stephen.png');
+    }
+
+    .stephen:hover{
+        background-image: url('png/stephenOn.png');
+    }
+
+    .chewydo{
+        background-image: url('png/chewydo.png');
+    }
+
+    .stephendo{
+        background-image: url('png/stephendo.png');
+    }
+
+    .arrow{
+        display: inline-block;
+        margin-bottom: -15px;
+        min-width: 25px;
+        height: 30px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url('png/arrow.png');
+    }
+
+    #infoClose{
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        height: 50px;
+        width: 50px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-image: url('png/close.png');
+    }
+
+    #infoClose:hover{
+        background-image: url('png/closeOn.png');
+    }
+
+
