@@ -20,7 +20,8 @@ export default class App extends PIXI.Application {
         });
 
         document.body.appendChild(this.view);
-        console.log(this.renderer.resolution)
+       // console.log(this.renderer.resolution)
+
         this.items = [];
         this.mobile = global.devicePixelRatio === 3;
         this.letters = [];
@@ -233,7 +234,6 @@ export default class App extends PIXI.Application {
         this.mobile = global.devicePixelRatio === 3;
         if(window.innerWidth > 1024 && window.innerWidth < 1900){
             this.renderer.resize(window.innerWidth, window.innerHeight)
-            this.renderer.resolution = global.devicePixelRatio
             this.bear.setPos(this.getCurAvatarPos()); 
             this.bear.setSize(this.getSize(0.5));
 
