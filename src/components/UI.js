@@ -7,11 +7,13 @@ export default class UI {
         this.info = document.getElementById("infoPage");
         this.infoBTN = document.getElementById("infoCTA");
         this.closeBTN = document.getElementById("infoClose");
-        this.bearImage = document.getElementById("bearImage");
+        this.bearImage = document.getElementsByClassName("infoBearGif")[0];
         
         this.sound.volume = 0.4;
         this.isPlaying = false;
         this.isInfoOn = false;
+
+        this.gif = document.getElementById("bearGif"); 
 
         this.bearImage.addEventListener('mouseover',this.toggleGIF.bind(this, true));   
         this.bearImage.addEventListener('mouseout',this.toggleGIF.bind(this, false));   
@@ -21,7 +23,7 @@ export default class UI {
     }
 
     toggleGIF(over){
-        this.bearImage.src = over ? 'assets/bear.gif' : 'assets/bear_still.jpg'
+        over ? this.gif.classList.add('showGif') : this.gif.classList.remove('showGif') 
     }
 
     toggleInfo(){
