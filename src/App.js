@@ -100,7 +100,7 @@ export default class App extends PIXI.Application {
        // this.form.showOldLetter(idx);
     }
 
-    //5:bed, 6:guitar, 7:pizza, 8:computer
+      //5: bed 6: guitar 7:computer 9:pizza
     getStartIdx(){
         let idx = 5;
         let h = new Date().getHours();
@@ -108,16 +108,17 @@ export default class App extends PIXI.Application {
         if (h >= 9 && h < 11){
            idx = 6; 
         } else if (h >= 11 && h < 14){
-            idx = 7; 
+            idx = 9; 
         } else if (h >= 14 && h < 18){
-            idx = 8;
-        } else if (h >= 18 && h < 20){
             idx = 7;
+        } else if (h >= 18 && h < 20){
+            idx = 9;
         } else if (h >= 20 && h < 22){
             idx = 6;
         } else {
             idx = 5;
         }
+
         return idx;
     }
 
@@ -149,6 +150,8 @@ export default class App extends PIXI.Application {
     subAssetsLoaded() {
        // this.setActiveScene(0);
         this.updateSession(ITEMS[this.getStartIdx()])
+       // console.log(ITEMS[this.getStartIdx()].name)
+      
         this.checkReachedItem(true)
         this.bear.setPos(this.getCurAvatarPos()); 
         this.bear.setSize(this.getSize(0.5)); 
@@ -232,7 +235,7 @@ export default class App extends PIXI.Application {
 
     onResize() {
         this.mobile = global.devicePixelRatio === 3;
-        if(window.innerWidth > 1024 && window.innerWidth < 1900){
+        if(window.innerWidth > 1024 && window.innerWidth && window.innerHeight > 700 ){
             this.renderer.resize(window.innerWidth, window.innerHeight)
             this.bear.setPos(this.getCurAvatarPos()); 
             this.bear.setSize(this.getSize(0.5));
