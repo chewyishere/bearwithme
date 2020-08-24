@@ -255,3 +255,29 @@ body,html {
     #close:hover{
         background-image: url('png/no-hover.png');
     }
+
+    header button:focus{
+        border: none;
+        outline: none;
+    }
+
+    #musicCTA, #infoCTA{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        background-position: center
+    }
+
+    #musicCTA {
+        background-image: url('https://img.icons8.com/dotty/80/000000/musical.png');
+    }
+
+    .off{
+        background-image: url('https://img.icons8.com/dotty/80/000000/circled-pause.png') !important;
+    } 
+
+    #infoCTA {
+        background-image: url('https://img.icons8.com/dotty/80/000000/info.png');
+    }

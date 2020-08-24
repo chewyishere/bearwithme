@@ -23,9 +23,8 @@ export default class App extends PIXI.Application {
         this.letters = [];
         this.prevAnim = 0;
         this.currentItem = null;
-        this.music = null;
         this.currentIdx = 0;
-        
+        this.music = new Music();
 
         this.ticker = PIXI.Ticker.shared;
         this.scenes = [new PIXI.Container(), new PIXI.Container()];
@@ -42,7 +41,6 @@ export default class App extends PIXI.Application {
         this.getBear()
         this.initFilters();
         this.form = new Form(this.setupLetters.bind(this));
-        this.setupSpeaker();
     }
 
     initFilters(){
@@ -68,12 +66,6 @@ export default class App extends PIXI.Application {
             scene.y = 0;
             this.stage.addChild(scene)
         });
-    }
-    setupSpeaker(){
-        let _item = OTHERS[1];
-        let pos = this.getPos(_item, 'itemPos');
-        let size = this.getSize(_item.size);
-        this.music = new Music(_item, pos, size);
     }
 
     setupLetters(msgs, init){
@@ -160,7 +152,6 @@ export default class App extends PIXI.Application {
             this.scenes[_item.scene].addChild(_item);
         });
         this.scenes[0].addChild(this.bear);
-        this.scenes[0].addChild(this.music);
         this.updateShadow(false);
         this.start();
     }
@@ -249,8 +240,6 @@ export default class App extends PIXI.Application {
                 item.setTransform(pos, scale)
                 item.updateShadowY();
             });
-
-            this.music.setTransform(this.getPos(this.music, 'itemPos'), this.getSize(this.music.size));
 
             this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset,this.getSize(1));
             this.updateShadow();

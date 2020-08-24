@@ -206,16 +206,6 @@ const OTHERS = [
         zOrder: 0,
         anchor: 0,
     },
-    {
-        name:'speaker',
-        itemShadowDir: [-0.02, 1.02],
-        itemShadowY: 1.1,
-        scene: 0,
-        itemPos: {x: 0.55, y: 0.6},
-        size: 0.5,
-        zOrder: 0,
-        anchor: 1,
-    }
 ]
     
 export {ITEMS, OTHERS}
