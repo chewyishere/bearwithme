@@ -8,6 +8,11 @@
         <link href="assets/style/index.css" rel="stylesheet">
     </head>
     <body>
+        <header>           
+            <audio id="music" autoplay="false" loop="true">
+                <source src="assets/track.mp3"  type="audio/mpeg">
+            </audio>
+        </header>
         <main>
             <span id="info"></span>
             <span id="close"></span>
@@ -16,7 +21,7 @@
                 <div class="bgContainer">
                     <div class="formgroup message-form">
                         <label for="fmessage"></label>
-                        <textarea class="message-input" name="fmessage" placeholder="some nice words?  It's optional!"></textarea>
+                        <textarea class="message-input" name="fmessage" maxlength="90" placeholder="Some nice words?        Totally optional        (max: 90)"></textarea>
                     </div>
                     <div class="formgroup name-form">
                         <label for="fname"></label>

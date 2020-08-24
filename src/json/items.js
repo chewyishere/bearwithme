@@ -71,7 +71,7 @@ const ITEMS = [
         clickable: true,
         zOrder: 0,
         anchor: 0.5,
-        hitAreaOffset: [-150, -100, 300, 180],
+        hitAreaOffset: [-200, -120, 400, 200],
     },
     {
         session: 'guitar',
@@ -109,7 +109,7 @@ const ITEMS = [
         hasAnim: true,
         anchor: 0.5,
         clickable: true,
-        hitAreaOffset:  [-80, -180, 180, 300],
+        hitAreaOffset:  [-80, -180, 150, 300],
     },
     {
         session: 'computer',
@@ -205,6 +205,16 @@ const OTHERS = [
         size: 0.19,
         zOrder: 0,
         anchor: 0,
+    },
+    {
+        name:'speaker',
+        itemShadowDir: [-0.02, 1.02],
+        itemShadowY: 1.1,
+        scene: 0,
+        itemPos: {x: 0.55, y: 0.6},
+        size: 0.5,
+        zOrder: 0,
+        anchor: 1,
     }
 ]
     

@@ -26,8 +26,8 @@ export default class Bear extends PIXI.Container {
 
         this.hint = new PIXI.Sprite.from(`assets/bear/hint.png`);
         this.hint.scale.set(0.6);
-        this.hint.anchor.x = 0;
-        this.hint.anchor.y = 1.2;
+        this.hint.anchor.x = 0.5;
+        this.hint.anchor.y = 1.5;
         this.hint.alpha = 0;
         this.addChild(this.hint)
 
@@ -52,15 +52,19 @@ export default class Bear extends PIXI.Container {
         this.bear.scale.set(size);
     }
 
-    setHitArea(avatarPos, offsetSq){
+    setHitArea(avatarPos, offsetSq, size){
+        let x = avatarPos.x+offsetSq[0]*size;
+        let y = avatarPos.y+offsetSq[1]*size;
+        let w = offsetSq[2]*size;
+        let h = offsetSq[3]*size;
         this.hitSqr.clear();
         this.hitSqr.beginFill(0xDE3249);
         this.hitSqr.alpha = 0;
-        this.hitSqr.drawRect(avatarPos.x+offsetSq[0], avatarPos.y+offsetSq[1], offsetSq[2], offsetSq[3]);
+        this.hitSqr.drawRect(x, y, w, h);
         this.hitSqr.endFill();
         this.hitSqr.interactive = true;
-        this.hint.position.x = avatarPos.x+offsetSq[0]
-        this.hint.position.y = avatarPos.y+offsetSq[1]
+        this.hint.position.x = x + w/2;
+        this.hint.position.y = y;
     }
 
     setCurrentAnim(anim, init){
@@ -87,7 +91,6 @@ export default class Bear extends PIXI.Container {
     }
 
     lookAway(){
-       
         if(this.currentAnim !== 'walk'){
             this.hint.alpha = 0;
             this.hint.filters = [];

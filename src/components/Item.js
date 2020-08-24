@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { shadowVert, shadowFrag} from './glsl/shadow'
+import { GlowFilter } from 'pixi-filters';
 
 export default class Item extends PIXI.Container {
     constructor(item, pos, size, index, _tapcb, _loadcb) {
@@ -22,8 +23,11 @@ export default class Item extends PIXI.Container {
         this.setActive = this.setActive.bind(this);
         this.loadCB = _loadcb;
         this.shadow = new PIXI.Filter(shadowVert, shadowFrag);
+        this.glow = new GlowFilter();
 
         if(this.clickable){
+            this._item.on('pointerover',this.onHover.bind(this, true));
+            this._item.on('pointerout',this.onHover.bind(this, false));
             this._item.on('pointerdown',this.onClick.bind(this));
         }
     }
@@ -33,6 +37,10 @@ export default class Item extends PIXI.Container {
         this.shadow.uniforms.shadowDirection = this.itemShadowDir;
         this.updateShadowY();
         this.filters = [this.shadow];
+    }
+
+    onHover(over){
+        this.filters = [this.shadow, over && this.glow];
     }
 
     updateShadowY(){

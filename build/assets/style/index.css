@@ -19,6 +19,18 @@ body,html {
         top: 0;
     }
 
+    header{
+        position: fixed;
+        z-index: 10;
+        top: 20px;
+        left: 20px;
+    }
+
+    .headerBtn{
+        width: 60px;
+        height: 30px;
+    }
+
     main {
         position: fixed;
         margin: auto;
@@ -90,19 +102,26 @@ body,html {
     }
 
     .message-form {
-        margin: 10rem 5rem 1rem;
+        margin: 12rem 5rem 1rem;
         width: calc(100% - 10rem);
-        height: 45%;
+        height: 40%;
         align-self: center;
     }
 
     .name-form,
     .email-form{
-        font-size: 1em;
         margin-right: 5rem;
         width: 33%;
         border-bottom: 1px dotted #676767;
         align-items: flex-end;
+    }
+
+    .email-form-input{
+        font-size: 1em;
+    }
+
+    .name-form-input{
+        font-size: 1.5em;
     }
 
     .name-form-input,
@@ -130,7 +149,7 @@ body,html {
         color: #676767;
         font-family: 'Sniglet', sans-serif;
         line-height: 1.6em;
-        font-size: 1.8em;
+        font-size: 1.9em;
         width: 96%;
         height: 94%;
     }
