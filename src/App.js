@@ -50,10 +50,11 @@ export default class App extends PIXI.Application {
     initFilters(){
         this.shadowFilter = new PIXI.Filter(shadowVert, shadowFrag);
         this.shadowFilter.padding = 500;
+        let vig = map(window.innerWidth, 764, 1400, 0, 0.3);
         this.oldFilmFilter = new OldFilmFilter({
             sepia: 0,
             noise: this.mobile ? .08 : .11,
-            vignetting: this.mobile ? 0 : .3,
+            vignetting: vig,
             scratch: this.mobile ? 0 : .3,
           }, 0)
 

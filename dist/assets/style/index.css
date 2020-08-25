@@ -544,21 +544,22 @@ body,html {
         }
 
         .message-form{
-            margin: 120px 0 0;
-            width: 70%;
+            margin: 23vw 0 0;
+            width: 61vw;
             height: 39%;
         }
 
         .message-input{
-            font-size: 1.4em;
+            font-size: 1.3em;
             width: 81%;
             height: 94%;
             margin: auto;
         }
 
         .name-form, .email-form{
-            margin-right: 18%;
+            margin-right: 22vw;
             width: 25%;
+            height: 1.5em
         }
 
         .name-form-input,.email-form-input{
