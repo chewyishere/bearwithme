@@ -51,16 +51,16 @@ export default class App extends PIXI.Application {
         this.shadowFilter.padding = 500;
         this.oldFilmFilter = new OldFilmFilter({
             sepia: 0,
-            noise: 0.11,
-            vignetting: .3,
-            scratch: 0.3,
+            noise: this.mobile ? .08 : .11,
+            vignetting: this.mobile ? 0 : .3,
+            scratch: this.mobile ? 0 : .3,
           }, 0)
-        if(this.mobile === false){
-            this.scenes[0].filters = [this.oldFilmFilter]
-            this.ticker.add(()=>{
-                this.oldFilmFilter.seed = Math.random()
-            })
-        }
+
+        this.scenes[0].filters = [this.oldFilmFilter]
+        this.ticker.add(()=>{
+            this.oldFilmFilter.seed = Math.random()
+        })
+        
     }
 
     setupWorld() {
@@ -89,7 +89,7 @@ export default class App extends PIXI.Application {
             let _idx = this.letters.length;
             let l = new Letter(_item, pos, size, _idx, color, msgs, this.openLetter.bind(this));
             this.letters.push(l);
-            l.addShadow();
+            !this.mobile && l.addShadow();
             this.scenes[_item.scene].addChild(l);
             this.form.addLetterToDom(msgs);
         }
@@ -131,7 +131,7 @@ export default class App extends PIXI.Application {
             this.animate.bind(this),
             this.sendLove.bind(this),
         );
-        this.bear.filters = [this.shadowFilter];
+        this.bear.filters = !this.mobile && [this.shadowFilter];
         this.getAsset();
     }
         
@@ -156,11 +156,11 @@ export default class App extends PIXI.Application {
         this.bear.setPos(this.getCurAvatarPos()); 
         this.bear.setSize(this.getSize(0.5)); 
         this.items.forEach(_item => {
-            _item.addShadow();
+            !this.mobile && _item.addShadow();
             this.scenes[_item.scene].addChild(_item);
         });
         this.letters.forEach(_item => {
-            _item.addShadow();
+            !this.mobile && _item.addShadow();
             this.scenes[_item.scene].addChild(_item);
         });
         this.scenes[0].addChild(this.bear);
@@ -170,14 +170,16 @@ export default class App extends PIXI.Application {
     }
 
     updateShadow(walk){
-       if (walk){
-            this.shadowFilter.uniforms.shadowDirection = [0, -0.3]
-             this.ticker.add(this.shadowTicker, this);
-       } else{
-            this.ticker.remove(this.shadowTicker, this);
-            this.shadowFilter.uniforms.shadowDirection = this.currentItem.avatarShadowDir;
-            this.shadowFilter.uniforms.floorY =  this.getCurAvatarPos().y + this.getShadowY(this.currentItem.avatarShadowY);
-       };
+        if (!this.mobile){
+            if (walk){
+                    this.shadowFilter.uniforms.shadowDirection = [0, -0.3]
+                    this.ticker.add(this.shadowTicker, this);
+            } else{
+                    this.ticker.remove(this.shadowTicker, this);
+                    this.shadowFilter.uniforms.shadowDirection = this.currentItem.avatarShadowDir;
+                    this.shadowFilter.uniforms.floorY =  this.getCurAvatarPos().y + this.getShadowY(this.currentItem.avatarShadowY);
+            };
+        }
     }
 
     updateSession(item){
@@ -298,7 +300,7 @@ export default class App extends PIXI.Application {
     }
 
     getPos(item, posName){
-        if(this.mobile && item.mobilePos){
+        if(this.mobile){
             return {
                 x: this.renderer.width * item.mobilePos.x,
                 y: this.renderer.height * item.mobilePos.y
@@ -323,7 +325,7 @@ export default class App extends PIXI.Application {
     }
 
     getSize(size){
-        let magicN = this.mobile ? 0.0012 : 0.0007;
+        let magicN = this.mobile ? 0.0011 : 0.0007;
         return this.renderer.width * size * magicN;
     }
 

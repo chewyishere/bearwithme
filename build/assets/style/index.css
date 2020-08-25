@@ -44,8 +44,6 @@ body,html {
         min-height: 600px;
         opacity: 0;
     }
-
-
  
     .formContainer {
         position: absolute;
@@ -55,7 +53,6 @@ body,html {
         min-width: 400px;
         height: 650px;
         z-index: 1;
-        border-radius: 20px;
         display: flex;
         flex-flow: column;
         transform-origin: center;
@@ -488,4 +485,49 @@ body,html {
             height: 40px;
             width: 40px;
         }
+        #musicCTA, #infoCTA{
+            height: 35px;
+            width: 35px;
+            margin: 0;
+        }
+        .formContainer{
+            top: 6%;
+            height: 60%;
+            min-width: unset;
+            width: 90vw;
+        }
+
+        .formContainer::before{
+            background-size: contain;
+            height: 130px;
+            margin-top: -5px;
+        }
+        .bgContainer{
+            background-size: contain;
+        }
+
+        .message-form{
+            margin: 6rem 0rem 0rem;
+            width: calc(100% - 5.5rem);
+            height: 39%;
+        }
+
+        .message-input{
+            font-size: 1.4em;
+        }
+
+        .name-form, .email-form{
+            margin-right: 3rem
+        }
+
+        .name-form-input,.email-form-input{
+            font-size: 0.8em;
+        }
+
+        #close,#info{
+            width: 30%;
+            height: 30%;
+            bottom: 0;
+        }
+
     }
