@@ -314,9 +314,6 @@ body,html {
     .infoContent h1 {
         width: 90%;
     }
-    .infoContent p span{
-        display: inline-flex;
-    }
     .infoTodo{
         right: 50px;
         top: 100px;
@@ -453,4 +450,35 @@ body,html {
         .infoCreditItem {
           flex-wrap: wrap;
         }
+        .gifArrow, .infoBearGif{
+            display: none !important;
+        }
       }
+
+    @media only screen and (max-width: 600px) {
+        #infoPage{
+            min-width: unset;
+            height: 100vh;
+        }
+        .infoTodo {
+            display: none !important;
+        }
+        .infoContent h1{
+            font-size: 1.3em;
+            width: 80%;
+        }
+        .infoContent p{
+            font-size: 0.8em;
+            width: calc(100% - 20px);
+        }
+        .infoContent p span{
+            width: 20px;
+            height: 20px;
+            min-width: unset;
+            margin-bottom: -6px;
+        }
+        #infoClose{
+            height: 40px;
+            width: 40px;
+        }
+    }
