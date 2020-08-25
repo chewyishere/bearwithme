@@ -70,6 +70,7 @@ body,html {
         display: flex;
         flex-flow: column;
         align-items: flex-end;
+        background-position: center;
     }
     .formContainer::before{
         content: '';
@@ -100,7 +101,7 @@ body,html {
     }
 
     .message-form {
-        margin: 12rem 5rem 1rem;
+        margin: 11rem 5rem 1rem;
         width: calc(100% - 10rem);
         height: 35%;
         align-self: center;
@@ -445,6 +446,22 @@ body,html {
 
 
     @media only screen and (max-width: 1100px) {
+        .formContainer{
+            width: 80vw;
+        }
+        .formContainer::before{
+            background-size: contain;
+            height: 200px;
+            margin-top: -10px;
+        }
+        
+        .bgContainer{
+            background-size: contain;
+            
+        }
+        .message-form{
+            margin: 9rem 5rem 1rem
+        }
         main{
             min-width: 300px;
         }
@@ -457,6 +474,19 @@ body,html {
         .infoContent p span{
             display: inline-block;
         }
+        #close,#info{
+            width: 20%;
+            height: 20%;
+            bottom: 0;
+            background-size: contain;
+        }
+        #chat{
+            width: 40%;
+            height: 40%;
+            right: -10%;
+            top: -10%;
+        }
+
       }
 
     @media only screen and (max-width: 600px) {
@@ -495,7 +525,7 @@ body,html {
             top: 6%;
             height: 60%;
             min-width: unset;
-            width: 100vw;
+            width: 100%;
         }
 
         #submitCTA{
@@ -514,17 +544,21 @@ body,html {
         }
 
         .message-form{
-            margin: 6rem 0rem 0rem;
-            width: calc(100% - 5.5rem);
+            margin: 8.5rem 0rem 0rem;
+            width: 70%;
             height: 39%;
         }
 
         .message-input{
             font-size: 1.4em;
+            width: 71%;
+            height: 94%;
+            margin: auto;
         }
 
         .name-form, .email-form{
-            margin-right: 3rem
+            margin-right: 18%;
+            width: 25%;
         }
 
         .name-form-input,.email-form-input{
@@ -543,6 +577,13 @@ body,html {
 
         #info{
             background-image: url('png/info-hover.png');
+        }
+
+        #chat{
+            width: 25%;
+            height: 25%;
+            right: 5%;
+            top: -5%;
         }
 
     }
