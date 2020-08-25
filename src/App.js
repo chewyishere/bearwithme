@@ -6,6 +6,7 @@ import Item from './components/Item';
 import Form from './components/Form';
 import Letter from './components/Letter';
 import UI from './components/UI';
+import {map} from './utils/math';
 import { shadowVert, shadowFrag} from './components/glsl/shadow'
 import { OldFilmFilter } from 'pixi-filters';
 
@@ -23,7 +24,7 @@ export default class App extends PIXI.Application {
        // console.log(this.renderer.resolution)
 
         this.items = [];
-        this.mobile = global.devicePixelRatio === 3;
+        this.mobile = window.innerWidth <= 768;
         this.letters = [];
         this.prevAnim = 0;
         this.currentItem = null;
@@ -236,10 +237,12 @@ export default class App extends PIXI.Application {
     }
 
     onResize() {
-        this.mobile = global.devicePixelRatio === 3;
+        this.mobile = window.innerWidth < 600;
         this.view.style.width = window.innerWidth;
         this.view.style.height = window.innerHeight;
-        if(window.innerWidth > 1024 && window.innerWidth && window.innerHeight > 700 ){
+    
+        let vig = map(window.innerWidth, 764, 1400, 0, 0.3);
+        this.oldFilmFilter.vignetting = vig
             this.renderer.resize(window.innerWidth, window.innerHeight)
             this.bear.setPos(this.getCurAvatarPos()); 
             this.bear.setSize(this.getSize(0.5));
@@ -261,7 +264,7 @@ export default class App extends PIXI.Application {
 
             this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset,this.getSize(1));
             this.updateShadow();
-        }
+        
     }
 
     addItemShadow(dir, y){
