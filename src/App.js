@@ -18,6 +18,7 @@ export default class App extends PIXI.Application {
             height: window.innerHeight,
             backgroundColor: 0xf6d9b1,
             resolution: 1,
+            antialias: true,
         });
 
         document.body.appendChild(this.view);
@@ -53,7 +54,7 @@ export default class App extends PIXI.Application {
         let vig = map(window.innerWidth, 764, 1400, 0, 0.3);
         this.oldFilmFilter = new OldFilmFilter({
             sepia: 0,
-            noise: this.mobile ? .08 : .11,
+            noise: this.mobile ? 0 : .11,
             vignetting: vig,
             scratch: this.mobile ? 0 : .3,
           }, 0)
@@ -99,7 +100,7 @@ export default class App extends PIXI.Application {
     }
 
     openLetter(idx){
-       // this.form.showOldLetter(idx);
+       this.form.showOldLetter(idx);
     }
 
       //5: bed 6: guitar 7:computer 9:pizza
@@ -260,7 +261,7 @@ export default class App extends PIXI.Application {
         this.letters.forEach(item => {
             let pos = this.getPos(item, 'itemPos');
             let scale = this.getSize(item.size);
-            item.setTransform(pos, scale)
+            item.setTransform(pos, scale, window.innerWidth)
             item.updateShadowY();
         });
 

@@ -12,6 +12,7 @@ export default class Form {
         this.info = document.getElementById("info");
         this.close = document.getElementById("close");
         this.chat = document.getElementById("chat");
+
         this.closeArea.addEventListener("click", this.onCloseLetter.bind(this));
         this.close.addEventListener("click", this.onCloseLetter.bind(this));
         this.close.addEventListener("mouseover", this.onCloseHover.bind(this, true));
@@ -25,6 +26,7 @@ export default class Form {
 
         this.main = document.querySelector("main");
         this.getCB = _getCB;
+        this.showingOldLetter = false;
         this.getLetters();
         this.letterDOMS = [];
         this.currentIdx = 0;
@@ -64,14 +66,24 @@ export default class Form {
     addLetterToDom(msgs) {
         let main = document.querySelector("main");
         let letterContainer = document.createElement("div");
-        let msgField = document.createElement("p");
-        
-        letterContainer.classList.add('formContainer');
-        msgField.classList.add('message-form','message-input');
-        msgField.innerHTML = msgs.data.message;
-
+        letterContainer.classList.add('oldLetter');
         main.appendChild(letterContainer);
+
+        let msgField = document.createElement("p");
+        msgField.classList.add('oldLetterText');
+        msgField.innerHTML = msgs.data.message ? msgs.data.message : '...';
         letterContainer.appendChild(msgField);
+
+        let nameField = document.createElement("p");
+        nameField.classList.add('oldLetterName');
+        nameField.innerHTML = msgs.data.name ? msgs.data.name : 'mystery person';
+        letterContainer.appendChild(nameField);
+
+        let locationField = document.createElement("p");
+        locationField.classList.add('oldLetterLocation');
+        locationField.innerHTML = msgs.data.location ? msgs.data.location : 'somewhere in the world';
+        letterContainer.appendChild(locationField);
+
         this.letterDOMS.push(letterContainer);
     }
 
@@ -115,50 +127,78 @@ export default class Form {
         }});
     }
 
-    /*
+    
     showOldLetter(idx){
         this.currentIdx = idx;
-        this.main.classList.add('active')
-        
+        this.main.classList.add('active-letter');
+        this.showingOldLetter = true;
         gsap.fromTo(
-            this.letterDOMS[idx], 
-            {rotation: -10, x: 0, y: "300%", opacity: 1}, 
-            {rotation: -2,  x: 0, y: "15%", duration: 0.5}
+            this.letterDOMS[idx], {
+                rotation: 10, 
+                x: 0,
+                y: "-200%", 
+                opacity: 1,
+            }, 
+            { 
+                rotation: -10, 
+                x: 0, 
+                y: "20%", 
+                duration: 1,
+                ease: "power3.out",
+            }
         );
     }
-     */
 
-    onCloseLetter() {
-       //let l = this.letterDOMS[this.currentIdx]; 
-       this.resetDOM();
+    hideOldLetter(){
+        let l = this.letterDOMS[this.currentIdx]; 
         gsap.to(
-            this.form, 
-            {rotation: 10, x: 0, 
-                y: "300%", 
-                opacity: 1, 
-                duration: 0.8, 
+            l, {
+                rotation: 10, 
+                x: 0, 
+                y: "-200%", 
+                opacity: 0, 
+                duration: 0.75, 
+                ease: "power3.in",
                 onComplete: ()=>{
-                    this.main.classList.remove('active')
-                    this.emptyForm();
+                    this.showingOldLetter = false;
+                    this.main.classList.remove('active-letter')
                 }
             }, 
         );
     }
+     
+
+    onCloseLetter() {
+       if (this.showingOldLetter){
+        this.hideOldLetter();
+       } else {
+        this.resetDOM();
+        gsap.to(
+            this.form, {
+                rotation: 10, 
+                x: 0, 
+                y: "300%", 
+                opacity: 1, 
+                duration: 0.75, 
+                ease: "power3.in",
+                onComplete: ()=>{
+                    this.main.classList.remove('active-form')
+                    this.emptyForm();
+                }
+            }, 
+        );
+       }
+    }
    
 
     show(){
-        this.main.classList.add('active')
-        gsap.to(this.info, {rotation: 0, x: '0%', duration: 0.5, delay: 1});
-        gsap.to(this.close, {rotation: 0, x: '0%', duration: 0.5, delay: 1});
+        this.main.classList.add('active-form')
+        gsap.to(this.info, {rotation: 0, x: '0%', duration: 0.5, delay: 1, ease: "power3.out",});
+        gsap.to(this.close, {rotation: 0, x: '0%', duration: 0.5, delay: 1, ease: "power3.out",});
         gsap.fromTo(
             this.form, 
             {rotation: -10, x: 0, y: "300%", opacity: 1}, 
-            {rotation: -2,  x: 0, y: "15%", duration: 0.5}
-        );
-        gsap.fromTo(
-            this.form, 
-            {rotation: -10, x: 0, y: "300%", opacity: 1}, 
-            {rotation: -2,  x: 0, y: "15%", duration: 0.5}
+            {rotation: -2,  x: 0, y: "15%", duration: 1, ease: "power3.out"}
         );
     }
 
@@ -187,7 +227,7 @@ export default class Form {
             showOnShelf: true,
         }
 
-        if( msg.data.email === '' || this.validated(msg.data.email)){
+        if(msg.data.email === '' || this.validated(msg.data.email)){
             this.chat.classList.remove('chat-error');
             this.postLetters(msg);
         } else {

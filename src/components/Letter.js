@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { shadowVert, shadowFrag} from './glsl/shadow'
+import {map} from '../utils/math';
 
 export default class Letter extends PIXI.Container {
     constructor(item, pos, size, index, color, content, _tapcb) {
@@ -22,12 +23,11 @@ export default class Letter extends PIXI.Container {
         this._initial.style.fontSize = 20;
 
         this.tapcb = _tapcb;
-        this.play = this.play.bind(this);
         this.shadow = new PIXI.Filter(shadowVert, shadowFrag);
 
-        // this._item.on('pointerdown',this.onClick.bind(this));
-       // this._item.interactive = true;
-        this.setTransform(pos, size);
+        this._item.on('pointerdown',this.onClick.bind(this));
+        this._item.interactive = true;
+        this.setTransform(pos, size, window.innerWidth);
         this.addChild(this._item);
         this.addChild(this._stamp);
         this.addChild(this._initial);
@@ -45,11 +45,16 @@ export default class Letter extends PIXI.Container {
         this.shadow.uniforms.floorY  = this._item.toGlobal(new PIXI.Point(0, 0)).y + this._item.height * this.itemShadowY;
     }
 
-    setTransform(pos,scale){
+    setTransform(pos,scale, w){
+        let offsetY = w < 600 ? map(w, 300, 600, 10, 15) : map(w, 764, 1300, 15, -5);
+        
         let rowNum = 6;
-        let disX = this.index > rowNum * 2 ? (this.index - rowNum * 2 - 1) : this.index > rowNum ? (this.index - rowNum - 1 )* 23 : this.index * 23;
-        let disY = this.index > rowNum * 2 ? 700 * scale * 2 - 8 : this.index > rowNum ? 700 * scale : 5;
-        let row = pos.y + disY;
+        let disX = this.index > rowNum * 2 ? (this.index - rowNum * 2 - 1) : this.index > rowNum ? (this.index - rowNum - 1 )* 160*scale : this.index * 160*scale;
+        let disY = this.index > rowNum * 2 ? 700 * scale * 2: this.index > rowNum ? 710 * scale : 5;
+        let row = pos.y + disY + offsetY;
+        
+        let fs = w < 600 ? map(w, 300, 600, 9, 14) : map(w, 764, 1300, 14, 20);
+        this._initial.style.fontSize = fs;
 
         this._item.scale.set(scale);
         this._item.position.x = pos.x + disX;
@@ -59,20 +64,12 @@ export default class Letter extends PIXI.Container {
         this._stamp.position.x = pos.x + 450 * scale / 2 + disX;
         this._stamp.position.y = row + 291 * scale / 2 + 2;
 
-        this._initial.position.x =  this._stamp.position.x - 1;
-        this._initial.position.y =  this._stamp.position.y - 1;
+        this._initial.position.x =  this._stamp.position.x;
+        this._initial.position.y =  this._stamp.position.y - 0.5;
     }
 
     onClick(e) {
         this.tapcb(this.index);
     }
-
-    play(){
-        console.log('play animation?')
-    }
-    stop(){
-        
-    }
-    
 }
 
