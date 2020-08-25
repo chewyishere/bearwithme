@@ -3,13 +3,14 @@ import { GlowFilter } from 'pixi-filters';
 import gsap from 'gsap';
 
 export default class Bear extends PIXI.Container {
-    constructor(spineData, lookCB, loveCB) {
+    constructor(spineData, lookCB, loveCB, mobile) {
         super()
 
         this.bear = new PIXI.spine.Spine(spineData)
         this.bear.skeleton.setSkinByName('default') 
         this.zIndex = 1;
         this.bear.interactive = true;
+        this.mobile = mobile;
 
         this.addChild(this.bear)
 
@@ -28,7 +29,8 @@ export default class Bear extends PIXI.Container {
         this.hint.scale.set(0.6);
         this.hint.anchor.x = 0.5;
         this.hint.anchor.y = 1.5;
-        this.hint.alpha = 0;
+        this.hint.alpha =  mobile ? 1 : 0;
+        this.hint.filters = mobile && [this.glowFilter];
         this.addChild(this.hint)
 
         this.lookCB = lookCB;
@@ -36,9 +38,11 @@ export default class Bear extends PIXI.Container {
     }
 
     move(pos, _itemCB){
+        this.hint.alpha = 0;
         this.setCurrentAnim('walk');
         gsap.to(this.bear.position, { x: pos.x, y:pos.y, duration: 1, 
             onComplete: () => {
+                this.hint.alpha = this.mobile && 1;
                 _itemCB();
             }
         });

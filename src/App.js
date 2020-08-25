@@ -131,6 +131,7 @@ export default class App extends PIXI.Application {
             res.bears.spineData,
             this.animate.bind(this),
             this.sendLove.bind(this),
+            this.mobile,
         );
         this.bear.filters = !this.mobile && [this.shadowFilter];
         this.getAsset();
@@ -243,27 +244,27 @@ export default class App extends PIXI.Application {
     
         let vig = map(window.innerWidth, 764, 1400, 0, 0.3);
         this.oldFilmFilter.vignetting = vig
-            this.renderer.resize(window.innerWidth, window.innerHeight)
-            this.bear.setPos(this.getCurAvatarPos()); 
-            this.bear.setSize(this.getSize(0.5));
+        this.renderer.resize(window.innerWidth, window.innerHeight)
+        this.bear.setPos(this.getCurAvatarPos()); 
+        this.bear.setSize(this.getSize(0.5));
 
-            this.items.forEach(item => {
-                let itemPos = this.getPos(item, 'itemPos');
-                let itemSize = this.getSize(item.size);
-                item.setPos(itemPos);
-                item.setSize(itemSize);
-                item.updateShadowY();
-            });
-            
-            this.letters.forEach(item => {
-                let pos = this.getPos(item, 'itemPos');
-                let scale = this.getSize(item.size);
-                item.setTransform(pos, scale)
-                item.updateShadowY();
-            });
+        this.items.forEach(item => {
+            let itemPos = this.getPos(item, 'itemPos');
+            let itemSize = this.getSize(item.size);
+            item.setPos(itemPos);
+            item.setSize(itemSize);
+            item.updateShadowY();
+        });
+        
+        this.letters.forEach(item => {
+            let pos = this.getPos(item, 'itemPos');
+            let scale = this.getSize(item.size);
+            item.setTransform(pos, scale)
+            item.updateShadowY();
+        });
 
-            this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset,this.getSize(1));
-            this.updateShadow();
+        this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset,this.getSize(1));
+        this.updateShadow();
         
     }
 
