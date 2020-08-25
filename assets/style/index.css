@@ -490,11 +490,18 @@ body,html {
             width: 35px;
             margin: 0;
         }
+
         .formContainer{
             top: 6%;
             height: 60%;
             min-width: unset;
-            width: 90vw;
+            width: 100vw;
+        }
+
+        #submitCTA{
+            border: 1px #D8A028 solid;
+            height: 40px;
+            width: 80px;
         }
 
         .formContainer::before{
@@ -528,6 +535,14 @@ body,html {
             width: 30%;
             height: 30%;
             bottom: 0;
+        }
+
+        #close{
+            background-image: url('png/no-hover.png');
+        }
+
+        #info{
+            background-image: url('png/info-hover.png');
         }
 
     }
