@@ -9,7 +9,8 @@ export default class Item extends PIXI.Container {
         this._item = PIXI.Sprite.from(`assets/items/${item.session}/${item.name}.png`);
         this._item.position = pos;
         this._item.scale.set(size)
-        this._item.anchor.set(item.anchor)
+        this.mobile = global.devicePixelRatio === 3;
+        this.mobile && this.anchorMobile ? this._item.anchor.set(item.anchorMobile[0], item.anchorMobile[1]) : this._item.anchor.set(item.anchor[0], item.anchor[1])
         this._item.interactive = item.clickable;
         this._item.buttonMode = true;
         this.name = item.name;

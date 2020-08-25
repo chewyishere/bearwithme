@@ -338,6 +338,10 @@ body,html {
         margin-bottom: 0;
     }
 
+    .infoContent p span{
+        display: inline-flex;
+    }
+
     .infoCreditItem {
         display: flex;
         justify-content: flex-start;
@@ -452,6 +456,9 @@ body,html {
         }
         .gifArrow, .infoBearGif{
             display: none !important;
+        }
+        .infoContent p span{
+            display: inline-block;
         }
       }
 

@@ -235,6 +235,8 @@ export default class App extends PIXI.Application {
 
     onResize() {
         this.mobile = global.devicePixelRatio === 3;
+        this.view.style.width = window.innerWidth;
+        this.view.style.height = window.innerHeight;
         if(window.innerWidth > 1024 && window.innerWidth && window.innerHeight > 700 ){
             this.renderer.resize(window.innerWidth, window.innerHeight)
             this.bear.setPos(this.getCurAvatarPos()); 
@@ -296,17 +298,24 @@ export default class App extends PIXI.Application {
     }
 
     getPos(item, posName){
-        if (posName){
+        if(this.mobile && item.mobilePos){
             return {
-                x: this.renderer.width * item[posName].x,
-                y: this.renderer.height * item[posName].y
-            };
-        } else {
-            return {
-                x: this.renderer.width * item.x,
-                y: this.renderer.height * item.y
+                x: this.renderer.width * item.mobilePos.x,
+                y: this.renderer.height * item.mobilePos.y
             }
-        }
+        } else {
+            if (posName){
+                return {
+                    x: this.renderer.width * item[posName].x,
+                    y: this.renderer.height * item[posName].y
+                };
+            } else {
+                return {
+                    x: this.renderer.width * item.x,
+                    y: this.renderer.height * item.y
+                }
+            }
+        } 
     }
 
     getShadowY(y){
@@ -314,7 +323,8 @@ export default class App extends PIXI.Application {
     }
 
     getSize(size){
-        return this.renderer.width * size * 0.0007;
+        let magicN = this.mobile ? 0.0012 : 0.0007;
+        return this.renderer.width * size * magicN;
     }
 
 
