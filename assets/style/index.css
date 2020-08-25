@@ -460,7 +460,7 @@ body,html {
             
         }
         .message-form{
-            margin: 9rem 5rem 1rem
+            margin: 10rem 5rem 1rem
         }
         main{
             min-width: 300px;
@@ -544,14 +544,14 @@ body,html {
         }
 
         .message-form{
-            margin: 140px 0 0;
+            margin: 120px 0 0;
             width: 70%;
             height: 39%;
         }
 
         .message-input{
             font-size: 1.4em;
-            width: 71%;
+            width: 81%;
             height: 94%;
             margin: auto;
         }
@@ -575,7 +575,7 @@ body,html {
             background-image: url('png/no-hover.png');
         }
 
-        #info{
+        ≈{
             background-image: url('png/info-hover.png');
         }
 
