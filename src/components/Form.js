@@ -216,7 +216,7 @@ export default class Form {
         let location = form.elements["flocation"].value;
 
         let msg = {
-            id: email,
+            id: Date.now() + Math.floor(Math.random() * 100),
             data: {
                 name: name,
                 email: email,
