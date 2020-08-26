@@ -101,16 +101,14 @@ export default class Form {
     }
 
     postLetters(msg) {
-        this.postComplete();
-        this.getCB(msg, false);
-        // axios.post(apiPath, msg)
-        //   .then((res) => {
-        //       this.postComplete();
-        //       this.getCB(msg, false);
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
+        axios.post(apiPath, msg)
+          .then((res) => {
+              this.postComplete();
+              this.getCB(msg, false);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     }
 
     emptyForm(){

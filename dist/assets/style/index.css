@@ -486,7 +486,20 @@ body,html {
         top: 45%;
     }
 
+    #hugPage{
+        text-align: center;
+        position: absolute;
+        width: 100vw;
+        top: 5vh;
+        pointer-events: none;
+        z-index: -1;
+    }
 
+    #hugPage h1{
+        opacity: 0;
+        font-size: 1.5rem;
+        color: #383838;
+    }
 
 
 
@@ -535,6 +548,16 @@ body,html {
       }
 
     @media only screen and (max-width: 600px) {
+        #hugPage{
+            top: 6vh;
+        }
+
+        #hugPage h1{
+            margin: 1rem 2rem;
+            opacity: 0;
+            font-size: 1.2rem;
+        }
+    
         #infoPage{
             min-width: unset;
             height: 100vh;
