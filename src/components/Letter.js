@@ -48,8 +48,9 @@ export default class Letter extends PIXI.Container {
     setTransform(pos,scale, w){
         let offsetY = w < 600 ? map(w, 300, 600, 10, 15) : map(w, 764, 1300, 15, -5);
         
-        let rowNum = 6;
-        let disX = this.index > rowNum * 2 ? (this.index - rowNum * 2 - 1)* 160 * scale : this.index > rowNum ? (this.index - rowNum - 1 )* 160*scale : this.index * 160*scale;
+        let rowNum = 10;
+        let letterW = map(rowNum, 6, 15, 160, 40) * scale;
+        let disX = this.index > rowNum * 2 ? (this.index - rowNum * 2 - 1)* letterW : this.index > rowNum ? (this.index - rowNum - 1 )*letterW : this.index * letterW;
         let disY = this.index > rowNum * 2 ? 700 * scale * 2: this.index > rowNum ? 710 * scale : 5;
         let row = pos.y + disY + offsetY;
         
