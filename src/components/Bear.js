@@ -42,7 +42,6 @@ export default class Bear extends PIXI.Container {
         this.setCurrentAnim('walk');
         gsap.to(this.bear.position, { x: pos.x, y:pos.y, duration: 1, 
             onComplete: () => {
-                this.hint.alpha = this.mobile && 1;
                 _itemCB();
             }
         });
@@ -71,7 +70,7 @@ export default class Bear extends PIXI.Container {
         this.hint.position.y = y;
     }
 
-    setCurrentAnim(anim, init){
+    setCurrentAnim(anim, init, loop){
         if (typeof(anim) === 'string') {
             this.prevAnim = this.currentAnim;
             this.currentAnim = anim;
@@ -79,12 +78,19 @@ export default class Bear extends PIXI.Container {
                 this.bear.stateData.setMix(anim, this.prevAnim, 0.1);
                 this.bear.stateData.setMix(this.prevAnim, anim, 0.1);
             }
-            this.bear.state.setAnimation(0, anim, true);
+            this.bear.state.setAnimation(0, anim, loop);
         }
+
+        if(anim !== 'hug' && anim !== 'walk' && this.mobile){
+            this.hint.alpha = 1;
+        }
+    }
+    hug(){
+        this.setCurrentAnim('hug', false, false);
     }
 
     look(){
-        if(this.currentAnim !== 'walk'){
+        if(this.currentAnim !== 'walk' && this.currentAnim !== 'hug'){
             this.hint.alpha = 1;
             this.hint.filters = [this.glowFilter];
             this.bear.stateData.setMix(this.currentAnim, this.currentAnim + '-look', 0.1);
@@ -95,7 +101,7 @@ export default class Bear extends PIXI.Container {
     }
 
     lookAway(){
-        if(this.currentAnim !== 'walk'){
+        if(this.currentAnim !== 'walk' && this.currentAnim !== 'hug'){
             this.hint.alpha = 0;
             this.hint.filters = [];
             this.setCurrentAnim(this.currentAnim);
@@ -104,7 +110,9 @@ export default class Bear extends PIXI.Container {
     }
 
     onClick(){
-        this.loveCB();
+        if(this.currentAnim !== 'walk' && this.currentAnim !== 'hug'){
+            this.loveCB();
+        }
     }
 
 }

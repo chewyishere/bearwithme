@@ -22,7 +22,6 @@ export default class App extends PIXI.Application {
         });
 
         document.body.appendChild(this.view);
-       // console.log(this.renderer.resolution)
 
         this.items = [];
         this.mobile = window.innerWidth <= 768;
@@ -33,6 +32,7 @@ export default class App extends PIXI.Application {
 
         this.ticker = PIXI.Ticker.shared;
         this.scenes = [new PIXI.Container(), new PIXI.Container()];
+        this.objectLayer = new PIXI.Container();
      
         this.init();
         this.getBear = this.getBear.bind(this);
@@ -45,7 +45,7 @@ export default class App extends PIXI.Application {
         this.setupWorld();
         this.getBear()
         this.initFilters();
-        this.form = new Form(this.setupLetters.bind(this));
+        this.form = new Form(this.setupLetters.bind(this), this.sentLetter.bind(this));
     }
 
     initFilters(){
@@ -74,6 +74,7 @@ export default class App extends PIXI.Application {
             scene.y = 0;
             this.stage.addChild(scene)
         });
+        this.scenes[0].addChild(this.objectLayer);
     }
 
     setupLetters(msgs, init){
@@ -93,10 +94,15 @@ export default class App extends PIXI.Application {
             let l = new Letter(_item, pos, size, _idx, color, msgs, this.openLetter.bind(this));
             this.letters.push(l);
             !this.mobile && l.addShadow();
-            this.scenes[_item.scene].addChild(l);
+            this.objectLayer.addChild(l);
             this.form.addLetterToDom(msgs);
         }
-      
+    }
+
+    sentLetter(){
+        this.bear.bear.interactive = false;
+        this.walkBear(99);
+        this.bear.hint.alpha = 0;
     }
 
     openLetter(idx){
@@ -161,11 +167,11 @@ export default class App extends PIXI.Application {
         this.bear.setSize(this.getSize(0.5)); 
         this.items.forEach(_item => {
             !this.mobile && _item.addShadow();
-            this.scenes[_item.scene].addChild(_item);
+            this.objectLayer.addChild(_item);
         });
         this.letters.forEach(_item => {
             !this.mobile && _item.addShadow();
-            this.scenes[_item.scene].addChild(_item);
+            this.objectLayer.addChild(_item);
         });
         this.scenes[0].addChild(this.bear);
         this.UI = new UI();
@@ -176,12 +182,17 @@ export default class App extends PIXI.Application {
     updateShadow(walk){
         if (!this.mobile){
             if (walk){
-                    this.shadowFilter.uniforms.shadowDirection = [0, -0.3]
-                    this.ticker.add(this.shadowTicker, this);
-            } else{
-                    this.ticker.remove(this.shadowTicker, this);
-                    this.shadowFilter.uniforms.shadowDirection = this.currentItem.avatarShadowDir;
-                    this.shadowFilter.uniforms.floorY =  this.getCurAvatarPos().y + this.getShadowY(this.currentItem.avatarShadowY);
+                this.shadowFilter.uniforms.shadowDirection = [0, -0.3]
+                this.ticker.add(this.shadowTicker, this);
+            } else if (this.currentIdx === 99){
+                this.ticker.remove(this.shadowTicker, this);
+                 let shadowY = this.getCurAvatarPos().y + this.getShadowY(OTHERS[1].avatarShadowY);
+                 this.shadowFilter.uniforms.floorY =  shadowY;
+            } else { 
+                this.ticker.remove(this.shadowTicker, this);
+                let shadowY = this.getCurAvatarPos().y + this.getShadowY(this.currentItem.avatarShadowY);
+                this.shadowFilter.uniforms.shadowDirection = this.currentItem.avatarShadowDir;
+                this.shadowFilter.uniforms.floorY =  shadowY;
             };
         }
     }
@@ -206,20 +217,21 @@ export default class App extends PIXI.Application {
     }
 
     walkBear(idx){
-        if(idx === 2) {
-           this.openDoor();
+        this.updateShadow(true);
+        this.toggleItemAnim(1);
+        this.prevAnim = 0;
+        if(idx === 99) {
+            this.currentIdx = idx;
+            this.bear.move(this.getPos(OTHERS[1], 'avatarPos'), this.playhug.bind(this));
         } else {
-            this.updateShadow(true);
-            this.toggleItemAnim(1);
-            this.prevAnim = 0;
             this.updateSession(ITEMS[idx]);
             this.bear.move(this.getPos(this.currentItem, 'avatarPos'), this.checkReachedItem.bind(this))
         }
     }
 
-    openDoor(){
-        this.setActiveScene(1);
-    }
+    // openDoor(){
+    //     this.setActiveScene(1);
+    // }
     
     toggleItemAnim(val){
         this.currentItem.setActive(val);
@@ -234,9 +246,70 @@ export default class App extends PIXI.Application {
     }
     checkReachedItem(init){
         this.toggleItemAnim(0);
-        this.bear.setCurrentAnim(this.currentItem.avatarAnim, init)
+        this.bear.setCurrentAnim(this.currentItem.avatarAnim, init, true)
         this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset, this.getSize(1)); 
         this.updateShadow(false);
+    }
+
+    playhug(){
+        this.items.forEach(_item=>{
+            _item._item.interactive = false;
+        });
+
+        this.letters.forEach(_letter=>{
+            _letter._item.interactive = false;
+        })
+        gsap.to(this.objectLayer, {alpha: 0, duration: 1.5, ease: "power2.out", onComplete: ()=>{
+            this.bear.hug();
+        }});   
+    
+        this.updateShadow();
+        this.showHugPage();
+    }
+
+
+    showHugPage(){
+        let hugPage = document.getElementById("hugPage");
+        let hugMsgs = hugPage.querySelectorAll("h1");
+        gsap.to(hugPage, {zIndex: 1});
+        gsap.to(hugMsgs, {
+            opacity: 1,
+            ease: "power2.in",
+            stagger: 1.5,
+            delay: 5,
+            onComplete: ()=>{
+                setTimeout(()=>{ 
+                    this.afterHug();
+                }, 3000);
+            }
+        })
+    }
+
+    afterHug(){
+        let hugPage = document.getElementById("hugPage");
+        let hugMsgs = hugPage.querySelectorAll("h1");
+        gsap.to(hugMsgs, {
+            opacity: 0,
+            ease: "power2.out",
+            duration: 0.5,
+            onComplete: ()=>{
+                gsap.to(hugPage, {zIndex: 1});
+            }
+        })
+
+        this.items.forEach(_item=>{
+            _item._item.interactive = true;
+        });
+
+        this.letters.forEach(_letter=>{
+            _letter._item.interactive = true;
+        })
+
+        gsap.to(this.objectLayer, {alpha: 1, duration: 1.5, ease: "power2.out", onComplete: ()=>{
+            this.walkBear(this.getStartIdx());
+            this.updateSession(ITEMS[this.getStartIdx()]);
+        }});   
+       
     }
 
     onResize() {
@@ -250,22 +323,25 @@ export default class App extends PIXI.Application {
         this.bear.setPos(this.getCurAvatarPos()); 
         this.bear.setSize(this.getSize(0.5));
 
-        this.items.forEach(item => {
-            let itemPos = this.getPos(item, 'itemPos');
-            let itemSize = this.getSize(item.size);
-            item.setPos(itemPos);
-            item.setSize(itemSize);
-            item.updateShadowY();
-        });
-        
-        this.letters.forEach(item => {
-            let pos = this.getPos(item, 'itemPos');
-            let scale = this.getSize(item.size);
-            item.setTransform(pos, scale, window.innerWidth)
-            item.updateShadowY();
-        });
+        if(this.currentIdx !== 99){
+            this.items.forEach(item => {
+                let itemPos = this.getPos(item, 'itemPos');
+                let itemSize = this.getSize(item.size);
+                item.setPos(itemPos);
+                item.setSize(itemSize);
+                item.updateShadowY();
+            });
+            
+            this.letters.forEach(item => {
+                let pos = this.getPos(item, 'itemPos');
+                let scale = this.getSize(item.size);
+                item.setTransform(pos, scale, window.innerWidth)
+                item.updateShadowY();
+            });
 
-        this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset,this.getSize(1));
+            this.bear.setHitArea(this.getCurAvatarPos(), this.currentItem.hitAreaOffset,this.getSize(1));
+        }
+
         this.updateShadow();
         
     }
@@ -298,11 +374,12 @@ export default class App extends PIXI.Application {
     }
 
     shadowTicker() {
-        this.shadowFilter.uniforms.floorY =  this.bear.bear.toGlobal(new PIXI.Point(0, 0)).y + this.getShadowY(0.3)
+        this.shadowFilter.uniforms.floorY =  this.bear.bear.toGlobal(new PIXI.Point(0, 0)).y + this.getShadowY(0.2)
     }
 
     getCurAvatarPos(){
-        return this.getPos(this.currentItem, 'avatarPos');
+        let pos = this.currentIdx === 99 ? this.getPos(OTHERS[1], 'avatarPos') : this.getPos(this.currentItem, 'avatarPos');
+        return pos
     }
 
     getPos(item, posName){

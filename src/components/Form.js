@@ -4,7 +4,7 @@ const apiPath = 'https://iot.dukefromearth.com/products/bearwithme'
 
 
 export default class Form {
-    constructor(_getCB) {
+    constructor(_getCB, _sentCB) {
         this.form = document.querySelector("form");
         this.form.addEventListener("submit", this.onSubmit.bind(this));
         this.closeArea = document.getElementById("closeArea");
@@ -26,12 +26,14 @@ export default class Form {
 
         this.main = document.querySelector("main");
         this.getCB = _getCB;
+        this.sentCB = _sentCB;
         this.showingOldLetter = false;
         this.getLetters();
         this.letterDOMS = [];
         this.currentIdx = 0;
         this.resetDOM();
     }
+
 
     resetDOM(){
         gsap.to(this.info, {rotation: -40, x: '-100%'});
@@ -99,21 +101,24 @@ export default class Form {
     }
 
     postLetters(msg) {
-        axios.post(apiPath, msg)
-          .then((res) => {
-              this.postComplete();
-              this.getCB(msg, false);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        this.postComplete();
+        this.getCB(msg, false);
+        // axios.post(apiPath, msg)
+        //   .then((res) => {
+        //       this.postComplete();
+        //       this.getCB(msg, false);
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
     }
 
     emptyForm(){
         this.form.elements["fname"].value = '';
         this.form.elements["femail"].value = '';
         this.form.elements["fmessage"].value='';
-        this.main.classList.remove('active')
+        this.main.classList.remove('active-form');
+        this.main.classList.remove('active-letter')
         this.chat.classList.remove('chat-thanks');
         this.chat.classList.remove('chat-error');
     }
@@ -124,6 +129,7 @@ export default class Form {
         gsap.to(this.form, {rotation: 10, y: "-150%", duration: 0.5, delay: 1, onComplete: ()=>{
             gsap.set(this.chat, {opacity: 0});
             this.emptyForm();
+            this.sentCB();
         }});
     }
 
