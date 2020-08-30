@@ -26,7 +26,7 @@ export default class Bear extends PIXI.Container {
         this.hitSqr.on('pointerout', this.lookAway.bind(this));
 
         this.hint = new PIXI.Sprite.from(`assets/bear/hint.png`);
-        this.hint.scale.set(0.6);
+        this.hint.scale.set(0.2);
         this.hint.anchor.x = 0.5;
         this.hint.anchor.y = 1.5;
         this.hint.alpha =  mobile ? 1 : 0;

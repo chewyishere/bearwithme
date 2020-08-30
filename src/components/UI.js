@@ -1,17 +1,20 @@
 import gsap from 'gsap';
 
 export default class UI {
-    constructor() {
+    constructor(scene) {
+        this.scene = scene;
         this.sound = document.getElementById("music");
         this.soundBTN = document.getElementById("musicCTA");
         this.info = document.getElementById("infoPage");
         this.infoBTN = document.getElementById("infoCTA");
         this.closeBTN = document.getElementById("infoClose");
         this.bearImage = document.getElementsByClassName("infoBearGif")[0];
-        
+        this.next = document.getElementById("next");
+
         this.sound.volume = 0.4;
         this.isPlaying = false;
         this.isInfoOn = false;
+        this.on2ndPage = false;
 
         this.gif = document.getElementById("bearGif"); 
 
@@ -20,6 +23,13 @@ export default class UI {
         this.soundBTN.addEventListener('mousedown',this.toggleMusic.bind(this));   
         this.infoBTN.addEventListener('mousedown',this.toggleInfo.bind(this));   
         this.closeBTN.addEventListener('mousedown',this.toggleInfo.bind(this, false));
+        this.next.addEventListener('mousedown',this.nextPage.bind(this, false));
+    }
+
+    nextPage(){
+        gsap.to(this.scene.position, {x: !this.on2ndPage? -window.innerWidth : 0, duration: 0.5});  
+        this.on2ndPage = !this.on2ndPage;
+        console.log(this.scene.position)  
     }
 
     toggleGIF(over){

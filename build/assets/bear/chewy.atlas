@@ -1,0 +1,118 @@
+
+chewy.png
+size: 1595,780
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm_l
+  rotate: false
+  xy: 912, 6
+  size: 90, 202
+  orig: 92, 202
+  offset: 1, 0
+  index: -1
+arm_r
+  rotate: false
+  xy: 1004, 19
+  size: 99, 189
+  orig: 99, 194
+  offset: 0, 5
+  index: -1
+body
+  rotate: false
+  xy: 1218, 218
+  size: 375, 560
+  orig: 375, 561
+  offset: 0, 1
+  index: -1
+body_back
+  rotate: true
+  xy: 2, 6
+  size: 772, 410
+  orig: 772, 410
+  offset: 0, 0
+  index: -1
+body_side
+  rotate: false
+  xy: 807, 210
+  size: 409, 568
+  orig: 410, 568
+  offset: 1, 0
+  index: -1
+chair
+  rotate: false
+  xy: 414, 148
+  size: 391, 630
+  orig: 391, 630
+  offset: 0, 0
+  index: -1
+eyebrow
+  rotate: true
+  xy: 1400, 8
+  size: 208, 35
+  orig: 212, 46
+  offset: 3, 7
+  index: -1
+eyes_highlight_r
+  rotate: true
+  xy: 807, 183
+  size: 25, 24
+  orig: 25, 24
+  offset: 0, 0
+  index: -1
+eyes_hightlight_l
+  rotate: true
+  xy: 807, 156
+  size: 25, 23
+  orig: 25, 25
+  offset: 0, 0
+  index: -1
+eyes_look
+  rotate: true
+  xy: 1218, 7
+  size: 209, 89
+  orig: 211, 94
+  offset: 1, 5
+  index: -1
+eyes_sad
+  rotate: true
+  xy: 1309, 7
+  size: 209, 89
+  orig: 211, 94
+  offset: 1, 5
+  index: -1
+face_side
+  rotate: true
+  xy: 764, 7
+  size: 139, 146
+  orig: 140, 148
+  offset: 0, 1
+  index: -1
+face_side_look
+  rotate: false
+  xy: 414, 2
+  size: 184, 144
+  orig: 184, 151
+  offset: 0, 1
+  index: -1
+leg_l
+  rotate: false
+  xy: 600, 6
+  size: 80, 140
+  orig: 81, 141
+  offset: 0, 1
+  index: -1
+leg_r
+  rotate: false
+  xy: 682, 6
+  size: 80, 140
+  orig: 81, 141
+  offset: 1, 1
+  index: -1
+nose
+  rotate: false
+  xy: 1105, 136
+  size: 77, 72
+  orig: 77, 72
+  offset: 0, 0
+  index: -1
