@@ -1,9 +1,10 @@
 import * as PIXI from 'pixi.js';
 import { GlowFilter } from 'pixi-filters';
+import { shadowVert, shadowFrag} from '../components/glsl/shadow'
 import gsap from 'gsap';
 
 export default class Bear extends PIXI.Container {
-    constructor(spineData, lookCB, loveCB, mobile) {
+    constructor(spineData, shadowFilter, lookCB, loveCB, mobile) {
         super()
 
         this.bear = new PIXI.spine.Spine(spineData)
@@ -11,10 +12,10 @@ export default class Bear extends PIXI.Container {
         this.zIndex = 1;
         this.bear.interactive = true;
         this.mobile = mobile;
-
+        this.shadowFilter = shadowFilter;
+        this.filters = !this.mobile && [this.shadowFilter];
         this.addChild(this.bear)
 
-        this.bear.interactive = true;
         this.currentAnim = 'walk';
         this.prevAnim = '';
 
@@ -26,7 +27,7 @@ export default class Bear extends PIXI.Container {
         this.hitSqr.on('pointerout', this.lookAway.bind(this));
 
         this.hint = new PIXI.Sprite.from(`assets/bear/hint.png`);
-        this.hint.scale.set(0.2);
+        this.hint.scale.set(0.6);
         this.hint.anchor.x = 0.5;
         this.hint.anchor.y = 1.5;
         this.hint.alpha =  mobile ? 1 : 0;
@@ -113,6 +114,26 @@ export default class Bear extends PIXI.Container {
         if(this.currentAnim !== 'walk' && this.currentAnim !== 'hug'){
             this.loveCB();
         }
+    }
+    shadowTicker() {
+        this.shadowFilter.uniforms.floorY =  this.bear.toGlobal(new PIXI.Point(0, 0)).y + this.getShadowY(0.2)
+    }
+
+    updateShadow(walk, ticker, y_avatar, y_item, dir){
+        if (!this.mobile){
+            if (walk){
+                this.shadowFilter.uniforms.shadowDirection = [0, -0.3]
+                ticker.add(this.shadowTicker, this);
+            } else {
+                ticker.remove(this.shadowTicker, this);
+                 let shadowY = y_avatar + this.getShadowY(y_item);
+                 this.shadowFilter.uniforms.floorY = shadowY;
+                 this.shadowFilter.uniforms.shadowDirection = dir;
+            } 
+        }
+    }
+    getShadowY(y){
+        return this.height * y;
     }
 
 }
