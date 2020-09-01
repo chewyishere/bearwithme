@@ -28,6 +28,7 @@ export default class Form {
         this.getCB = _getCB;
         this.sentCB = _sentCB;
         this.showingOldLetter = false;
+        this.forBear = '';
         this.getLetters();
         this.letterDOMS = [];
         this.currentIdx = 0;
@@ -101,14 +102,16 @@ export default class Form {
     }
 
     postLetters(msg) {
-        axios.post(apiPath, msg)
-          .then((res) => {
-              this.postComplete();
-              this.getCB(msg, false);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        this.postComplete();
+        this.getCB(msg, false);
+        // axios.post(apiPath, msg)
+        //   .then((res) => {
+        //       this.postComplete();
+        //       this.getCB(msg, false);
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
     }
 
     emptyForm(){
@@ -195,7 +198,8 @@ export default class Form {
     }
    
 
-    show(){
+    show(bear){
+        this.forBear = bear;
         this.main.classList.add('active-form')
         gsap.to(this.info, {rotation: 0, x: '0%', duration: 0.5, delay: 1, ease: "power3.out",});
         gsap.to(this.close, {rotation: 0, x: '0%', duration: 0.5, delay: 1, ease: "power3.out",});

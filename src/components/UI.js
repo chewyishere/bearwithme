@@ -29,7 +29,8 @@ export default class UI {
     nextPage(){
         gsap.to(this.scene.position, {x: !this.on2ndPage? -window.innerWidth : 0, duration: 0.5});  
         this.on2ndPage = !this.on2ndPage;
-        console.log(this.scene.position)  
+        this.next.classList.toggle('next-right');
+
     }
 
     toggleGIF(over){

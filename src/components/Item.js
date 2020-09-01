@@ -3,7 +3,7 @@ import { shadowVert, shadowFrag} from './glsl/shadow'
 import { GlowFilter } from 'pixi-filters';
 
 export default class Item extends PIXI.Container {
-    constructor(item, pos, size, index, _tapcb, _loadcb) {
+    constructor(item, pos, size, index, _tapcb) {
         super()
         Object.assign(this, item);
         this._item = PIXI.Sprite.from(`assets/items/${item.session}/${item.name}.png`);
@@ -22,7 +22,6 @@ export default class Item extends PIXI.Container {
         this.play = this.play.bind(this);
         this.loadSubAssets = this.loadSubAssets.bind(this)
         this.setActive = this.setActive.bind(this);
-        this.loadCB = _loadcb;
         this.shadow = new PIXI.Filter(shadowVert, shadowFrag);
         this.glow = new GlowFilter();
 
@@ -56,7 +55,6 @@ export default class Item extends PIXI.Container {
         this.subAsset.alpha = 0;
         this.subAsset.scale = this._item.scale;
         this.addChild(this.subAsset);
-        this.loadCB();
     }
     setPos(pos){
         this._item.position = pos;

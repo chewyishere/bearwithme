@@ -1,10 +1,9 @@
 import * as PIXI from 'pixi.js';
 import { GlowFilter } from 'pixi-filters';
-import { shadowVert, shadowFrag} from '../components/glsl/shadow'
 import gsap from 'gsap';
 
 export default class Bear extends PIXI.Container {
-    constructor(spineData, shadowFilter, lookCB, loveCB, mobile) {
+    constructor(spineData, lookCB, loveCB, mobile) {
         super()
 
         this.bear = new PIXI.spine.Spine(spineData)
@@ -12,30 +11,35 @@ export default class Bear extends PIXI.Container {
         this.zIndex = 1;
         this.bear.interactive = true;
         this.mobile = mobile;
-        this.shadowFilter = shadowFilter;
-        this.filters = !this.mobile && [this.shadowFilter];
         this.addChild(this.bear)
 
         this.currentAnim = 'walk';
         this.prevAnim = '';
 
-        this.hitSqr = new PIXI.Graphics(0,0,1,1);
-        this.addChild(this.hitSqr)
-        this.glowFilter = new GlowFilter();
-        this.hitSqr.on('pointerover',this.look.bind(this));
-        this.hitSqr.on('pointerdown', this.onClick.bind(this));
-        this.hitSqr.on('pointerout', this.lookAway.bind(this));
-
-        this.hint = new PIXI.Sprite.from(`assets/bear/hint.png`);
-        this.hint.scale.set(0.6);
-        this.hint.anchor.x = 0.5;
-        this.hint.anchor.y = 1.5;
-        this.hint.alpha =  mobile ? 1 : 0;
-        this.hint.filters = mobile && [this.glowFilter];
-        this.addChild(this.hint)
+        this.setupHitSqr();
+        this.setupHint();
 
         this.lookCB = lookCB;
         this.loveCB = loveCB;
+    }
+
+    setupHitSqr() {
+        this.hitSqr = new PIXI.Graphics(0,0,1,1);
+        this.hitSqr.on('pointerover',this.look.bind(this));
+        this.hitSqr.on('pointerdown', this.onClick.bind(this));
+        this.hitSqr.on('pointerout', this.lookAway.bind(this));
+        this.addChild(this.hitSqr)
+    }
+
+    setupHint(){
+        this.hint = this.mobile? new PIXI.Sprite.from(`assets/bear/hint_mobile.png`) : new PIXI.Sprite.from(`assets/bear/hint.png`);
+        this.hint.scale.set(0.6);
+        this.hint.anchor.x = 0.5;
+        this.hint.anchor.y = 1.5;
+        this.hint.alpha =  this.mobile ? 1 : 0;
+        let glow = new GlowFilter();
+        this.hint.filters = [glow];
+        this.addChild(this.hint)
     }
 
     move(pos, _itemCB){
@@ -48,11 +52,8 @@ export default class Bear extends PIXI.Container {
         });
     }
 
-    setPos(pos){
+    setTransform(pos, size){
         this.bear.position = pos;
-    }
-
-    setSize(size){
         this.bear.scale.set(size);
     }
 
@@ -67,11 +68,12 @@ export default class Bear extends PIXI.Container {
         this.hitSqr.drawRect(x, y, w, h);
         this.hitSqr.endFill();
         this.hitSqr.interactive = true;
-        this.hint.position.x = x + w/2;
-        this.hint.position.y = y;
+
+        this.hint.position.x = this.mobile ? window.innerWidth/2 : x + w/2;
+        this.hint.position.y = this.mobile ? window.innerHeight - 10 : y;
     }
 
-    setCurrentAnim(anim, init, loop){
+    setCurrentAnim(anim, init){
         if (typeof(anim) === 'string') {
             this.prevAnim = this.currentAnim;
             this.currentAnim = anim;
@@ -79,7 +81,15 @@ export default class Bear extends PIXI.Container {
                 this.bear.stateData.setMix(anim, this.prevAnim, 0.1);
                 this.bear.stateData.setMix(this.prevAnim, anim, 0.1);
             }
-            this.bear.state.setAnimation(0, anim, loop);
+            if(anim === 'walk'){
+                this.hitSqr.clear();
+            }
+            if(anim === 'hug'){
+                this.bear.state.setAnimation(0, anim, false);
+            } else {
+                this.bear.state.setAnimation(0, anim, true);
+            }
+            
         }
 
         if(anim !== 'hug' && anim !== 'walk' && this.mobile){
@@ -93,7 +103,6 @@ export default class Bear extends PIXI.Container {
     look(){
         if(this.currentAnim !== 'walk' && this.currentAnim !== 'hug'){
             this.hint.alpha = 1;
-            this.hint.filters = [this.glowFilter];
             this.bear.stateData.setMix(this.currentAnim, this.currentAnim + '-look', 0.1);
             this.bear.stateData.setMix(this.currentAnim + '-look', this.currentAnim, 0.1);
             this.bear.state.setAnimation(0, this.currentAnim + '-look', true);
@@ -104,7 +113,6 @@ export default class Bear extends PIXI.Container {
     lookAway(){
         if(this.currentAnim !== 'walk' && this.currentAnim !== 'hug'){
             this.hint.alpha = 0;
-            this.hint.filters = [];
             this.setCurrentAnim(this.currentAnim);
             this.lookCB(0);
         }
@@ -115,25 +123,4 @@ export default class Bear extends PIXI.Container {
             this.loveCB();
         }
     }
-    shadowTicker() {
-        this.shadowFilter.uniforms.floorY =  this.bear.toGlobal(new PIXI.Point(0, 0)).y + this.getShadowY(0.2)
-    }
-
-    updateShadow(walk, ticker, y_avatar, y_item, dir){
-        if (!this.mobile){
-            if (walk){
-                this.shadowFilter.uniforms.shadowDirection = [0, -0.3]
-                ticker.add(this.shadowTicker, this);
-            } else {
-                ticker.remove(this.shadowTicker, this);
-                 let shadowY = y_avatar + this.getShadowY(y_item);
-                 this.shadowFilter.uniforms.floorY = shadowY;
-                 this.shadowFilter.uniforms.shadowDirection = dir;
-            } 
-        }
-    }
-    getShadowY(y){
-        return this.height * y;
-    }
-
 }
