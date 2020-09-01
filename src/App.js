@@ -64,8 +64,8 @@ export default class App extends PIXI.Application {
         this.loader.load(this.onBearsLoaded.bind(this));
     }
     onBearsLoaded(loader, res) {
-        this.chewy = new BearScene(res.chewy.spineData, 'chewy', this.ticker, 0.35, this.helper, this.objectLayer, this.form, this.afterHug);
-        this.stephen = new BearScene(res.bears.spineData, 'stephen', this.ticker, 0.29, this.helper, this.objectLayer, this.form, this.afterHug);
+        this.chewy = new BearScene(res.chewy.spineData, 'chewy', this.ticker, 0.35, this.helper, this.objectLayer, this.form, this.afterHug, this.updateMusic.bind(this));
+        this.stephen = new BearScene(res.bears.spineData, 'stephen', this.ticker, 0.29, this.helper, this.objectLayer, this.form, this.afterHug, this.updateMusic.bind(this));
         this.chewy.loadItems(this.loader, ITEMS_C, ()=>{
             this.stephen.loadItems(this.loader, ITEMS_S, ()=>{
                 this.allAssetsLoaded();
@@ -139,6 +139,10 @@ export default class App extends PIXI.Application {
         } else {
             gsap.to(this.stephen.bear, {alpha: 1, duration: 1, delay: 2.5, ease: "power2.out" });   
         }
+    }
+
+    updateMusic(song){
+        this.UI.switchMusic(song);
     }
 
     openLetter(idx){

@@ -3,7 +3,8 @@ import gsap from 'gsap';
 export default class UI {
     constructor(scene) {
         this.scene = scene;
-        this.sound = document.getElementById("music");
+        this.sound_guitar = document.getElementById("music_guitar");
+        this.sound_piano = document.getElementById("music_piano");
         this.soundBTN = document.getElementById("musicCTA");
         this.info = document.getElementById("infoPage");
         this.infoBTN = document.getElementById("infoCTA");
@@ -11,10 +12,18 @@ export default class UI {
         this.bearImage = document.getElementsByClassName("infoBearGif")[0];
         this.next = document.getElementById("next");
 
-        this.sound.volume = 0.4;
+        this.sound_guitar.volume = 0.3;
+        this.sound_piano.volume = 0.3;
+        this.sound = [this.sound_guitar, this.sound_piano];
+
+        this.sound.forEach(s=>{
+            s.pause();
+        })
+
         this.isPlaying = false;
         this.isInfoOn = false;
         this.on2ndPage = false;
+        this.musicIdx = 1;
 
         this.gif = document.getElementById("bearGif"); 
 
@@ -30,7 +39,6 @@ export default class UI {
         gsap.to(this.scene.position, {x: !this.on2ndPage? -window.innerWidth : 0, duration: 0.5});  
         this.on2ndPage = !this.on2ndPage;
         this.next.classList.toggle('next-right');
-
     }
 
     toggleGIF(over){
@@ -42,14 +50,36 @@ export default class UI {
         gsap.to(this.info, {y: this.isInfoOn ? '0%': '-100%', duration: 0.5});    
     }
 
+    switchMusic(n){
+        this.musicIdx = n;
+        this.isPlaying = true;
+        this.soundBTN.classList.add('off')
+        if(n === 1){
+            this.sound[0].pause();
+            this.sound[0].currentTime = 0;
+            let p = setTimeout(()=>{
+                this.sound[1].play(); 
+                clearTimeout(p);
+            }, 1000);
+
+        } else {
+            this.sound[1].pause()
+            this.sound[1].currentTime = 0;
+            let p = setTimeout(()=>{
+                this.sound[0].play(); 
+                clearTimeout(p);
+            }, 1000);
+        }
+    }
+
     toggleMusic(){
         this.isPlaying = !this.isPlaying;
        if( this.isPlaying ) {
             this.soundBTN.classList.add('off')
-            this.sound.play()
+            this.sound[this.musicIdx].play();
         } else {
             this.soundBTN.classList.remove('off')
-            this.sound.pause()
+            this.sound[this.musicIdx].pause();
         }
 
     }

@@ -6,7 +6,7 @@ import Item from './Item';
 import { shadowVert, shadowFrag} from './glsl/shadow'
 
 export default class BearScene extends PIXI.Container{
-    constructor(bearData, name, ticker, size, helper, objectLayer, form, afterHug){
+    constructor(bearData, name, ticker, size, helper, objectLayer, form, afterHug, updateMusic){
         super();
         this.ticker = ticker;
         this.size = size;
@@ -24,6 +24,7 @@ export default class BearScene extends PIXI.Container{
         this.hitHalfScreen = false;
         this.onPage = 0;
         this.walkBear = this.walkBear.bind(this);
+        this.updateMusic = updateMusic;
 
         this.bear = new Bear(bearData, this.animate.bind(this), this.sendLove.bind(this), this.mobile);    
         this.bear.name = name;
@@ -106,6 +107,7 @@ export default class BearScene extends PIXI.Container{
         this.updateShadow(true);
         this.toggleItemAnim(1);
         this.prevAnim = 0;
+
         if(idx === 99) {
             this.previousIdx = this.currentIdx;
             this.currentIdx = idx;
@@ -122,6 +124,12 @@ export default class BearScene extends PIXI.Container{
         } else {
             this.updateSession(this.rawItems[idx]);
             this.bear.move(this.helper.getPos(this.currentItem, 'avatarPos'), this.checkReachedItem.bind(this))
+            if(this.currentItem.name === 'piano'){
+                this.updateMusic(1)
+            }
+            if(this.currentItem.name === 'guitar'){
+                this.updateMusic(0)
+            }
         }
     }
     
