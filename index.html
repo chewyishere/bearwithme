@@ -12,6 +12,7 @@
             <div class="controls">
                 <button id="musicCTA"></button>         
                 <button id="infoCTA"></button>  
+                <button id="next"></button>  
             </div>
             <div id="hugPage">
                 <h1>Oh my! We are delighted!</h1>
@@ -22,7 +23,7 @@
             </div>
             <div id="infoPage">
                 <div class="infoContent">
-                    <h1>Bear With Me is an <span style="color: #f08038"> IoT </span> experiment that turns viritual hugs into physical hugs!</h1> 
+                    <h1>Bear With Me is an <span style="color: #f08038"> Internet of Things </span> experiment that turns viritual hugs into physical hugs!</h1> 
                     <p>Welcome! to the quarantine life of two sad bears. Chewy <span class="chewy"> </span>and Stephen <span class="stephen"></span></p>
                     <p>If you'd like, you can send a virtual hug here, with some message. (<span class="stephen"></span> is sensitive...please be kind. )
                     <p>Once you send a message/hug, they will be sent to an 8ft tall robot bear, who will give us a real hug<span class="arrow gifArrow"></span>
@@ -30,19 +31,21 @@
                         <img id="bearImage" src="assets/bear_still.jpg" alt="bearStill">
                         <img id="bearGif" src="assets/bear.gif" alt="bearStill">
                     </span></p>
-                    <p>Thank you for visiting, sending hugs and being kind towards each other!</p>
+                    <p>Thank you for visiting! </p>
                     
                     <div class="infoCredit">
                         <p>techincal breakdown <span class="arrow"></span></p>
                             <div class="infoCreditItem">
                                 <p>
                                     <a href="https://chewy.ninja" target="_blank"><span class="chewy"></span></a>
-                                    PS + DragonBone + PIXI.js + webpack ->
-                                    </p><p>
+                                    PS + Spine + PIXI.js + webpack ->
+                                </p>
+                                <p>
                                     <span class="chewydo"></span> ->
                                     MongoDB + AWS + Raspberry Pi + Arduino ->
                                     <span class="stephendo"></span> 
-                                </p><p>
+                                </p>
+                                <p>
                                     <- one stuffed bear + 3d printer + sketchup
                                     <a href="https://dukefromearth.com" target="_blank"><span class="stephen"></span></a>
                                 </p>
@@ -55,7 +58,7 @@
                 </div>
             </div>    
             <audio id="music" autoplay="false" loop="true">
-                <source src="assets/track.mp3"  type="audio/mpeg">
+                <!-- <source src="assets/track.mp3"  type="audio/mpeg"> -->
             </audio>
         </header>
         <main>
@@ -82,8 +85,11 @@
                     </div>
                 </div>
                 <div id="chat"></div>
-                <input id="submitCTA" type="submit" value="send!" onsubmit= return false />
+                <div class='form-ctas'>
+                    <input id="submitCTA-Hug" type="submit" value="send a hug!" onsubmit= return false />
+                    <input id="submitCTA-Kiss" type="submit" value="blow a kiss!" onsubmit= return false />
+                </div>
             </form>
         </main>
-    <script type="text/javascript" src="main.js?248fd2e042d75437754e"></script></body>
+    <script type="text/javascript" src="main.js?6e979ca2a7cd2050ebdb"></script></body>
 </html>

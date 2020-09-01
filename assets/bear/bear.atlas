@@ -1,257 +1,243 @@
 
 bear.png
-size: 1388,1023
+size: 1152,1025
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 arm_L
   rotate: true
-  xy: 901, 10
+  xy: 441, 8
   size: 108, 142
   orig: 109, 146
   offset: 0, 2
   index: -1
 arm_R
   rotate: false
-  xy: 507, 320
+  xy: 1030, 109
   size: 108, 142
   orig: 109, 146
   offset: 1, 2
   index: -1
-balloon
-  rotate: true
-  xy: 797, 847
-  size: 174, 578
-  orig: 174, 579
-  offset: 0, 0
-  index: -1
 beer
   rotate: true
-  xy: 901, 120
+  xy: 2, 2
   size: 68, 200
   orig: 68, 200
   offset: 0, 0
   index: -1
 body
-  rotate: true
-  xy: 2, 144
+  rotate: false
+  xy: 586, 543
   size: 293, 480
   orig: 298, 491
   offset: 0, 11
   index: -1
 eye_highlight_L
   rotate: false
-  xy: 1345, 404
+  xy: 1093, 643
   size: 41, 37
   orig: 41, 38
   offset: 0, 1
   index: -1
 eye_highlight_R
-  rotate: false
-  xy: 617, 298
+  rotate: true
+  xy: 351, 280
   size: 38, 34
   orig: 38, 34
   offset: 0, 0
   index: -1
 eyebrow
-  rotate: true
-  xy: 1347, 484
+  rotate: false
+  xy: 886, 4
   size: 176, 21
   orig: 176, 21
   offset: 0, 0
   index: -1
 eyes
-  rotate: false
-  xy: 617, 334
+  rotate: true
+  xy: 1093, 858
   size: 165, 48
   orig: 165, 48
   offset: 0, 0
   index: -1
 eyes_closed
   rotate: true
-  xy: 484, 257
+  xy: 548, 338
   size: 180, 21
   orig: 181, 22
   offset: 0, 0
   index: -1
 eyes_sad
   rotate: true
-  xy: 1347, 662
+  xy: 548, 153
   size: 183, 35
   orig: 183, 41
   offset: 0, 6
   index: -1
-fish
-  rotate: true
-  xy: 797, 510
-  size: 335, 389
-  orig: 413, 420
-  offset: 0, 31
-  index: -1
 items/angel/angel_arm_l
-  rotate: false
-  xy: 1104, 163
+  rotate: true
+  xy: 751, 18
   size: 99, 133
   orig: 101, 135
   offset: 1, 1
   index: -1
 items/angel/angel_body
-  rotate: false
-  xy: 2, 439
+  rotate: true
+  xy: 2, 520
   size: 503, 582
   orig: 503, 582
   offset: 0, 0
   index: -1
 items/angel/angel_eyes
-  rotate: true
-  xy: 1045, 2
+  rotate: false
+  xy: 1021, 27
   size: 116, 80
   orig: 116, 80
   offset: 0, 0
   index: -1
 items/angel/angel_eyes_close
   rotate: false
-  xy: 617, 384
+  xy: 585, 31
   size: 156, 78
   orig: 156, 78
   offset: 0, 0
   index: -1
 items/angel/angle_arm_r
-  rotate: false
-  xy: 1205, 165
+  rotate: true
+  xy: 1016, 544
   size: 97, 134
   orig: 98, 134
   offset: 0, 0
   index: -1
 items/angel/hug_body
-  rotate: true
-  xy: 797, 298
+  rotate: false
+  xy: 881, 643
   size: 210, 380
   orig: 210, 381
   offset: 0, 0
   index: -1
 items/back_ear_L
-  rotate: false
-  xy: 484, 152
+  rotate: true
+  xy: 1093, 701
   size: 47, 46
   orig: 49, 51
   offset: 0, 5
   index: -1
 items/back_ear_R
   rotate: false
-  xy: 1347, 443
+  xy: 351, 320
   size: 39, 39
   orig: 39, 40
   offset: 0, 0
   index: -1
 items/back_eye
   rotate: true
-  xy: 1332, 58
+  xy: 1093, 750
   size: 106, 46
   orig: 107, 46
   offset: 1, 0
   index: -1
 items/back_face
   rotate: true
-  xy: 1227, 52
+  xy: 441, 118
   size: 111, 103
   orig: 114, 104
   offset: 0, 1
   index: -1
 items/back_hair
-  rotate: true
-  xy: 507, 200
+  rotate: false
+  xy: 204, 9
   size: 118, 61
   orig: 121, 79
   offset: 2, 16
   index: -1
 items/bedsheet
   rotate: false
-  xy: 570, 9
+  xy: 2, 72
   size: 329, 287
   orig: 371, 287
   offset: 1, 0
   index: -1
 items/chair_back
-  rotate: false
-  xy: 507, 464
+  rotate: true
+  xy: 586, 253
   size: 288, 557
   orig: 288, 566
   offset: 0, 0
   index: -1
 items/eyes_back_closed
   rotate: true
-  xy: 1370, 541
+  xy: 333, 240
   size: 119, 16
   orig: 119, 16
   offset: 0, 0
   index: -1
 items/guitar
-  rotate: false
-  xy: 1188, 443
+  rotate: true
+  xy: 2, 361
   size: 157, 402
   orig: 161, 439
   offset: 0, 0
   index: -1
 items/phone
-  rotate: false
-  xy: 901, 190
+  rotate: true
+  xy: 333, 28
   size: 201, 106
   orig: 201, 106
   offset: 0, 0
   index: -1
 leg_L
   rotate: true
-  xy: 291, 10
+  xy: 751, 119
   size: 132, 277
   orig: 139, 285
   offset: 3, 1
   index: -1
 leg_R
-  rotate: true
-  xy: 2, 2
+  rotate: false
+  xy: 406, 231
   size: 140, 287
   orig: 142, 287
   offset: 1, 0
   index: -1
 mouth_L
   rotate: false
-  xy: 1127, 9
+  xy: 1093, 682
   size: 42, 17
   orig: 42, 17
   offset: 0, 0
   index: -1
 mouth_R
   rotate: false
-  xy: 1227, 33
+  xy: 351, 261
   size: 42, 17
   orig: 42, 17
   offset: 0, 0
   index: -1
 mouth_sad
   rotate: true
-  xy: 784, 373
+  xy: 571, 429
   size: 89, 11
   orig: 89, 11
   offset: 0, 0
   index: -1
 nose
-  rotate: true
-  xy: 1304, 166
+  rotate: false
+  xy: 886, 58
   size: 133, 59
   orig: 134, 60
   offset: 0, 1
   index: -1
 nose_Top
-  rotate: true
-  xy: 1127, 28
+  rotate: false
+  xy: 881, 543
   size: 133, 98
   orig: 133, 112
   offset: 0, 1
   index: -1
 pizza
   rotate: true
-  xy: 1179, 301
+  xy: 585, 111
   size: 140, 164
   orig: 140, 165
   offset: 0, 0
