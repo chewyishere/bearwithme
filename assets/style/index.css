@@ -723,6 +723,7 @@ body,html {
             top: 50%;
         }
         #next{
+            top: 40vh;
             width: 60px;
             height: 40px;
         }
