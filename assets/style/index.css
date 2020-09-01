@@ -666,7 +666,7 @@ body,html {
 
         .name-form, .email-form{
             width: 25%;
-            height: 2em
+            height: 1.8em;
         }
 
         .name-form-input,.email-form-input{
