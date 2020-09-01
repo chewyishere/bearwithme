@@ -530,6 +530,7 @@ body,html {
         height: 40px;
         border: none;
         background-color: transparent;
+        opacity: 0;
     }
 
     #next:hover{
@@ -650,7 +651,7 @@ body,html {
         }
 
         .message-form{
-            margin-top: 55%;
+            margin-top: 20vh;
             width: 70%;
             height: 26%;
         }
