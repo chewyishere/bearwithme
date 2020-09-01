@@ -33,6 +33,8 @@ export default class UI {
         this.infoBTN.addEventListener('mousedown',this.toggleInfo.bind(this));   
         this.closeBTN.addEventListener('mousedown',this.toggleInfo.bind(this, false));
         this.next.addEventListener('mousedown',this.nextPage.bind(this, false));
+
+        gsap.to( this.next, {opacity:1, duration: 1, delay: 1});    
     }
 
     nextPage(){

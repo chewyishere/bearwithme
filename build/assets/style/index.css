@@ -250,6 +250,7 @@ body,html {
         position: absolute;
         bottom:0;
         cursor: pointer;
+        z-index: 10;
     }
 
     #info{
@@ -530,6 +531,7 @@ body,html {
         height: 40px;
         border: none;
         background-color: transparent;
+        opacity: 0;
     }
 
     #next:hover{
@@ -641,12 +643,16 @@ body,html {
             margin-bottom: 20px;
         }
 
+        .bgContainer{
+            height: 75%;
+        }
+
         .formContainer::before{
-            margin-top: 11%
+            margin-top: 0;
         }
 
         .message-form{
-            margin-top: 28vh;
+            margin-top: 20vh;
             width: 70%;
             height: 26%;
         }
@@ -667,6 +673,11 @@ body,html {
             font-size: 0.5em;
         }
 
+        input[type=text], input[type=button] {
+            -webkit-appearance: none;
+            -webkit-border-radius: 0;
+        }
+
         #close,#info{
             width: 30%;
             height: 30%;
@@ -685,7 +696,7 @@ body,html {
             width: 30%;
             height: 30%;
             right: -10%;
-            top: 5%;
+            top: 0%;
         }
 
         .oldLetter{
@@ -712,6 +723,7 @@ body,html {
             top: 50%;
         }
         #next{
+            top: 40vh;
             width: 60px;
             height: 40px;
         }
