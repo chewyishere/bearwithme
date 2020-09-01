@@ -8,7 +8,8 @@ export default class Form {
         this.form = document.querySelector("form");
         this.form.addEventListener("submit", this.onSubmit.bind(this));
         this.closeArea = document.getElementById("closeArea");
-        this.submitBTN = document.getElementById("submitCTA");
+        this.submitBTN_Hug = document.getElementById("submitCTA-Hug");
+        this.submitBTN_Kiss = document.getElementById("submitCTA-Kiss");
         this.info = document.getElementById("info");
         this.close = document.getElementById("close");
         this.chat = document.getElementById("chat");
@@ -17,8 +18,8 @@ export default class Form {
         this.close.addEventListener("click", this.onCloseLetter.bind(this));
         this.close.addEventListener("mouseover", this.onCloseHover.bind(this, true));
         this.close.addEventListener("mouseout", this.onCloseHover.bind(this, false));
-        this.submitBTN.addEventListener("mouseover", this.onSendHover.bind(this,true));
-        this.submitBTN.addEventListener("mouseout", this.onSendHover.bind(this,false));
+        // this.submitBTN.addEventListener("mouseover", this.onSendHover.bind(this,true));
+        // this.submitBTN_Hug.addEventListener("mousedown", this.onSendHover.bind(this,false));
 
         this.email = document.getElementById("info");
         this.email.addEventListener("mouseover", this.onEmailHover.bind(this, true));
@@ -41,15 +42,15 @@ export default class Form {
         gsap.to(this.close, {rotation: 40, x: '100%'});
     }
 
-    onSendHover(over){
-        if(over){
-            gsap.to(this.chat, {opacity: 1, duration: 0.3});
-            this.form.classList.add('formContainer--hover')
-        } else {
-            gsap.to(this.chat, {opacity: 0, duration: 0.3});
-            this.form.classList.remove('formContainer--hover')
-        }
-    }
+    // onSendHover(over){
+    //     if(over){
+    //         gsap.to(this.chat, {opacity: 1, duration: 0.3});
+    //         this.form.classList.add('formContainer--hover')
+    //     } else {
+    //         gsap.to(this.chat, {opacity: 0, duration: 0.3});
+    //         this.form.classList.remove('formContainer--hover')
+    //     }
+    // }
 
     onCloseHover(over){
         if(over){
@@ -102,16 +103,16 @@ export default class Form {
     }
 
     postLetters(msg) {
-        this.postComplete();
-        this.getCB(msg, false);
-        // axios.post(apiPath, msg)
-        //   .then((res) => {
-        //       this.postComplete();
-        //       this.getCB(msg, false);
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
+        // this.postComplete();
+        // this.getCB(msg, false);
+        axios.post(apiPath, msg)
+          .then((res) => {
+              this.postComplete();
+              this.getCB(msg, false);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     }
 
     emptyForm(){
@@ -196,7 +197,6 @@ export default class Form {
         );
        }
     }
-   
 
     show(bear){
         this.forBear = bear;
@@ -206,7 +206,7 @@ export default class Form {
         gsap.fromTo(
             this.form, 
             {rotation: -10, x: 0, y: "300%", opacity: 1}, 
-            {rotation: -2,  x: 0, y: "15%", duration: 1, ease: "power3.out"}
+            {rotation: -2,  x: 0, y: "0%", duration: 1, ease: "power3.out"}
         );
     }
 
@@ -217,6 +217,7 @@ export default class Form {
 
     onSubmit(e){
         e.preventDefault();
+        let typeoflove =  e.submitter.id === 'submitCTA-Hug' ? 'hug' : 'kiss';
         let form = e.target;
         let name = form.elements["fname"].value;
         let email = form.elements["femail"].value;
@@ -230,9 +231,9 @@ export default class Form {
                 email: email,
                 message: message,
                 location: location,
+                type: typeoflove,
             },
             hasPlayed: "false",
-            showOnShelf: true,
         }
 
         if(msg.data.email === '' || this.validated(msg.data.email)){

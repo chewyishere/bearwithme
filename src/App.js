@@ -23,30 +23,35 @@ export default class App extends PIXI.Application {
         });
 
         document.body.appendChild(this.view);
+        this.baseW = window.innerWidth;
         
         this.letters = [];
-        this.bears = [];
         this.ticker = PIXI.Ticker.shared;
         this.currentBear = 0;
         this.scene = new PIXI.Container();
         this.objectLayer = new PIXI.Container();
+        this.mobile = window.innerWidth < 600;
         this.stage.addChild(this.scene);
         this.scene.addChild(this.objectLayer);
-        this.helper = new ResizeHelper(this.renderer.width, this.renderer.height);
+        this.helper = new ResizeHelper(this.renderer.width, this.renderer.height, this.mobile);
         this.init();
+
+        this.openLetter = this.openLetter.bind(this);
+        this.allAssetsLoaded = this.allAssetsLoaded.bind(this)
+        this.afterHug = this.afterHug.bind(this)
     }
 
     init() {
         this.stop();
         window.addEventListener('resize', this.onResize.bind(this))
-        this.setupWorld();
+        this.setScene();
         this.getBears()
        this.initFilters();
        this.form = new Form(this.setupLetters.bind(this), this.sentLetter.bind(this));
        this.UI = new UI(this.scene);
     }
 
-    setupWorld() {
+    setScene() {
         this.scene.width = this.renderer.width;
         this.scene.height = this.renderer.height;
         this.scene.x = 0;
@@ -59,26 +64,25 @@ export default class App extends PIXI.Application {
         this.loader.load(this.onBearsLoaded.bind(this));
     }
     onBearsLoaded(loader, res) {
-        this.chewy = new BearScene(res.chewy.spineData, 'chewy', this.ticker, 0.35, this.helper, this.objectLayer, this.form);
-        this.chewy.loadItems(this.loader, ITEMS_C)
-        
-        this.stephen = new BearScene(res.bears.spineData, 'stephen', this.ticker, 0.29, this.helper, this.objectLayer, this.form);
-        this.stephen.loadItems(this.loader, ITEMS_S)
-       
-        this.loader.onComplete.add(this.allAssetsLoaded.bind(this));
-      
+        this.chewy = new BearScene(res.chewy.spineData, 'chewy', this.ticker, 0.35, this.helper, this.objectLayer, this.form, this.afterHug);
+        this.stephen = new BearScene(res.bears.spineData, 'stephen', this.ticker, 0.29, this.helper, this.objectLayer, this.form, this.afterHug);
+        this.chewy.loadItems(this.loader, ITEMS_C, ()=>{
+            this.stephen.loadItems(this.loader, ITEMS_S, ()=>{
+                this.allAssetsLoaded();
+            })
+        })  
     }
 
     allAssetsLoaded(){
         this.chewy.doneLoading();
         this.stephen.doneLoading();
-        this.bears = [this.stephen.bear, this.chewy.bear];
         this.scene.addChild(this.chewy.bear);
         this.scene.addChild(this.stephen.bear);
         this.letters.forEach(_item => {
             !this.mobile && _item.addShadow();
             this.objectLayer.addChild(_item);
         });
+        this.onResize()
         this.start();
     }
     
@@ -90,13 +94,13 @@ export default class App extends PIXI.Application {
 
         if(init === true){
             msgs.forEach((_msg,idx)=>{
-                let l = new Letter(_item, pos, size, idx, color, _msg, this.openLetter.bind(this)); 
+                let l = new Letter(_item, pos, size, idx, color, _msg, this.openLetter); 
                 this.letters.push(l);
                 this.form.addLetterToDom(_msg);
             })
         } else {
             let _idx = this.letters.length;
-            let l = new Letter(_item, pos, size, _idx, color, msgs, this.openLetter.bind(this));
+            let l = new Letter(_item, pos, size, _idx, color, msgs, this.openLetter);
             this.letters.push(l);
             !this.mobile && l.addShadow();
             this.objectLayer.addChild(l);
@@ -107,15 +111,33 @@ export default class App extends PIXI.Application {
 
     sentLetter(){
         if(this.form.forBear === 'stephen'){
-            gsap.to(this.bears[1], {alpha: 0, duration: 1.5, ease: "power2.out" });   
+            gsap.to(this.chewy.bear, {alpha: 0, duration: 1.5, ease: "power2.out" });   
             this.stephen.bear.interactive = false;
-            this.stephen.walkBear(99);
             this.stephen.bear.hint.alpha = 0;
+            this.stephen.walkBear(99);
+            gsap.to(this.objectLayer, {alpha: 0, duration: 3, ease: "power2.out" });
         } else {
-            gsap.to(this.bears[0], {alpha: 0, duration: 1.5, ease: "power2.out" });   
+            gsap.to(this.stephen.bear, {alpha: 0, duration: 1.5, ease: "power2.out" });   
             this.chewy.bear.interactive = false;
-            this.chewy.walkBear(99);
             this.chewy.bear.hint.alpha = 0;
+            this.chewy.walkBear(99);
+            gsap.to(this.objectLayer, {alpha: 0, duration: 3, ease: "power2.out"});
+        }
+        
+        this.objectLayer.children.forEach(_child =>{
+            _child._item.interactive = false;
+        })
+
+        gsap.to(this.UI.next, {alpha: 0, duration: 3, ease: "power2.out"});
+        
+    }
+
+    afterHug(){
+        gsap.to(this.UI.next, {alpha: 1, duration: 3, ease: "power2.out"});
+        if(this.form.forBear === 'stephen'){
+            gsap.to(this.chewy.bear, {alpha: 1, duration: 1, delay: 2.5, ease: "power2.out" });   
+        } else {
+            gsap.to(this.stephen.bear, {alpha: 1, duration: 1, delay: 2.5, ease: "power2.out" });   
         }
     }
 
@@ -145,17 +167,18 @@ export default class App extends PIXI.Application {
         let h = window.innerHeight;
         this.mobile = w < 600;
         this.renderer.resize(w * 2, h)
+        
         this.view.style.width = w * 2;
         this.view.style.height = h;
     
         let vig = map(w, 764, 1400, 0, 0.3);
         this.oldFilmFilter.vignetting = vig
-        
-        this.helper.resize(w * 2, h);
 
-        this.bears.forEach(bear=>{
-            bear.resize(this.mobile)
-        })
+        this.helper.resize(this.renderer.width, h, this.mobile)
+        this.scene.position.x = this.UI.on2ndPage ? -w : 0;
+
+        this.chewy.resize(this.mobile);
+        this.stephen.resize(this.mobile)
 
         this.letters.forEach(item => {
             let pos = this.helper.getPos(item, 'itemPos');

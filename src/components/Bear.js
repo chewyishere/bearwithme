@@ -3,14 +3,13 @@ import { GlowFilter } from 'pixi-filters';
 import gsap from 'gsap';
 
 export default class Bear extends PIXI.Container {
-    constructor(spineData, lookCB, loveCB, mobile) {
+    constructor(spineData, lookCB, loveCB) {
         super()
 
         this.bear = new PIXI.spine.Spine(spineData)
         this.bear.skeleton.setSkinByName('default') 
         this.zIndex = 1;
         this.bear.interactive = true;
-        this.mobile = mobile;
         this.addChild(this.bear)
 
         this.currentAnim = 'walk';
@@ -32,6 +31,7 @@ export default class Bear extends PIXI.Container {
     }
 
     setupHint(){
+        this.mobile = window.innerWidth < 600;
         this.hint = this.mobile? new PIXI.Sprite.from(`assets/bear/hint_mobile.png`) : new PIXI.Sprite.from(`assets/bear/hint.png`);
         this.hint.scale.set(0.6);
         this.hint.anchor.x = 0.5;

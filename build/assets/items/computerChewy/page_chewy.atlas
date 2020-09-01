@@ -1,0 +1,34 @@
+
+page_chewy.png
+size: 498,92
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+screen1
+  rotate: false
+  xy: 2, 2
+  size: 122, 88
+  orig: 122, 88
+  offset: 0, 0
+  index: -1
+screen2
+  rotate: false
+  xy: 126, 2
+  size: 122, 88
+  orig: 122, 88
+  offset: 0, 0
+  index: -1
+screen3
+  rotate: false
+  xy: 250, 2
+  size: 122, 88
+  orig: 122, 88
+  offset: 0, 0
+  index: -1
+screen4
+  rotate: false
+  xy: 374, 2
+  size: 122, 88
+  orig: 122, 88
+  offset: 0, 0
+  index: -1

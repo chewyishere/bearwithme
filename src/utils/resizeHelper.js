@@ -1,18 +1,18 @@
 export default class ResizeHelper {
-    constructor(width, height){
+    constructor(width, height, mobile){
          this.width = width;
          this.height = height;
-         this.mobile = this.width / 2 <= 768;
+         this.mobile = mobile
     }
 
-    resize(width, height){
+    resize(width, height, mobile){
         this.width = width;
         this.height = height;
-        this.mobile = width / 2 <= 768;
+        this.mobile = mobile
     }
 
-    getPos(item, posName){
-        if(this.mobile){
+    getPos(item, posName, hug){
+        if(this.mobile && !hug){
             return {
                 x: this.width * item.mobilePos.x,
                 y: this.height * item.mobilePos.y

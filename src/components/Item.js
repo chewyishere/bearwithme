@@ -47,19 +47,36 @@ export default class Item extends PIXI.Container {
         this.shadow.uniforms.floorY  = this._item.toGlobal(new PIXI.Point(0, 0)).y + this._item.height * this.itemShadowY;
     }
 
-    loadSubAssets(loader, res) {
-        let spineData = res.seq.spineData;
+    loadSubAssets(res) {
+        let spineData = res.spineData;
         this.subAsset =  new PIXI.spine.Spine(spineData)
         this.subAsset.skeleton.setSkinByName('default') 
         this.subAsset.position = this._item.position;
         this.subAsset.alpha = 0;
         this.subAsset.scale = this._item.scale;
+        this.subAsset.pivot.x = this.subAssetsOffset.x;
         this.addChild(this.subAsset);
+    } 
+
+    setAnchor(mobile){
+        if(mobile && this.anchorMobile ) {
+            this._item.anchor.set(this.anchorMobile[0], this.anchorMobile[1])
+        } else{
+            this._item.anchor.set(this.anchor[0], this.anchor[1])
+        }
+
+        if(this.subAsset) {
+            this.subAsset.pivot.x = mobile ? 0 : this.subAssetsOffset.x;
+        };
     }
+
+
     setPos(pos){
         this._item.position = pos;
+        
         if(this.subAsset) {
             this.subAsset.position = pos
+            this.subAsset.pivot.x = 0;
         };
     }
 

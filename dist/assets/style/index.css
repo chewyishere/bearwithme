@@ -54,10 +54,9 @@ body,html {
     .formContainer {
         position: absolute;
         margin: auto;
-        width: 65vw;
-        max-width: 500px;
-        min-width: 400px;
-        height: 650px;
+        width: 35%;
+        height: 80%;
+        min-width: 300px;
         z-index: 1;
         display: none;
         flex-flow: column;

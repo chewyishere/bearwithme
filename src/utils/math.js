@@ -74,3 +74,7 @@ export const easeInOutQuad = (x, t, b, c, d) => {
 		return (-c / 2) * (--t * (t - 2) - 1) + b
 	}
 }
+
+export const clamp = (num, min, max) => {
+	return num <= min ? min : num >= max ? max : num;
+  }
