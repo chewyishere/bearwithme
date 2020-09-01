@@ -658,7 +658,7 @@ body,html {
         }
 
         .message-input{
-            font-size: 1.3em;
+            font-size: 1.5em;
             width: 81%;
             height: 94%;
             margin: auto;
@@ -666,11 +666,11 @@ body,html {
 
         .name-form, .email-form{
             width: 25%;
-            height: 1.5em
+            height: 2em
         }
 
         .name-form-input,.email-form-input{
-            font-size: 0.5em;
+            font-size: 0.8em;
         }
 
         input[type=text], input[type=button] {
