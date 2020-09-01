@@ -672,6 +672,11 @@ body,html {
             font-size: 0.5em;
         }
 
+        input[type=text], input[type=button] {
+            -webkit-appearance: none;
+            -webkit-border-radius: 0;
+        }
+
         #close,#info{
             width: 30%;
             height: 30%;
