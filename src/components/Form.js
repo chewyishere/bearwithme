@@ -44,7 +44,6 @@ export default class Form {
 
     setType(type){
         this.type = type;
-        console.log('set type ' + this.type)
     }
 
     resetDOM(){
@@ -247,7 +246,6 @@ export default class Form {
 
     clearURL(){
         const url = new URL(location);
-        console.log(url)
         url.searchParams.delete('fmessage');
         url.searchParams.delete('fname');
         url.searchParams.delete('flocation');
