@@ -79,7 +79,6 @@ export default class App extends PIXI.Application {
         this.scene.addChild(this.chewy.bear);
         this.scene.addChild(this.stephen.bear);
         this.letters.forEach(_item => {
-            !this.mobile && _item.addShadow();
             this.objectLayer.addChild(_item);
         });
         this.onResize()
@@ -93,16 +92,19 @@ export default class App extends PIXI.Application {
         let color =  Math.random() * 0xFFFFFF;
 
         if(init === true){
-            msgs.forEach((_msg,idx)=>{
-                let l = new Letter(_item, pos, size, idx, color, _msg, this.openLetter); 
-                this.letters.push(l);
-                this.form.addLetterToDom(_msg);
+            let idx = -1;
+            msgs.forEach((_msg)=>{
+                if(_msg.data.message !== ''){
+                    idx ++;
+                    let l = new Letter(_item, pos, size, idx, color, _msg, this.openLetter); 
+                    this.letters.push(l);
+                    this.form.addLetterToDom(_msg);
+                }
             })
         } else {
             let _idx = this.letters.length;
             let l = new Letter(_item, pos, size, _idx, color, msgs, this.openLetter);
             this.letters.push(l);
-            !this.mobile && l.addShadow();
             this.objectLayer.addChild(l);
             this.form.addLetterToDom(msgs);
         }
@@ -188,7 +190,6 @@ export default class App extends PIXI.Application {
             let pos = this.helper.getPos(item, 'itemPos');
             let scale = this.helper.getSize(item.size);
             item.setTransform(pos, scale, w)
-            item.updateShadowY();
         });  
 
     }

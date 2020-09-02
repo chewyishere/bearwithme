@@ -270,7 +270,20 @@ export default class BearScene extends PIXI.Container{
     }
 
     getCurAvatarPos(){
-        let pos = this.currentIdx === 99 ? this.helper.getPos(OTHERS[1], 'avatarPos') : this.helper.getPos(this.currentItem, 'avatarPos');
+        let onPage1 = this.bear.bear.position.x < window.innerWidth;
+        let pos;
+        let hug_id = this.name === 'stephen' ? OTHERS[1] : OTHERS[2]
+        if( this.currentIdx === 99 ){
+            if(this.mobile) {
+                pos = onPage1 ? this.helper.getPos(hug_id, 'mobilePos', true) : this.helper.getPos(hug_id, 'mobilePos2', true)
+            } else {
+                pos = onPage1 ? this.helper.getPos(hug_id, 'avatarPos', true) : this.helper.getPos(hug_id, 'avatarPos2', true)
+            }
+                
+        } else {
+            pos = this.helper.getPos(this.currentItem, 'avatarPos', false);
+        }
+
         return pos
     }
 }

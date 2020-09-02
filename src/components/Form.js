@@ -1,4 +1,5 @@
 import gsap from 'gsap';
+import { debounce } from "debounce";
 const axios = require('axios');
 const apiPath = 'https://iot.dukefromearth.com/products/bearwithme'
 
@@ -7,6 +8,7 @@ export default class Form {
     constructor(_getCB, _sentCB) {
         this.form = document.querySelector("form");
         this.form.addEventListener("submit", this.onSubmit.bind(this));
+
         this.closeArea = document.getElementById("closeArea");
         this.submitBTN_Hug = document.getElementById("submitCTA-Hug");
         this.submitBTN_Kiss = document.getElementById("submitCTA-Kiss");
@@ -18,12 +20,16 @@ export default class Form {
         this.close.addEventListener("click", this.onCloseLetter.bind(this));
         this.close.addEventListener("mouseover", this.onCloseHover.bind(this, true));
         this.close.addEventListener("mouseout", this.onCloseHover.bind(this, false));
-        // this.submitBTN.addEventListener("mouseover", this.onSendHover.bind(this,true));
-        // this.submitBTN_Hug.addEventListener("mousedown", this.onSendHover.bind(this,false));
+        
+        this.submitBTN_Hug.addEventListener("mouseover", this.setType.bind(this,'hug'));
+        this.submitBTN_Kiss.addEventListener("mouseover", this.setType.bind(this, 'kiss'));
 
         this.email = document.getElementById("info");
         this.email.addEventListener("mouseover", this.onEmailHover.bind(this, true));
         this.email.addEventListener("mouseout", this.onEmailHover.bind(this, false));
+
+        this.type = 'hug';
+        this.on2ndPage = false;
 
         this.main = document.querySelector("main");
         this.getCB = _getCB;
@@ -36,21 +42,15 @@ export default class Form {
         this.resetDOM();
     }
 
+    setType(type){
+        this.type = type;
+        console.log('set type ' + this.type)
+    }
 
     resetDOM(){
         gsap.to(this.info, {rotation: -40, x: '-100%'});
         gsap.to(this.close, {rotation: 40, x: '100%'});
     }
-
-    // onSendHover(over){
-    //     if(over){
-    //         gsap.to(this.chat, {opacity: 1, duration: 0.3});
-    //         this.form.classList.add('formContainer--hover')
-    //     } else {
-    //         gsap.to(this.chat, {opacity: 0, duration: 0.3});
-    //         this.form.classList.remove('formContainer--hover')
-    //     }
-    // }
 
     onCloseHover(over){
         if(over){
@@ -103,16 +103,16 @@ export default class Form {
     }
 
     postLetters(msg) {
-        // this.postComplete();
-        // this.getCB(msg, false);
-        axios.post(apiPath, msg)
-          .then((res) => {
-              this.postComplete();
-              this.getCB(msg, false);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        this.postComplete();
+        this.getCB(msg, false);
+        // axios.post(apiPath, msg)
+        //   .then((res) => {
+        //       this.postComplete();
+        //       this.getCB(msg, false);
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
     }
 
     emptyForm(){
@@ -151,7 +151,7 @@ export default class Form {
                 rotation: -10, 
                 x: 0, 
                 y: "20%", 
-                duration: 1,
+                duration: 0.6,
                 ease: "power3.out",
             }
         );
@@ -165,7 +165,7 @@ export default class Form {
                 x: 0, 
                 y: "-200%", 
                 opacity: 0, 
-                duration: 0.75, 
+                duration: 0.6, 
                 ease: "power3.in",
                 onComplete: ()=>{
                     this.showingOldLetter = false;
@@ -187,7 +187,7 @@ export default class Form {
                 x: 0, 
                 y: "300%", 
                 opacity: 1, 
-                duration: 0.75, 
+                duration: 0.6, 
                 ease: "power3.in",
                 onComplete: ()=>{
                     this.main.classList.remove('active-form')
@@ -201,12 +201,12 @@ export default class Form {
     show(bear){
         this.forBear = bear;
         this.main.classList.add('active-form')
-        gsap.to(this.info, {rotation: 0, x: '0%', duration: 0.5, delay: 1, ease: "power3.out",});
-        gsap.to(this.close, {rotation: 0, x: '0%', duration: 0.5, delay: 1, ease: "power3.out",});
+        gsap.to(this.info, {rotation: 0, x: '0%', duration: 0.5, delay: 0.5, ease: "power3.out",});
+        gsap.to(this.close, {rotation: 0, x: '0%', duration: 0.5, delay: 0.5, ease: "power3.out",});
         gsap.fromTo(
             this.form, 
             {rotation: -10, x: 0, y: "300%", opacity: 1}, 
-            {rotation: -2,  x: 0, y: "0%", duration: 1, ease: "power3.out"}
+            {rotation: -2,  x: 0, y: "0%", duration: 0.6, ease: "power3.out"}
         );
     }
 
@@ -217,7 +217,7 @@ export default class Form {
 
     onSubmit(e){
         e.preventDefault();
-        let typeoflove =  e.submitter.id === 'submitCTA-Hug' ? 'hug' : 'kiss';
+       
         let form = e.target;
         let name = form.elements["fname"].value;
         let email = form.elements["femail"].value;
@@ -231,7 +231,7 @@ export default class Form {
                 email: email,
                 message: message,
                 location: location,
-                type: typeoflove,
+                type: this.type,
             },
             hasPlayed: "false",
         }
@@ -239,9 +239,20 @@ export default class Form {
         if(msg.data.email === '' || this.validated(msg.data.email)){
             this.chat.classList.remove('chat-error');
             this.postLetters(msg);
+            this.clearURL();
         } else {
             this.emailError();
         }
+    }
+
+    clearURL(){
+        const url = new URL(location);
+        console.log(url)
+        url.searchParams.delete('fmessage');
+        url.searchParams.delete('fname');
+        url.searchParams.delete('flocation');
+        url.searchParams.delete('femail');
+        history.replaceState(null, null, url)
     }
     
     emailError(){

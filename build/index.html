@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1,  maximum-scale=1">
         <title>Bear With Me</title>
         <link href="assets/style/index.css" rel="stylesheet">
     </head>
@@ -23,7 +23,7 @@
             </div>
             <div id="infoPage">
                 <div class="infoContent">
-                    <h1>Bear With Me is an <span style="color: #f08038"> Internet of Things </span> experiment that turns viritual hugs into physical hugs!</h1> 
+                    <h1>Bear With Me is an <span style="color: #de4300"> Internet of Things </span> experiment that turns viritual hugs into physical hugs!</h1> 
                     <p>Welcome! to the quarantine life of two sad bears. Chewy <span class="chewy"> </span>and Stephen <span class="stephen"></span></p>
                     <p>If you'd like, you can send a virtual hug here, with some message. (<span class="stephen"></span> is sensitive...please be kind. )
                     <p>Once you send a message/hug, they will be sent to an 8ft tall robot bear, who will give us a real hug<span class="arrow gifArrow"></span>
@@ -58,7 +58,7 @@
                 </div>
             </div>    
             <audio id="music_guitar" autoplay="false" loop="true">
-                <source src="assets/guitar.mp3"  type="audio/mpeg">
+                <source src="assets/guitar.mp3"  type="audio/mpeg" >
             </audio>
             <audio id="music_piano" autoplay="false" loop="true">
                 <source src="assets/Gaze-Moux.mp3"  type="audio/mpeg">
@@ -89,8 +89,8 @@
                 </div>
                 <div id="chat"></div>
                 <div class='form-ctas'>
-                    <input id="submitCTA-Hug" type="submit" value="send a hug!" onsubmit= return false />
-                    <input id="submitCTA-Kiss" type="submit" value="blow a kiss!" onsubmit= return false />
+                    <button id="submitCTA-Hug" >send a hug!</button>
+                    <button id="submitCTA-Kiss" >blow a kiss!</button>
                 </div>
             </form>
         </main>

@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
-import { shadowVert, shadowFrag } from './glsl/shadow'
 import {map} from '../utils/math';
+import { debounce } from "debounce";
 
 export default class Letter extends PIXI.Container {
     constructor(item, pos, size, index, color, content, _tapcb) {
@@ -23,27 +23,16 @@ export default class Letter extends PIXI.Container {
         this._initial.style.fontSize = 20;
 
         this.tapcb = _tapcb;
-        this.shadow = new PIXI.Filter(shadowVert, shadowFrag);
 
-        this._item.on('pointerdown',this.onClick.bind(this));
         this._item.interactive = true;
+        this._item.on('pointerdown',debounce(this.onClick.bind(this),200));
+            
         this.setTransform(pos, size, window.innerWidth);
         this.addChild(this._item);
         this.addChild(this._stamp);
         this.addChild(this._initial);
-
     }
 
-    addShadow(){
-        this.shadow.padding = 100;
-        this.shadow.uniforms.shadowDirection = 10;
-        this.updateShadowY();
-        this.filters = [this.shadow];
-    }
-
-    updateShadowY(){
-        this.shadow.uniforms.floorY  = this._item.toGlobal(new PIXI.Point(0, 0)).y + this._item.height * this.itemShadowY;
-    }
 
     setTransform(pos,scale, w){
         let offsetY = w < 600 ? map(w, 300, 600, 10, 15) : map(w, 764, 1300, 15, -5);

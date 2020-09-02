@@ -5,6 +5,7 @@ export default class UI {
         this.scene = scene;
         this.sound_guitar = document.getElementById("music_guitar");
         this.sound_piano = document.getElementById("music_piano");
+        
         this.soundBTN = document.getElementById("musicCTA");
         this.info = document.getElementById("infoPage");
         this.infoBTN = document.getElementById("infoCTA");
@@ -12,13 +13,11 @@ export default class UI {
         this.bearImage = document.getElementsByClassName("infoBearGif")[0];
         this.next = document.getElementById("next");
 
-        this.sound_guitar.volume = 0.3;
-        this.sound_piano.volume = 0.3;
         this.sound = [this.sound_guitar, this.sound_piano];
 
-        this.sound.forEach(s=>{
-            s.pause();
-        })
+        this.sound_piano.volume = 0.3;
+        this.sound_guitar.pause();
+        this.sound_piano.pause();
 
         this.isPlaying = false;
         this.isInfoOn = false;
@@ -36,6 +35,7 @@ export default class UI {
 
         gsap.to( this.next, {opacity:1, duration: 1, delay: 1});    
     }
+
 
     nextPage(){
         gsap.to(this.scene.position, {x: !this.on2ndPage? -window.innerWidth : 0, duration: 0.5});  
