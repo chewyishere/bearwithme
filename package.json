@@ -28,6 +28,7 @@
     "axios": "^0.20.0",
     "debounce": "^1.2.0",
     "gsap": "^3.4.1",
+    "lottie-web": "^5.7.3",
     "pixi-filters": "^3.1.1",
     "pixi-spine": "^2.1.9",
     "pixi.js": "^5.3.0"

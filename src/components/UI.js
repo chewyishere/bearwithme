@@ -1,8 +1,10 @@
 import gsap from 'gsap';
+import lottie from 'lottie-web'
 
 export default class UI {
     constructor(scene) {
         this.scene = scene;
+        this.loader_container = document.getElementById("loader_chewy");
         this.sound_guitar = document.getElementById("music_guitar");
         this.sound_piano = document.getElementById("music_piano");
         
@@ -40,9 +42,24 @@ export default class UI {
         gsap.set(this.next, {opacity: 0});
         gsap.set(this.soundBTN, {opacity: 0});
         gsap.set(this.infoBTN, {opacity: 0});
-    }
+        this.loaderAnim = lottie.loadAnimation({
+            container:  this.loader_container, // the dom element that will contain the animation
+            renderer: 'svg',
+            clearCanvas: false,
+            loop: true,
+            autoplay: false,
+            path: 'assets/loader/panda.json', // the path to the animation json
+            rendererSettings: {
+				preserveAspectRatio: 'xMidYMid slice',
+				clearCanvas: false,
+				progressiveLoad: false,
+			}
+          });
+        this.loaderAnim.play(); 
+    };
 
     loadingComplete(){
+        this.loaderAnim.pause(); 
         gsap.to( this.loader, {opacity:0, duration: 0.5, onComplete: ()=> {
             gsap.set(this.loader, {display: 'none'});
             gsap.to( this.next, {opacity:1, duration: 1, delay: 1});    
@@ -50,7 +67,6 @@ export default class UI {
             gsap.to( this.infoBTN, {opacity:1, duration: 1});    
         }});      
     }
-
 
     nextPage(){
         gsap.to(this.scene.position, {x: !this.on2ndPage? -window.innerWidth : 0, duration: 0.5});  

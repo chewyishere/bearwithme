@@ -72,12 +72,12 @@ export default class Form {
 
         let msgField = document.createElement("p");
         msgField.classList.add('oldLetterText');
-        msgField.innerHTML = msgs.data.message ? msgs.data.message : '...';
+        msgField.innerHTML = msgs.data.message ? msgs.data.message : 'just a hug';
         letterContainer.appendChild(msgField);
 
         let nameField = document.createElement("p");
         nameField.classList.add('oldLetterName');
-        nameField.innerHTML = msgs.data.name ? msgs.data.name : 'mystery person';
+        nameField.innerHTML = msgs.data.name ? msgs.data.name : 'a mysterious person';
         letterContainer.appendChild(nameField);
 
         let locationField = document.createElement("p");
@@ -100,22 +100,22 @@ export default class Form {
     }
 
     postLetters(msg) {
-        this.postComplete();
-        this.getCB(msg, false);
-        // axios.post(apiPath, msg)
-        //   .then((res) => {
-        //       this.postComplete();
-        //       this.getCB(msg, false);
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
+        // this.postComplete();
+        // this.getCB(msg, false);
+        axios.post(apiPath, msg)
+          .then((res) => {
+              this.postComplete();
+              this.getCB(msg, false);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     }
 
     emptyForm(){
         this.form.elements["fname"].value = '';
         this.form.elements["femail"].value = '';
-        this.form.elements["fmessage"].value='';
+        this.form.elements["fmessage"].value= '';
         this.main.classList.remove('active-form');
         this.main.classList.remove('active-letter')
         this.chat.classList.remove('chat-thanks');
@@ -222,7 +222,7 @@ export default class Form {
         let location = form.elements["flocation"].value;
 
         let msg = {
-            id: Date.now() + Math.floor(Math.random() * 100),
+            id: message === '' && name === '' ? 'empty' : Date.now() + Math.floor(Math.random() * 100),
             data: {
                 name: name,
                 email: email,
