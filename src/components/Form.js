@@ -1,5 +1,4 @@
 import gsap from 'gsap';
-import { debounce } from "debounce";
 const axios = require('axios');
 const apiPath = 'https://iot.dukefromearth.com/products/bearwithme'
 
@@ -29,7 +28,6 @@ export default class Form {
         this.email.addEventListener("mouseout", this.onEmailHover.bind(this, false));
 
         this.type = 'hug';
-        this.on2ndPage = false;
 
         this.main = document.querySelector("main");
         this.getCB = _getCB;

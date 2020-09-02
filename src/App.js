@@ -83,6 +83,7 @@ export default class App extends PIXI.Application {
         });
         this.onResize()
         this.start();
+        this.UI.loadingComplete();
     }
     
     setupLetters(msgs, init){

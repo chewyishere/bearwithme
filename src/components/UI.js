@@ -12,7 +12,7 @@ export default class UI {
         this.closeBTN = document.getElementById("infoClose");
         this.bearImage = document.getElementsByClassName("infoBearGif")[0];
         this.next = document.getElementById("next");
-
+        this.loader = document.getElementById("loader");
         this.sound = [this.sound_guitar, this.sound_piano];
 
         this.sound_piano.volume = 0.3;
@@ -24,6 +24,8 @@ export default class UI {
         this.on2ndPage = false;
         this.musicIdx = 1;
 
+        this.initLoad();
+
         this.gif = document.getElementById("bearGif"); 
 
         this.bearImage.addEventListener('mouseover',this.toggleGIF.bind(this, true));   
@@ -32,8 +34,21 @@ export default class UI {
         this.infoBTN.addEventListener('mousedown',this.toggleInfo.bind(this));   
         this.closeBTN.addEventListener('mousedown',this.toggleInfo.bind(this, false));
         this.next.addEventListener('mousedown',this.nextPage.bind(this, false));
+    }
+   
+    initLoad(){
+        gsap.set(this.next, {opacity: 0});
+        gsap.set(this.soundBTN, {opacity: 0});
+        gsap.set(this.infoBTN, {opacity: 0});
+    }
 
-        gsap.to( this.next, {opacity:1, duration: 1, delay: 1});    
+    loadingComplete(){
+        gsap.to( this.loader, {opacity:0, duration: 0.5, onComplete: ()=> {
+            gsap.set(this.loader, {display: 'none'});
+            gsap.to( this.next, {opacity:1, duration: 1, delay: 1});    
+            gsap.to( this.soundBTN, {opacity:1, duration: 1});    
+            gsap.to( this.infoBTN, {opacity:1, duration: 1});    
+        }});      
     }
 
 

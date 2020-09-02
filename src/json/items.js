@@ -240,7 +240,7 @@ const ITEMS_S = [
         page: 2,
         scene: 0,
         itemPos: {x: 0.85, y: 0.89},
-        mobilePos: {x: 0.75, y: 0.88},
+        mobilePos: {x: 0.85, y: 0.88},
         itemShadowDir: [0.4, 0.3],
         itemShadowY: -0.1,
         avatarPos: {x: 0.84, y: 0.8},
