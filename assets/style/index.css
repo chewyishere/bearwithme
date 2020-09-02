@@ -519,7 +519,8 @@ body,html {
 
     #hugPage h1{
         opacity: 0;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+        line-height: 1.4rem;
         color: #57554e;
     }
 
@@ -643,15 +644,20 @@ body,html {
         }
 
         .bgContainer{
-            height: 75%;
+            height: 80%;
         }
+
+        .formContainer{
+            min-height: 550px;
+        }
+
 
         .formContainer::before{
             margin-top: 0;
         }
 
         .message-form{
-            margin-top: 100px;
+            margin-top: calc(100px + 5vw);
             width: 70%;
             height: 30%;
         }
