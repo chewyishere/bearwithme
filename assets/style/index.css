@@ -13,6 +13,30 @@ body,html {
         font-family: 'Sniglet', cursive;
     }
 
+    #loader{
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+        background: #FAE5D3;
+        z-index: 10;
+    }
+
+    #loader span{
+        min-width: 60px;
+        height: 60px;
+    }
+
+    .hide{
+        z-index: -1;
+        opacity: 0;
+    }
+
     canvas {
         position: fixed;
         left: 0;
