@@ -54,9 +54,10 @@ body,html {
         position: absolute;
         margin: auto;
         width: 35%;
-        height: 90%;
+        height: 60vw;
         top: 5%;
         min-width: 300px;
+        min-height: 500px;
         max-height: 680px;
         z-index: 1;
         display: none;
@@ -116,16 +117,17 @@ body,html {
     }
 
     .message-form {
-        margin-top: 23vh;
+        margin-top: calc(150px + 1vw);
         width: 65%;
         height: 35%;
         font-size: 0.7em;
         align-self: center;
+        max-width: 300px;
     }
 
     .name-form,
     .email-form{
-        margin-right: 4.5rem;
+        margin-right: 18%;
         width: 33%;
         border-bottom: 1px dotted #676767;
         align-items: flex-end;
@@ -172,7 +174,7 @@ body,html {
     .form-ctas{
         position: absolute;
         margin: auto;
-        bottom: 5%;
+        bottom: 0;
         width: 100%;
         display: flex;
         justify-content: space-evenly;
@@ -333,10 +335,12 @@ body,html {
         display: block;
         color: 	#383838;  
         width: 70%; 
+        cursor: default;
     }
     .infoContent h1 {
-        width: 90%;
+        width: 100%;
         font-size: 1.7em;
+        cursor: default;
     }
     .infoTodo{
         right: 50px;
@@ -430,8 +434,8 @@ body,html {
 
     #infoClose{
         position: absolute;
-        right: 20px;
-        top: 20px;
+        bottom: 40px;
+        right: 40px;
         height: 50px;
         width: 50px;
         background-size: contain;
@@ -552,9 +556,8 @@ body,html {
         }
         
         .message-form{
-            font-size: 0.5em;
-            margin-top: 26vh;
-            height: 25%;
+            font-size: 0.5rem;
+            height: 28%;
         }
 
         .name-form,
@@ -609,11 +612,10 @@ body,html {
             display: none !important;
         }
         .infoContent h1{
-            font-size: 1em;
-            width: 90%;
+            font-size: 1.2rem;
         }
         .infoContent p{
-            font-size: 0.8em;
+            font-size: 0.8rem;
             width: calc(100% - 20px);
         }
         .infoContent p span{
@@ -621,10 +623,6 @@ body,html {
             height: 20px;
             min-width: unset;
             margin-bottom: -6px;
-        }
-        #infoClose{
-            height: 40px;
-            width: 40px;
         }
         #musicCTA, #infoCTA{
             height: 35px;
@@ -641,6 +639,7 @@ body,html {
             height: 40px;
             width: 120px;
             margin-bottom: 20px;
+            -webkit-appearance: button;
         }
 
         .bgContainer{
@@ -652,25 +651,25 @@ body,html {
         }
 
         .message-form{
-            margin-top: 20vh;
+            margin-top: 100px;
             width: 70%;
-            height: 26%;
+            height: 30%;
         }
 
         .message-input{
-            font-size: 1.5em;
+            font-size: 0.9rem;
             width: 81%;
             height: 94%;
             margin: auto;
         }
 
         .name-form, .email-form{
-            width: 25%;
-            height: 1.8em;
+            width: 35%;
+            height: 1.7rem;
         }
 
         .name-form-input,.email-form-input{
-            font-size: 0.8em;
+            font-size: 0.8rem;
         }
 
         input[type=text], input[type=button] {
