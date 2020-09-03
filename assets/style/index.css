@@ -519,7 +519,8 @@ body,html {
 
     .oldLetterText{
         color: black;
-        font-size: 1.8em;
+        font-size: 1.5rem;
+        line-height: 2.5rem;
         margin: 10% 30%;
     }
 
@@ -670,7 +671,6 @@ body,html {
             margin-left: 200px;
         }
 
-
         .infoContent h1{
             font-size: 1.2rem;
         }
@@ -771,7 +771,8 @@ body,html {
     
         .oldLetterText{
             color: black;
-            font-size: 1.3em;
+            font-size: 1.3rem;
+            line-height: 1.5rem;
             margin: 13% 22%;
         }
     
