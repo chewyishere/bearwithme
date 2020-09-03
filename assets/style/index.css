@@ -464,8 +464,8 @@ body,html {
 
     #infoClose{
         position: absolute;
-        bottom: 40px;
-        right: 40px;
+        bottom: 10px;
+        right: 10px;
         height: 50px;
         width: 50px;
         background-size: contain;
@@ -482,7 +482,8 @@ body,html {
         position: absolute;
         top: 21%;
         margin-left: 20px;
-        width: 150px;
+        width: 13%;
+        max-width: 160px;
         transform: rotate(-5deg);   
     }
 
@@ -490,13 +491,14 @@ body,html {
         width: 100%;
     }
 
-    #bearImage, #bearGif {
+    .bearGif {
         position: absolute;
     }
-    
-    #bearGif {
-        display: none;
+    .kissGif{
+        margin-left: 20%;
+        transform: rotate(5deg);   
     }
+    
 
     .showGif {
         display: block !important;
@@ -603,12 +605,26 @@ body,html {
         .infoCreditItem {
           flex-wrap: wrap;
         }
-        .gifArrow, .infoBearGif{
+        .gifArrow {
             display: none !important;
+        }
+        .infoBearGif{
+            right: 5%;
+            top: 15%;
+            min-width: 100px;
+        }
+
+        .kissGif{
+            top: 300px;
         }
         .infoContent p span{
             display: inline-block;
         }
+        .infoCredit{
+            margin-bottom: 100px;
+            width: 80%;
+        }
+    
         #close,#info{
             width: 20%;
             height: 20%;
@@ -639,9 +655,19 @@ body,html {
             min-width: unset;
             height: 100%;
         }
-        .infoTodo {
-            display: none !important;
+
+        .infoBearGif {
+            width: 100px !important;
+            bottom: 20%;
+            top: unset;
+            left: 10px;
         }
+
+        .kissGif {
+            margin-left: 200px;
+        }
+
+
         .infoContent h1{
             font-size: 1.2rem;
         }
