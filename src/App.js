@@ -95,7 +95,7 @@ export default class App extends PIXI.Application {
         if(init === true){
             let idx = -1;
             msgs.forEach((_msg)=>{
-                if(_msg.data.message !== ''){
+                if(_msg.id !== 'empty' && _msg.data.message !== ''){
                     idx ++;
                     let l = new Letter(_item, pos, size, idx, color, _msg, this.openLetter); 
                     this.letters.push(l);

@@ -220,14 +220,15 @@ export default class Form {
         let email = form.elements["femail"].value;
         let message = form.elements["fmessage"].value;
         let location = form.elements["flocation"].value;
+        let test = message === '' && name === '' && location === '';
 
         let msg = {
-            id: message === '' && name === '' ? 'empty' : Date.now() + Math.floor(Math.random() * 100),
+            id: test ? 'empty' : Date.now() + Math.floor(Math.random() * 100),
             data: {
-                name: name,
+                name: name === '' ? 'an angel' : name,
                 email: email,
-                message: message,
-                location: location,
+                message: message === '' ? 'here is some love' : message,
+                location: location === '' ? 'heaven' : location ,
                 type: this.type,
             },
             hasPlayed: "false",

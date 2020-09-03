@@ -12,7 +12,7 @@ export default class UI {
         this.info = document.getElementById("infoPage");
         this.infoBTN = document.getElementById("infoCTA");
         this.closeBTN = document.getElementById("infoClose");
-        this.bearImage = document.getElementsByClassName("infoBearGif")[0];
+
         this.next = document.getElementById("next");
         this.loader = document.getElementById("loader");
         this.sound = [this.sound_guitar, this.sound_piano];
@@ -27,11 +27,7 @@ export default class UI {
         this.musicIdx = 1;
 
         this.initLoad();
-
-        this.gif = document.getElementById("bearGif"); 
-
-        this.bearImage.addEventListener('mouseover',this.toggleGIF.bind(this, true));   
-        this.bearImage.addEventListener('mouseout',this.toggleGIF.bind(this, false));   
+        
         this.soundBTN.addEventListener('mousedown',this.toggleMusic.bind(this));   
         this.infoBTN.addEventListener('mousedown',this.toggleInfo.bind(this));   
         this.closeBTN.addEventListener('mousedown',this.toggleInfo.bind(this, false));
@@ -42,6 +38,7 @@ export default class UI {
         gsap.set(this.next, {opacity: 0});
         gsap.set(this.soundBTN, {opacity: 0});
         gsap.set(this.infoBTN, {opacity: 0});
+        gsap.set(this.loader_container, {opacity: 0});
         this.loaderAnim = lottie.loadAnimation({
             container:  this.loader_container, // the dom element that will contain the animation
             renderer: 'svg',
@@ -55,12 +52,16 @@ export default class UI {
 				progressiveLoad: false,
 			}
           });
-        this.loaderAnim.play(); 
+
+        this.loaderAnim.addEventListener('loaded_images',()=>{
+            gsap.to(this.loader_container, {opacity:1, duration: 0.3});    
+            this.loaderAnim.play(); 
+        });    
     };
 
     loadingComplete(){
         this.loaderAnim.pause(); 
-        gsap.to( this.loader, {opacity:0, duration: 0.5, onComplete: ()=> {
+        gsap.to( this.loader, {opacity:0, duration: 0.3, onComplete: ()=> {
             gsap.set(this.loader, {display: 'none'});
             gsap.to( this.next, {opacity:1, duration: 1, delay: 1});    
             gsap.to( this.soundBTN, {opacity:1, duration: 1});    
@@ -69,18 +70,14 @@ export default class UI {
     }
 
     nextPage(){
-        gsap.to(this.scene.position, {x: !this.on2ndPage? -window.innerWidth : 0, duration: 0.5});  
+        gsap.to(this.scene.position, {x: !this.on2ndPage? -window.innerWidth : 0, duration: 0.5,  ease: "power2.out"});  
         this.on2ndPage = !this.on2ndPage;
         this.next.classList.toggle('next-right');
     }
 
-    toggleGIF(over){
-        over ? this.gif.classList.add('showGif') : this.gif.classList.remove('showGif') 
-    }
-
     toggleInfo(){
         this.isInfoOn = !this.isInfoOn;
-        gsap.to(this.info, {y: this.isInfoOn ? '0%': '-100%', duration: 0.5});    
+        gsap.to(this.info, {y: this.isInfoOn ? '0%': '-100%', duration: 0.5, ease: "power2.out"});    
     }
 
     switchMusic(n){

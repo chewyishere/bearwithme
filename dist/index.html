@@ -10,8 +10,7 @@
     <body>
         <header> 
             <div id="loader">
-                <span class="chewy"></span>
-                <h1>loading...</h1>
+                <div id="loader_chewy"></div>
             </div>
             <div class="controls">
                 <button id="musicCTA"></button>         
@@ -29,13 +28,15 @@
                 <div class="infoContent">
                     <h1>Bear With Me is an <span style="color: #de4300"> Internet of Things </span> experiment that turns viritual hugs into physical hugs!</h1> 
                     <p>Welcome! to the quarantine life of two sad bears. Chewy <span class="chewy"> </span>and Stephen <span class="stephen"></span></p>
-                    <p>If you'd like, you can send a virtual hug here, with some message. (<span class="stephen"></span> is sensitive...please be kind. )
-                    <p>Once you send a message/hug, they will be sent to an 8ft tall robot bear, who will give us a real hug<span class="arrow gifArrow"></span>
+                    <p>If you'd like, you can send a virtual hug / a kiss here, with some message. (<span class="stephen"></span> is sensitive...please be kind. )
+                    <p>The hug/kiss will be sent to an 8ft tall robot bear, who will read out your message and give us a real hug/kiss! <span class="arrow gifArrow"></span>
                     <span class='infoBearGif'>
-                        <img id="bearImage" src="assets/bear_still.jpg" alt="bearStill">
-                        <img id="bearGif" src="assets/bear.gif" alt="bearStill">
-                    </span></p>
-                    <p>Thank you for visiting! </p>
+                        <img class="bearGif" src="assets/gifs/bear-hug.gif" alt="bearHug">
+                    </span>
+                    <span class='infoBearGif kissGif'>
+                        <img class="bearGif" src="assets/gifs/bear-kiss.gif" alt="bearHug">
+                    </span>
+                </p>
                     
                     <div class="infoCredit">
                         <p>techincal breakdown <span class="arrow"></span></p>
@@ -56,8 +57,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="infoTodo"></div>
                     <div id="infoClose"></div>
                 </div>
             </div>    
@@ -76,7 +75,7 @@
                 <div class="bgContainer">
                     <div class="formgroup message-form">
                         <label for="fmessage"></label>
-                        <textarea class="message-input" name="fmessage" maxlength="90" placeholder="Some nice words maybe? (max: 90)"></textarea>
+                        <textarea class="message-input" name="fmessage" maxlength="90" placeholder="A message that the bear will read out load for you (max: 90)"></textarea>
                     </div>
                     <div class="formgroup name-form">
                         <label for="fname"></label>
@@ -98,5 +97,5 @@
                 </div>
             </form>
         </main>
-    <script type="text/javascript" src="main.js?103fde2c1c17f3ff4b9b"></script></body>
+    <script type="text/javascript" src="main.js?ce0694fa250217d508d0"></script></body>
 </html>
