@@ -364,7 +364,7 @@ body,html {
     .infoContent p{
         display: block;
         color: 	#383838;  
-        width: 70%; 
+        width: 80%; 
         cursor: default;
     }
     .infoContent h1 {
@@ -661,7 +661,7 @@ body,html {
 
         .infoBearGif {
             width: 100px !important;
-            bottom: 20%;
+            bottom: 30%;
             top: unset;
             left: 10px;
         }
