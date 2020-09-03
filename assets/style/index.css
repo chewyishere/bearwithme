@@ -650,6 +650,9 @@ body,html {
             opacity: 0;
             font-size: 1rem;
         }
+        .infoCredit{
+            width: 100%;
+        }
     
         #infoPage{
             min-width: unset;
