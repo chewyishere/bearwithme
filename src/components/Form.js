@@ -116,6 +116,7 @@ export default class Form {
         this.form.elements["fname"].value = '';
         this.form.elements["femail"].value = '';
         this.form.elements["fmessage"].value= '';
+        this.form.elements["flocation"].value= '';
         this.main.classList.remove('active-form');
         this.main.classList.remove('active-letter')
         this.chat.classList.remove('chat-thanks');
@@ -226,15 +227,15 @@ export default class Form {
             id: test ? 'empty' : Date.now() + Math.floor(Math.random() * 100),
             data: {
                 name: name === '' ? 'an angel' : name,
-                email: email,
                 message: message === '' ? 'here is some love' : message,
                 location: location === '' ? 'heaven' : location ,
                 type: this.type,
             },
             hasPlayed: "false",
+            email: email,
         }
 
-        if(msg.data.email === '' || this.validated(msg.data.email)){
+        if(msg.email === '' || this.validated(msg.email)){
             this.chat.classList.remove('chat-error');
             this.postLetters(msg);
             this.clearURL();

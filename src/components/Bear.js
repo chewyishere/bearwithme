@@ -20,6 +20,8 @@ export default class Bear extends PIXI.Container {
 
         this.lookCB = lookCB;
         this.loveCB = loveCB;
+
+        this.hugging = false;
     }
 
     setupHitSqr() {
@@ -119,7 +121,8 @@ export default class Bear extends PIXI.Container {
     }
 
     onClick(){
-        if(this.currentAnim !== 'walk' && this.currentAnim !== 'hug'){
+        console.log(this.hugging)
+        if(!this.hugging && this.currentAnim !== 'walk' && this.currentAnim !== 'hug'){
             this.loveCB();
         }
     }

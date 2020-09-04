@@ -114,14 +114,15 @@ export default class App extends PIXI.Application {
 
     sentLetter(){
         if(this.form.forBear === 'stephen'){
-            gsap.to(this.chewy.bear, {alpha: 0, duration: 1.5, ease: "power2.out" });   
-            this.stephen.bear.interactive = false;
+            gsap.to(this.chewy.bear, {alpha: 0, duration: 1.5, ease: "power2.out" });  
+            this.chewy.bear.hugging = true; 
             this.stephen.bear.hint.alpha = 0;
+            this.stephen.bear.hitSqr.interactive = false;
             this.stephen.walkBear(99);
             gsap.to(this.objectLayer, {alpha: 0, duration: 3, ease: "power2.out" });
         } else {
             gsap.to(this.stephen.bear, {alpha: 0, duration: 1.5, ease: "power2.out" });   
-            this.chewy.bear.interactive = false;
+            this.stephen.bear.hugging = true;
             this.chewy.bear.hint.alpha = 0;
             this.chewy.walkBear(99);
             gsap.to(this.objectLayer, {alpha: 0, duration: 3, ease: "power2.out"});
@@ -138,9 +139,11 @@ export default class App extends PIXI.Application {
     afterHug(){
         gsap.to(this.UI.next, {alpha: 1, duration: 3, ease: "power2.out"});
         if(this.form.forBear === 'stephen'){
-            gsap.to(this.chewy.bear, {alpha: 1, duration: 1, delay: 2.5, ease: "power2.out" });   
+            gsap.to(this.chewy.bear, {alpha: 1, duration: 1, delay: 2.5, ease: "power2.out" });  
+            this.chewy.bear.hugging = false;
         } else {
             gsap.to(this.stephen.bear, {alpha: 1, duration: 1, delay: 2.5, ease: "power2.out" });   
+            this.stephen.bear.hugging = false;
         }
     }
 
