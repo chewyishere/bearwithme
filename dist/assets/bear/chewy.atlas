@@ -1,166 +1,173 @@
 
 chewy.png
-size: 2017,908
+size: 1905,971
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 angel_arm_l
   rotate: true
-  xy: 193, 2
+  xy: 1312, 870
   size: 99, 133
   orig: 101, 135
   offset: 1, 1
   index: -1
 angel_body
-  rotate: true
-  xy: 776, 403
+  rotate: false
+  xy: 807, 387
   size: 503, 582
   orig: 503, 582
   offset: 0, 0
   index: -1
 angel_eyes
-  rotate: false
-  xy: 1899, 415
+  rotate: true
+  xy: 582, 85
   size: 116, 80
   orig: 116, 80
   offset: 0, 0
   index: -1
 angel_eyes_close
   rotate: true
-  xy: 1899, 257
+  xy: 361, 39
   size: 156, 78
   orig: 156, 78
   offset: 0, 0
   index: -1
 angle_arm_r
-  rotate: true
-  xy: 1823, 17
+  rotate: false
+  xy: 578, 203
   size: 97, 134
   orig: 98, 134
   offset: 0, 0
   index: -1
 arm_l
-  rotate: true
-  xy: 1619, 19
+  rotate: false
+  xy: 1312, 666
   size: 90, 202
   orig: 92, 202
   offset: 1, 0
   index: -1
 arm_r
-  rotate: true
-  xy: 2, 2
+  rotate: false
+  xy: 2, 6
   size: 99, 189
   orig: 99, 194
   offset: 0, 5
   index: -1
 body
   rotate: true
-  xy: 634, 26
+  xy: 917, 10
   size: 375, 560
   orig: 375, 561
   offset: 0, 1
   index: -1
 body_back
-  rotate: false
-  xy: 2, 496
+  rotate: true
+  xy: 2, 197
   size: 772, 410
   orig: 772, 410
   offset: 0, 0
   index: -1
 body_side
-  rotate: true
-  xy: 1360, 497
+  rotate: false
+  xy: 1494, 29
   size: 409, 568
   orig: 410, 568
   offset: 1, 0
   index: -1
 chair
-  rotate: true
-  xy: 2, 103
+  rotate: false
+  xy: 414, 339
   size: 391, 630
   orig: 391, 630
   offset: 0, 0
   index: -1
 eyebrow
-  rotate: true
-  xy: 1930, 698
+  rotate: false
+  xy: 361, 2
   size: 208, 35
   orig: 212, 46
   offset: 3, 7
   index: -1
 eyes_highlight_r
   rotate: true
-  xy: 539, 2
+  xy: 249, 8
   size: 25, 24
   orig: 25, 24
   offset: 0, 0
   index: -1
 eyes_hightlight_l
   rotate: true
-  xy: 565, 2
+  xy: 275, 8
   size: 25, 23
   orig: 25, 25
   offset: 0, 0
   index: -1
 eyes_look
-  rotate: false
-  xy: 1360, 406
+  rotate: true
+  xy: 1312, 388
   size: 209, 89
   orig: 211, 94
   offset: 1, 5
   index: -1
 eyes_sad
-  rotate: false
-  xy: 328, 12
+  rotate: true
+  xy: 1403, 388
   size: 209, 89
   orig: 211, 94
   offset: 1, 5
   index: -1
 face_side
-  rotate: true
-  xy: 1805, 116
+  rotate: false
+  xy: 441, 49
   size: 139, 146
   orig: 140, 148
   offset: 0, 1
   index: -1
 face_side_look
-  rotate: false
-  xy: 1619, 111
+  rotate: true
+  xy: 103, 11
   size: 184, 144
   orig: 184, 151
   offset: 0, 1
   index: -1
 hug_body
-  rotate: false
-  xy: 1619, 257
+  rotate: true
+  xy: 677, 59
   size: 278, 238
   orig: 278, 238
   offset: 0, 0
   index: -1
 hug_head
   rotate: false
-  xy: 1196, 31
+  xy: 1479, 599
   size: 421, 370
   orig: 425, 372
   offset: 0, 2
   index: -1
-leg_l
+itme/donut
   rotate: true
-  xy: 634, 414
+  xy: 249, 35
+  size: 160, 110
+  orig: 160, 117
+  offset: 0, 0
+  index: -1
+leg_l
+  rotate: false
+  xy: 414, 197
   size: 80, 140
   orig: 81, 141
   offset: 0, 1
   index: -1
 leg_r
   rotate: false
-  xy: 1930, 556
+  xy: 496, 197
   size: 80, 140
   orig: 81, 141
   offset: 1, 1
   index: -1
 nose
-  rotate: false
-  xy: 539, 29
+  rotate: true
+  xy: 582, 6
   size: 77, 72
   orig: 77, 72
   offset: 0, 0
