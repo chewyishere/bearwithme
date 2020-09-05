@@ -121,7 +121,6 @@ export default class Bear extends PIXI.Container {
     }
 
     onClick(){
-        console.log(this.hugging)
         if(!this.hugging && this.currentAnim !== 'walk' && this.currentAnim !== 'hug'){
             this.loveCB();
         }

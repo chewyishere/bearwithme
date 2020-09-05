@@ -147,7 +147,7 @@ export default class Form {
             }, 
             { 
                 rotation: -10, 
-                x: 10, 
+                x: 0, 
                 y: "20%", 
                 duration: 0.6,
                 ease: "power3.out",
