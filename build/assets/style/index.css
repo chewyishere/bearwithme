@@ -244,7 +244,7 @@ body,html {
         position: absolute;
         background: grey;
         opacity: 0.5;
-        z-index: -1;
+        z-index: 1;
     }
 
 
@@ -507,21 +507,22 @@ body,html {
     .oldLetter{
         position: absolute;
         background-image: url('png/oldLetter.png');
-        background-size: contain;
+        background-size: cover;
         background-position-x: center;
         background-position-y: top;
         background-repeat: no-repeat;
-        width: 800px;
+        width: 500px;
         height: 600px;
         transform: translate(0%, -300%);
         opacity: 0;
+        z-index: 2;
     }
 
     .oldLetterText{
         color: black;
         font-size: 1.5rem;
-        line-height: 2.5rem;
-        margin: 10% 30%;
+        line-height: 2rem;
+        margin: 12% 22% 5% 19%;
     }
 
     .oldLetterName{
@@ -529,16 +530,16 @@ body,html {
         right: 0;
         color:black;
         font-size: 1.4em;
-        margin-right: 30%;
+        margin-right: 22%;
         top: 40%;
     }
     .oldLetterLocation{
         position: absolute;
         right: 0;
         color:black;
-        font-size: 1.2em;
-        margin-right: 30%;
-        top: 45%;
+        font-size: 1.3em;
+        margin-right: 22%;
+        top: 46%;
     }
 
     #hugPage{
@@ -764,16 +765,14 @@ body,html {
         }
 
         .oldLetter{
-            width: 90%;
-            left: 0;
+            width: 350px;
             height: 400px;
         }
     
         .oldLetterText{
             color: black;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             line-height: 1.5rem;
-            margin: 13% 22%;
         }
     
         .oldLetterName{

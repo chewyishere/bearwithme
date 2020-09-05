@@ -87,7 +87,7 @@ export default class BearScene extends PIXI.Container{
         // } else {
         //     idx = 0;
         // }
-        let n = this.name === 'stephen' ? 2 : 5;
+        let n = this.name === 'stephen' ? 1 : 6;
 
         return n;
     }

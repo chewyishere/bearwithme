@@ -30,6 +30,8 @@ export default class App extends PIXI.Application {
         this.currentBear = 0;
         this.scene = new PIXI.Container();
         this.objectLayer = new PIXI.Container();
+        this.letterLayer = new PIXI.Container();
+        this.letterLayer.zOrder = 10;
         this.mobile = window.innerWidth < 600;
         this.stage.addChild(this.scene);
         this.scene.addChild(this.objectLayer);
@@ -78,9 +80,7 @@ export default class App extends PIXI.Application {
         this.stephen.doneLoading();
         this.scene.addChild(this.chewy.bear);
         this.scene.addChild(this.stephen.bear);
-        this.letters.forEach(_item => {
-            this.objectLayer.addChild(_item);
-        });
+        this.objectLayer.addChild(this.letterLayer);
         this.onResize()
         this.start();
         this.UI.loadingComplete();
@@ -94,11 +94,12 @@ export default class App extends PIXI.Application {
 
         if(init === true){
             let idx = -1;
-            msgs.forEach((_msg)=>{
-                if(_msg.id !== 'empty' && _msg.data.message !== ''){
+            msgs.reverse().forEach((_msg)=>{
+                if(_msg.id !== 'empty'){
                     idx ++;
                     let l = new Letter(_item, pos, size, idx, color, _msg, this.openLetter); 
                     this.letters.push(l);
+                    this.letterLayer.addChild(l);
                     this.form.addLetterToDom(_msg);
                 }
             })
@@ -106,7 +107,7 @@ export default class App extends PIXI.Application {
             let _idx = this.letters.length;
             let l = new Letter(_item, pos, size, _idx, color, msgs, this.openLetter);
             this.letters.push(l);
-            this.objectLayer.addChild(l);
+            this.letterLayer.addChild(l);
             this.form.addLetterToDom(msgs);
         }
     
@@ -152,7 +153,7 @@ export default class App extends PIXI.Application {
     }
 
     openLetter(idx){
-       this.form.showOldLetter(idx);
+        this.form.showOldLetter(idx);
     }
 
     initFilters(){

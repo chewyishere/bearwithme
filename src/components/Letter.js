@@ -8,7 +8,7 @@ export default class Letter extends PIXI.Container {
         Object.assign(this, item);
         this._item = PIXI.Sprite.from(`assets/items/letters/letter.png`);
         this._item.anchor.set(item.anchor)
-        this._item.buttonMode = true;
+
         this.index = index;
         this.color = color;
         this.content = content;
@@ -16,7 +16,7 @@ export default class Letter extends PIXI.Container {
         this._stamp = PIXI.Sprite.from(`assets/items/letters/stamp.png`);
         this._stamp.anchor.set(0.5)
 
-        let name = content.data.name ? content.data.name : content.data.firstName ? content.data.firstName : '?';
+        let name = content.data.name ? content.data.name : '?';
 
         this._initial = new PIXI.Text(name.charAt(0));
         this._initial.anchor.set(0.5)
@@ -25,14 +25,15 @@ export default class Letter extends PIXI.Container {
         this.tapcb = _tapcb;
 
         this._item.interactive = true;
-        this._item.on('pointerdown',debounce(this.onClick.bind(this),200));
+        this._item.defaultCursor = 'pointer';
+        this._item.buttonMode = true;
+        this._item.on('pointerdown', debounce(this.onClick.bind(this),100));
             
-        this.setTransform(pos, size, window.innerWidth);
         this.addChild(this._item);
         this.addChild(this._stamp);
         this.addChild(this._initial);
+        this.setTransform(pos, size, window.innerWidth);
     }
-
 
     setTransform(pos,scale, w){
         let offsetY = w < 600 ? map(w, 300, 600, 10, 15) : map(w, 764, 1300, 15, -5);
@@ -46,6 +47,7 @@ export default class Letter extends PIXI.Container {
         let fs = w < 600 ? map(w, 300, 600, 9, 14) : map(w, 764, 1300, 14, 20);
         this._initial.style.fontSize = fs;
 
+    
         this._item.scale.set(scale);
         this._item.position.x = pos.x + disX;
         this._item.position.y = row;
