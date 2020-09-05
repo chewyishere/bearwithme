@@ -70,7 +70,6 @@ export default class BearScene extends PIXI.Container{
         this.bear.setTransform(this.getCurAvatarPos(), size); 
     }
 
-      //0: bed 1: guitar 2:computer 4:pizza
     getStartIdx(){
         // let idx = 0;
         // let h = new Date().getHours();
