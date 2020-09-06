@@ -1,10 +1,13 @@
 import gsap from 'gsap';
-import lottie from 'lottie-web'
 
 export default class UI {
     constructor(scene) {
         this.scene = scene;
+
         this.loader_container = document.getElementById("loader_chewy");
+        this.loader_z = document.getElementsByClassName("loader_z");
+        this.loader_dot = document.getElementsByClassName("loader_dot");
+
         this.sound_guitar = document.getElementById("music_guitar");
         this.sound_piano = document.getElementById("music_piano");
         
@@ -38,29 +41,36 @@ export default class UI {
         gsap.set(this.next, {opacity: 0});
         gsap.set(this.soundBTN, {opacity: 0});
         gsap.set(this.infoBTN, {opacity: 0});
-        gsap.set(this.loader_container, {opacity: 0});
-        this.loaderAnim = lottie.loadAnimation({
-            container:  this.loader_container, // the dom element that will contain the animation
-            renderer: 'svg',
-            clearCanvas: false,
-            loop: true,
-            autoplay: false,
-            path: 'assets/loader/panda.json', // the path to the animation json
-            rendererSettings: {
-				preserveAspectRatio: 'xMidYMid slice',
-				clearCanvas: false,
-				progressiveLoad: false,
-			}
-          });
-
-        this.loaderAnim.addEventListener('loaded_images',()=>{
-            gsap.to(this.loader_container, {opacity:1, duration: 0.3});    
-            this.loaderAnim.play(); 
-        });    
+        this.loadAnim();
     };
 
+    loadAnim(){
+        gsap.to(this.loader_z, {
+            opacity: 0,
+            duration: 0.5,
+        });
+        gsap.set(this.loader_dot, {
+            opacity: 0,
+            duration: 0.5,
+        });
+
+        gsap.to('.loader_z',{
+            opacity: 1,
+            duration: 0.5,
+            stagger: 1,
+            delay: 1,
+        });
+
+        gsap.to('.loader_dot',{
+            opacity: 1,
+            duration: 0.5,
+            stagger: 1,
+            delay: 1,
+            onComplete: ()=>this.loadAnim()
+        });
+    }
+
     loadingComplete(){
-        this.loaderAnim.pause(); 
         gsap.to( this.loader, {opacity:0, duration: 0.3, onComplete: ()=> {
             gsap.set(this.loader, {display: 'none'});
             gsap.to( this.next, {opacity:1, duration: 1, delay: 1});    
