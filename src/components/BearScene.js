@@ -71,24 +71,7 @@ export default class BearScene extends PIXI.Container{
     }
 
     getStartIdx(){
-        // let idx = 0;
-        // let h = new Date().getHours();
-
-        // if (h >= 9 && h < 11){
-        //    idx = 2; 
-        // } else if (h >= 11 && h < 14){
-        //     idx = 2; 
-        // } else if (h >= 14 && h < 18){
-        //     idx = 4;
-        // } else if (h >= 18 && h < 20){
-        //     idx = 2;
-        // } else if (h >= 20 && h < 22){
-        //     idx 
-        // } else {
-        //     idx = 0;
-        // }
         let n = this.name === 'stephen' ? 1 : 6;
-
         return n;
     }
 
@@ -188,9 +171,6 @@ export default class BearScene extends PIXI.Container{
     completeHug(){
         this.showHugPage(false);
         this.afterHug();
-        this.objectLayer.children.forEach(_child =>{
-            _child._item.interactive = true;
-        })
 
         gsap.to(this.objectLayer, {alpha: 1, duration: 1.5, ease: "power2.out", onComplete: ()=>{
             this.walkBear(this.previousIdx);

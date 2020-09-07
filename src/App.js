@@ -31,7 +31,6 @@ export default class App extends PIXI.Application {
         this.scene = new PIXI.Container();
         this.objectLayer = new PIXI.Container();
         this.letterLayer = new PIXI.Container();
-        this.letterLayer.zOrder = 10;
         this.mobile = window.innerWidth < 600;
         this.stage.addChild(this.scene);
         this.scene.addChild(this.objectLayer);
@@ -115,30 +114,56 @@ export default class App extends PIXI.Application {
 
     sentLetter(){
         if(this.form.forBear === 'stephen'){
-            gsap.to(this.chewy.bear, {alpha: 0, duration: 1.5, ease: "power2.out" });  
+            gsap.to(this.chewy.bear, {alpha: 0, duration: 1, ease: "power2.in" });  
             this.chewy.bear.hugging = true; 
             this.stephen.bear.hint.alpha = 0;
             this.stephen.bear.hitSqr.interactive = false;
             this.stephen.walkBear(99);
             gsap.to(this.objectLayer, {alpha: 0, duration: 3, ease: "power2.out" });
         } else {
-            gsap.to(this.stephen.bear, {alpha: 0, duration: 1.5, ease: "power2.out" });   
+            gsap.to(this.stephen.bear, {alpha: 0, duration: 1, ease: "power2.in" });   
             this.stephen.bear.hugging = true;
             this.chewy.bear.hint.alpha = 0;
             this.chewy.walkBear(99);
             gsap.to(this.objectLayer, {alpha: 0, duration: 3, ease: "power2.out"});
         }
-        
+
         this.objectLayer.children.forEach(_child =>{
+            if(_child.hasOwnProperty('page')) {
+                _child._item.interactive = false
+            };
+        })
+
+        this.letters.forEach(_child =>{
             _child._item.interactive = false;
         })
 
-        gsap.to(this.UI.next, {alpha: 0, duration: 3, ease: "power2.out"});
-        
+        gsap.to(this.UI.next, {
+            alpha: 0, 
+            duration: 1,
+            ease: "power2.in",
+            onComplete: ()=> {
+                gsap.set(this.UI.next,{ display: 'none'})
+            },
+        });  
     }
 
     afterHug(){
-        gsap.to(this.UI.next, {alpha: 1, duration: 3, ease: "power2.out"});
+        this.objectLayer.children.forEach(_child =>{
+            if(_child.hasOwnProperty('page')) {
+                _child._item.interactive = true
+            };
+        })
+        this.letters.forEach(_child =>{
+            _child._item.interactive = true;
+        })
+        
+        gsap.set(this.UI.next,{ display: 'block'})
+        gsap.to(this.UI.next, {
+            alpha: 1, 
+            duration: 1, 
+            ease: "power2.out"});
+
         if(this.form.forBear === 'stephen'){
             gsap.to(this.chewy.bear, {alpha: 1, duration: 1, delay: 2.5, ease: "power2.out" });  
             this.chewy.bear.hugging = false;

@@ -6,6 +6,13 @@
     src: url("fonts/Sniglet-Regular.woff2") format('woff2');
 }
 
+@font-face{
+    font-family: "JuliaHandwritten";
+    src: url("fonts/JuliaHandwritten2.ttf") format('truetype');
+    src: url("fonts/JuliaHandwritten2.woff") format('woff');
+    src: url("fonts/JuliaHandwritten2.woff2") format('woff2');
+}
+
 body,html {
         height: 100%;
         padding: 0;
@@ -29,13 +36,57 @@ body,html {
 
     #loader_chewy{
         width: 25%;
-        max-width: 300px;
+        max-width: 350px;
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
     }
 
-    #loader span{
-        min-width: 60px;
-        height: 60px;
+    #loader_text, .loader_dot{
+        font-family: 'JuliaHandwritten', 'Sniglet';
+        font-size: 3rem;
+        letter-spacing: 0.5rem;
+    }
+
+    .loader_dot{
+        opacity: 0;
+    }
+
+    #loader_texts{
+        display: flex;
+        flex-flow: row;
+    }
+
+    #loader_z_container{
+        width: 100%;
+        min-width: 200px;
+        max-width: 300px;
+    }
+
+    .loader_z{
+        opacity: 0;
+    }
+    
+
+    .loader_z:nth-child(1){
+        transform: translate3d(50%, 50%, 0) rotate(-30deg);
+        width: 10%;
+    }
+    .loader_z:nth-child(2) {
+        transform: translate3d(50%, 0%, 0) rotate(-15deg);
+        width: 17%;
+    }
+    .loader_z:nth-child(3) {
+        transform: translate3d(50%, -15%, 0) rotate(0deg);
+        width: 24%;
+    }
+
+    #loader_p{
+        width: 100%;
+        min-width: 200px;
+        max-width: 300px;
     }
 
     .hide{
@@ -356,6 +407,7 @@ body,html {
         width: 100vw;
         background: white;
         background-image: url('png/infoBG.jpg');
+        z-index: 20;
     }
     .infoContent{
         margin-left: 20px;
@@ -585,6 +637,8 @@ body,html {
 
 
 
+
+
     @media only screen and (max-width: 1100px) {
         .formContainer::before{
             margin-top: 5%;
@@ -643,6 +697,11 @@ body,html {
       }
 
     @media only screen and (max-width: 600px) {
+        #loader_text, .loader_dot{
+            font-size: 2rem;
+            letter-spacing: 0.2rem;
+        }
+
         #hugPage{
             top: 6vh;
         }
