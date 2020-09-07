@@ -407,6 +407,7 @@ body,html {
         width: 100vw;
         background: white;
         background-image: url('png/infoBG.jpg');
+        z-index: 20;
     }
     .infoContent{
         margin-left: 20px;
@@ -696,7 +697,6 @@ body,html {
       }
 
     @media only screen and (max-width: 600px) {
-
         #loader_text, .loader_dot{
             font-size: 2rem;
             letter-spacing: 0.2rem;
