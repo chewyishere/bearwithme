@@ -104,6 +104,7 @@ export default class Form {
         // this.getCB(msg, false);
         axios.post(apiPath, msg)
           .then((res) => {
+              console.log(msg)
               this.postComplete();
               this.getCB(msg, false);
           })
@@ -228,11 +229,11 @@ export default class Form {
             data: {
                 name: name === '' ? 'an angel' : name,
                 message: message === '' ? 'here is some love' : message,
-                location: location === '' ? 'heaven' : location ,
+                location: location === '' ? 'heaven' : location,
                 type: this.type,
             },
             hasPlayed: "false",
-            email: email,
+            email: email === '' ? 'empty@email.com' : email
         }
 
         if(msg.email === '' || this.validated(msg.email)){
