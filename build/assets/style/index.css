@@ -424,6 +424,16 @@ body,html {
         font-size: 1.7em;
         cursor: default;
     }
+    .infoContent p a{
+        color: 	#383838;
+        text-decoration: none;
+    }
+    .infoContent p a:hover{
+        color: 	#f56c42;
+
+    }
+
+    
     .infoTodo{
         right: 50px;
         top: 100px;
@@ -676,6 +686,8 @@ body,html {
         .infoContent p span{
             display: inline-block;
         }
+
+
         .infoCredit{
             margin-bottom: 100px;
             width: 80%;
