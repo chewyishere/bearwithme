@@ -725,6 +725,7 @@ body,html {
         }
         .infoCredit{
             width: 100%;
+            margin-top: 0px;
         }
     
         #infoPage{
